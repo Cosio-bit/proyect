@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es-ES"
+	  xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Detalle del Historial de Arancel</title>
+	<link rel="stylesheet" href="../static/style.css" type="text/css" th:href="@{/style.css}">
+</head>
+<style>
+	body {
+		background-color: #BAF4FA;
+		color: #6889BC;
+		font-family: Calibri, sans-serif;
+		margin: 0;
+		padding: 0;
+	}
+
+	.header {
+		background-color: #7AF4FA;
+		padding: 10px;
+		text-align: center;
+	}
+
+	.container {
+		margin: 20px;
+		padding: 20px;
+		background-color: #fff;
+		border-radius: 5px;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	}
+</style>
+<body>
+<header class="header">
+	<h1>Detalle del Historial de Arancel</h1>
+	<nav>
+	</nav>
+</header>
+<div class="container my-2">
+	<h2>Detalles del Historial de Arancel</h2>
+	<p>ID: <span th:text="${historialArancel.id}"></span></p>
+	<p>Monto Total: <span th:text="${historialArancel.montoTotal}"></span></p>
+	<p>Tipo de Pago: <span th:text="${historialArancel.tipoPago}"></span></p>
+	<p>Cuotas Pactadas: <span th:text="${historialArancel.cuotasPactadas}"></span></p>
+	<p>Cuotas Pagadas: <span th:text="${historialArancel.cuotasPagadas}"></span></p>
+	<p>Total Pagado: <span th:text="${historialArancel.totalPagado}"></span></p>
+	<p>Último Pago: <span th:text="${historialArancel.ultimoPago}"></span></p>
+	<p>Saldo Por Pagar: <span th:text="${historialArancel.saldoPorPagar}"></span></p>
+	<p>Cuotas de Retraso: <span th:text="${historialArancel.cuotasRetraso}"></span></p>
+
+	<td>
+		<a th:href="@{'/estudiantes/historialArancel/detallePagos/' + ${historialArancel.id}}" >Ver Detalle de los pagos</a>
+	</td>
+
+	<!-- Add more details about the historialArancel as needed -->
+
+	<!-- Add a button or link to go back to the list of historiales if needed -->
+	<a class="cta-button" href="/estudiantes/listarAranceles">Volver a la Lista de Historiales</a>
+	<a class="cta-button" href="/estudiantes"><button>Volver a estudiantes</button></a>
+</div>
+</body>
+</html>

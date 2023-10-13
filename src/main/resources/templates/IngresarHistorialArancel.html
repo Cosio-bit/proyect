@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link rel="stylesheet" href="../static/style.css" type="text/css" th:href="@{/style.css}">
+    <title>Ingresar Historial Académico</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+</head>
+
+<style>
+    body {
+        background-color: #BAF4FA;
+        color: #6889BC;
+        font-family: Calibri, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .header {
+        background-color: #BAF4FA;
+        padding: 10px;
+        text-align: center;
+    }
+</style>
+
+<body>
+<header class="header">
+    <div class="logo">
+    </div>
+    <nav>
+    </nav>
+    <a class="cta-button" href="/estudiantes"><button>Volver al menú principal</button></a>
+</header>
+<div class="mainclass">
+    <form th:action="@{'/estudiantes/crearHistorialArancel/'}" method="POST">
+        <div class="logo">
+            <h1><b>Registrar nuevo Historial Académico</b></h1>
+        </div>
+        <ul class="formcontainer">
+
+            @RequestParam("cuotasPactadas") String cuotasPactadas)
+
+            <ul class="container">
+                <li>
+                    <label><strong>notas</strong></label>
+                    <input type="text" id="notas" placeholder="Ingrese notas" name="notas">
+                </li>
+                <li>
+                    <label><strong>tipoColegio</strong></label>
+                    <input type="text" id="tipoColegio" placeholder="Ingrese tipoColegio" name="tipoColegio">
+                </li>
+                <li>
+                    <label><strong>AnnoEgreso</strong></label>
+                    <input type="text" id="AnnoEgreso" placeholder="Ingrese AnnoEgreso" name="AnnoEgreso">
+                </li>
+                <li>
+                    <label><strong>tipoPago</strong></label>
+                    <input type="text" id="tipoPago" placeholder="Ingrese tipoPago" name="tipoPago">
+                </li>
+                <li>
+                    <label><strong>Notas</strong></label>
+                    <input type="text" id="cuotasPactadas" placeholder="Ingrese cuotasPactadas" name="cuotasPactadas">
+                </li>
+
+                <!-- Agrega más campos según los atributos de tu entidad HistorialArancelEntity -->
+            </ul>
+            <div class="cta-button">
+                <button type="submit">Registrar Historial Académico</button>
+            </div>
+        </ul>
+    </form>
+</div>
+</body>
+
+</html>

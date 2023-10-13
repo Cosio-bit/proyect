@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es-ES"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Visualizar Historiales Académicos</title>
+    <link rel="stylesheet" href="../static/style.css" type="text/css" th:href="@{/style.css}">
+</head>
+<style>
+    body {
+        background-color: #BAF4FA;
+        color: #6889BC;
+        font-family: Calibri, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .header {
+        background-color: #7AF4FA;
+        padding: 10px;
+        text-align: center;
+    }
+</style>
+<body>
+<header class="header">
+    <h1>Visualizar Historiales Académicos</h1>
+    <nav>
+    </nav>
+</header>
+<div class="f">
+    <div class="container my-2">
+        <table border="1" class="content-table">
+            <tr>
+                <th>ID</th>
+                <th>Número de Exámenes</th>
+                <th>Promedio de Exámenes</th>
+                <th>Estudiante</th>
+                <th>Editar</th>
+                <!-- Agregar encabezados de columna dinámicos para las notas -->
+                <th th:each="nota, iterStat : ${historialesAcademicos[0].notas}" th:text="${'Nota ' + iterStat.count}"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="historialAcademico:${historialesAcademicos}">
+                <td th:text="${historialAcademico.id}"></td>
+                <td th:text="${historialAcademico.nroExamenes}"></td>
+                <td th:text="${historialAcademico.promedioExamenes}"></td>
+                <td><a th:href="@{'/estudiantes/historialAcademico/' + ${historialAcademico.estudianteID}}">Ver Historial Academico Estudiante</a></td>
+                <td><a th:href="@{'/editarHistorial/' + ${historialAcademico.id}}">Editar</a></td>
+                <!-- Agregar celdas dinámicas para las notas -->
+                <td th:each="nota : ${historialAcademico.notas}" th:text="${nota}"></td>
+            </tr>
+            </tbody>
+
+
+        </table>
+        <a class="cta-button" href="/estudiantes"><button>Volver a estudiantes</button></a>
+    </div>
+</div>
+<br>
+<hr>
+</body>
+</html>

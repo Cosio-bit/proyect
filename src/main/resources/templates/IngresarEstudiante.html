@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="../static/style.css" type="text/css" th:href="@{/style.css}">
+    <title>Ingresar Estudiante</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+</head>
+<style>
+    body {
+        background-color: #BAF4FA;
+        color: #6889BC;
+        font-family: Calibri, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .header {
+        background-color: #BAF4FA;
+        padding: 10px;
+        text-align: center;
+    }
+</style>
+<body>
+<header class="header">
+    <div class="logo">
+    </div>
+    <nav>
+    </nav>
+    <a class="cta-button" href="/estudiantes"><button>Volver al menú principal</button></a>
+</header>
+<div class="mainclass">
+    <form th:action="@{/nuevoEstudiante}" method="POST">
+        <div class="logo">
+            <h1><b>Registrar nuevo Estudiante</b></h1>
+        </div>
+        <ul class="formcontainer">
+            <hr/>
+            <ul class="container">
+                <li>
+                    <label><strong>Nombre</strong></label>
+                    <input type="text" id="nombre" placeholder="Ingrese el nombre del estudiante" name="nombre" required>
+                </li>
+                <li>
+                    <label><strong>Apellido</strong></label>
+                    <input type="text" id="apellido" placeholder="Ingrese el apellido del estudiante" name="apellido" required>
+                </li>
+                <li>
+                    <label><strong>Fecha de Nacimiento</strong></label>
+                    <input type="text" id="fechaNacimiento" placeholder="Ingrese fecha en formato año/mes/dia" name="fechaNacimiento">
+                </li>
+                <li>
+                    <label><strong>RUT</strong></label>
+                    <input type="text" id="rut" placeholder="Ingrese el RUT del estudiante" name="rut" required>
+                </li>
+                <li>
+                    <label><strong>Tipo Colegio</strong></label>
+                    <input type="text" id="tipoColegio" placeholder="Ingrese el tipo de colegio" name="tipoColegio" required>
+                </li>
+                <li>
+                    <label><strong>Nombre Colegio</strong></label>
+                    <input type="text" id="nombreColegio" placeholder="Ingrese el nombre del colegio" name="nombreColegio" required>
+                </li>
+                <li>
+                    <label><strong>Año de Egreso</strong></label>
+                    <input type="text" id="AnnoEgreso" placeholder="Ingrese fecha en formato año/mes/dia" name="AnnoEgreso">
+                </li>
+                <!-- Campos para ingresar información de Historial de Arancel -->
+                <li>
+                    <label><strong>Cantidad de cuotas</strong></label>
+                    <input type="text" id="notasArancel" placeholder="Ingrese las cantidad de cuotas" name="cuotasPactadas">
+                </li>
+                <!-- Campos para ingresar información de Historial de Arancel -->
+                <li>
+                    <label><strong>tipoPago</strong></label>
+                    <input type="text" id="tipoPago" placeholder="Ingrese tipo Pago" name="tipoPago">
+                </li>
+                <!-- Campos para ingresar información de Historial Académico -->
+                <li>
+                    <label><strong>Notas Académicas (separate with commas)</strong></label>
+                    <input type="text" id="notas" placeholder="Ingrese las notas separadas por comas" name="notas">
+                </li>
+                <li>
+                    <label><strong>Periodo de inscripcion</strong></label>
+                    <input type="text" id="periodoInscripcion" placeholder="Ingrese fecha en formato año/mes/dia" name="periodoInscripcion">
+                </li>
+
+            </ul>
+            <div class="cta-button">
+                <button type="submit">Registrar Estudiante</button>
+            </div>
+        </ul>
+    </form>
+</div>
+</body>
+
+
+
+</html>

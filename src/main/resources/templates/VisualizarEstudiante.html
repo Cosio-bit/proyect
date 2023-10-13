@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es-ES" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Información del Estudiante</title>
+    <link rel="stylesheet" href="../static/style.css" type="text/css" th:href="@{/style.css}">
+</head>
+<style>
+    body {
+        background-color: #BAF4FA;
+        color: #6889BC;
+        font-family: Calibri, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .header {
+        background-color: #7AF4FA;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .container {
+        margin: 20px;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+</style>
+<body>
+<header class="header">
+    <h1>Información del Estudiante</h1>
+</header>
+<div class="container">
+    <h2>Información del Estudiante</h2>
+    <p>ID: <span th:text="${estudiante.id}" id="estudianteId"></span></p>
+    <p>RUT: <span th:text="${estudiante.rut}"></span></p>
+    <p>Nombre: <span th:text="${estudiante.nombre}"></span></p>
+    <p>Apellido: <span th:text="${estudiante.apellido}"></span></p>
+    <p>Fecha de Nacimiento: <span th:text="${estudiante.fechaNacimiento}"></span></p>
+    <p>Tipo de Colegio: <span th:text="${estudiante.tipoColegio}"></span></p>
+    <p>Nombre del Colegio: <span th:text="${estudiante.nombreColegio}"></span></p>
+    <p>Año de Egreso: <span th:text="${estudiante.annoEgreso}"></span></p>
+    <p>Periodo de inscripcion: <span th:text="${estudiante.periodoInscripcion}"></span></p>
+
+    <!-- Use JavaScript to fetch content from links -->
+    <div id="VisualizarHistorialAcademico"></div>
+    <div id="VisualizarHistorialArancel"></div>
+
+</div>
+<a class="cta-button" href="/estudiantes"><button>Volver a Estudiantes</button></a>
+
+<!-- Include jQuery library for AJAX requests -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Get the estudiante.id from the generated HTML and store it in a JavaScript variable
+        var estudianteId = $('#estudianteId').text();
+
+        // Fetch and display Historial Académico content
+        $.get('/estudiantes/historialAcademico/' + estudianteId, function (data) {
+            $('#VisualizarHistorialAcademico').html(data);
+        });
+
+        // Fetch and display Historial Arancel content
+        $.get('/estudiantes/historialArancel/' + estudianteId, function (data) {
+            $('#VisualizarHistorialArancel').html(data);
+        });
+    });
+</script>
+</body>
+</html>

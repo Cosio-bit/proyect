@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es-ES"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Visualizar Historiales de Arancel</title>
+    <link rel="stylesheet" href="../static/style.css" type="text/css" th:href="@{/style.css}">
+</head>
+<style>
+    body {
+        background-color: #BAF4FA;
+        color: #6889BC;
+        font-family: Calibri, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .header {
+        background-color: #7AF4FA;
+        padding: 10px;
+        text-align: center;
+    }
+</style>
+<body>
+<header class="header">
+    <h1>Visualizar Historiales de Arancel</h1>
+    <nav>
+    </nav>
+</header>
+<div class="f">
+    <div class="container my-2">
+        <table border="1" class="content-table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Monto Total</th>
+                <th>Tipo de Pago</th>
+                <th>Cuotas Pactadas</th>
+                <th>Cuotas Pagadas</th>
+                <th>Total Pagado</th>
+                <th>Último Pago</th>
+                <th>Saldo Por Pagar</th>
+                <th>Cuotas de Retraso</th>
+                <th>Estudiante</th>
+                <th>Editar</th>
+                <!-- Add more headers for the new columns -->
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="historialArancel:${historialAranceles}">
+                <td th:text="${historialArancel.id}"></td>
+                <td th:text="${historialArancel.montoTotal}"></td>
+                <td th:text="${historialArancel.tipoPago}"></td>
+                <td th:text="${historialArancel.cuotasPactadas}"></td>
+                <td th:text="${historialArancel.cuotasPagadas}"></td>
+                <td th:text="${historialArancel.totalPagado}"></td>
+                <td th:text="${historialArancel.ultimoPago}"></td>
+                <td th:text="${historialArancel.saldoPorPagar}"></td>
+                <td th:text="${historialArancel.cuotasRetraso}"></td>
+                <td><a th:href="@{'/estudiantes/historialArancel/' + ${historialArancel.estudianteID}}">Ver Historial Arancel Estudiante</a></td>
+                <!-- Add an Edit button for each Historial de Arancel entry -->
+                <td><a th:href="@{'/editarHistorialArancel/' + ${historialArancel.id}}">Editar</a></td>
+                <!-- Add more columns for additional data if needed -->
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="0">Total:</td>
+                <td id="sumMontoTotal">0</td>
+                <td id="sumTipoPago">0</td>
+                <td id="sumCuotasPactadas">0</td>
+                <td id="sumCuotasPagadas">0</td>
+                <td id="sumTotalPagado">0</td>
+                <td id="sumUltimoPago">0</td>
+                <td id="sumSaldoPorPagar">0</td>
+                <td id="sumCuotasRetraso">0</td>
+                <td></td> <!-- Empty cell to align with the "Total:" cell -->
+            </tr>
+            </tfoot>
+        </table>
+
+        <a class="cta-button" href="/estudiantes"><button>Volver a estudiantes</button></a>
+    </div>
+</div>
+<br>
+<hr>
+<script>
+    // JavaScript to calculate and display the sums for each column
+    var columnSums = {
+        montoTotal: 0,
+        tipoPago: 0,
+        cuotasPactadas: 0,
+        cuotasPagadas: 0,
+        totalPagado: 0,
+        ultimoPago: 0,
+        saldoPorPagar: 0,
+        cuotasRetraso: 0
+    };
+
+    var historialAranceles = document.querySelectorAll("tbody tr");
+
+    historialAranceles.forEach(function (row) {
+        var cells = row.querySelectorAll("td");
+        columnSums.montoTotal += parseFloat(cells[1].textContent);
+        columnSums.cuotasPactadas += parseFloat(cells[3].textContent);
+        columnSums.cuotasPagadas += parseFloat(cells[4].textContent);
+        columnSums.totalPagado += parseFloat(cells[5].textContent);
+        columnSums.saldoPorPagar += parseFloat(cells[7].textContent);
+        columnSums.cuotasRetraso += parseFloat(cells[8].textContent);
+    });
+
+    // Display the sums in the respective cells in the footer
+    document.getElementById("sumMontoTotal").textContent = columnSums.montoTotal.toFixed(2);
+    document.getElementById("sumCuotasPactadas").textContent = columnSums.cuotasPactadas.toFixed(0);
+    document.getElementById("sumCuotasPagadas").textContent = columnSums.cuotasPagadas.toFixed(0);
+    document.getElementById("sumTotalPagado").textContent = columnSums.totalPagado.toFixed(2);
+    document.getElementById("sumSaldoPorPagar").textContent = columnSums.saldoPorPagar.toFixed(2);
+    document.getElementById("sumCuotasRetraso").textContent = columnSums.cuotasRetraso.toFixed(0);
+</script>
+
+</body>
+
+</html>
