@@ -1,18 +1,10 @@
 package edu.mtisw.testingwebapp.controllers;
-
-import edu.mtisw.testingwebapp.entities.HistorialAcademicoEntity;
-import edu.mtisw.testingwebapp.entities.HistorialArancelEntity;
-import edu.mtisw.testingwebapp.services.HistorialAcademicoService;
-import edu.mtisw.testingwebapp.services.HistorialArancelService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-
 import edu.mtisw.testingwebapp.entities.EstudianteEntity;
 import edu.mtisw.testingwebapp.services.EstudianteService;
 import org.springframework.web.servlet.ModelAndView;

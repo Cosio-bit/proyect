@@ -1,7 +1,5 @@
 package edu.mtisw.testingwebapp.services;
 
-import edu.mtisw.testingwebapp.entities.EstudianteEntity;
-import edu.mtisw.testingwebapp.entities.HistorialAcademicoEntity;
 import edu.mtisw.testingwebapp.entities.HistorialArancelEntity;
 import edu.mtisw.testingwebapp.repositories.HistorialArancelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service
