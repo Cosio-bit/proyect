@@ -37,7 +37,6 @@ public class EstudianteController {
 		return "VisualizarEstudiantes";
 	}
 
-
 	@GetMapping("/nuevoEstudiante")
 	public String estudianteForm(Model model) {
 		// Puedes agregar lógica para prellenar el formulario si es necesario.

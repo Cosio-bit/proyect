@@ -23,7 +23,6 @@ public class HistorialArancelService {
     public ArrayList<HistorialArancelEntity> obtenerHistorialArancels(){
         return (ArrayList<HistorialArancelEntity>) historialArancelRepository.findAll();
     }
-
     public HistorialArancelEntity guardarHistorialArancel(Long estudianteID,  String notas, String tipoColegio, String AnnoEgreso, String tipoPago, String cuotasPactadas){
         HistorialArancelEntity historialArancel = new HistorialArancelEntity();
         historialArancel.setMontoTotal(1500000);
@@ -48,24 +47,17 @@ public class HistorialArancelService {
         //detallePagoService.guardarDetallesPagos(historialArancel.getDetallePagos());
         return historialArancelRepository.save(historialArancel);
     }
-
-
     public Optional<HistorialArancelEntity> anadirPago(Long id, double efectivo) {
         // First, check if the entity with the given id exists
         Optional<HistorialArancelEntity> optionalHistorial = historialArancelRepository.findById(id);
         return optionalHistorial;
     }
-
-
     public Optional<HistorialArancelEntity> obtenerPorId(Long id){
         return historialArancelRepository.findById(id);
     }
-
     public Optional<HistorialArancelEntity> obtenerPorEstudianteId(Long id){
         return historialArancelRepository.findHistorialArancelByEstudianteID(id);
     }
-
-
     public boolean eliminarHistorialArancel(Long id) {
         try{
             historialArancelRepository.deleteById(id);
@@ -74,8 +66,6 @@ public class HistorialArancelService {
             return false;
         }
     }
-
-
 
 
 }

@@ -15,8 +15,6 @@ import java.util.Optional;
 
 @Repository
 public interface HistorialArancelRepository extends JpaRepository<HistorialArancelEntity, Long> {
-
-
     // Custom query method to find HistorialArancel by montoTotal using named parameters
     @Query("SELECT ha FROM HistorialArancelEntity ha WHERE ha.montoTotal = :montoTotal")
     HistorialArancelEntity findHistorialArancelByMontoTotal(@Param("montoTotal") double montoTotal);
@@ -28,12 +26,6 @@ public interface HistorialArancelRepository extends JpaRepository<HistorialAranc
     @Query("SELECT ha FROM HistorialArancelEntity ha WHERE ha.estudianteID = :estudianteID")
     Optional<HistorialArancelEntity> findHistorialArancelByEstudianteID(@Param("estudianteID") Long estudianteID);
 
-    // Custom query method to find HistorialArancel by estudiante using named parameters
-    /*
-    @Query("SELECT ha FROM HistorialArancelEntity ha WHERE ha.estudiante = :estudiante")
-    HistorialArancelEntity findHistorialArancelByEstudiante(@Param("estudiante") EstudianteEntity estudiante);
-    */
-
     // Custom query method to find HistorialArancel by ultimoPago using named parameters
     @Query("SELECT ha FROM HistorialArancelEntity ha WHERE ha.ultimoPago = :ultimoPago")
     HistorialArancelEntity findHistorialArancelByUltimoPago(@Param("ultimoPago") LocalDate ultimoPago);
@@ -41,12 +33,5 @@ public interface HistorialArancelRepository extends JpaRepository<HistorialAranc
     // Custom query method to find HistorialArancel by cuotasRetraso using named parameters
     @Query("SELECT ha FROM HistorialArancelEntity ha WHERE ha.cuotasRetraso = :cuotasRetraso")
     HistorialArancelEntity findHistorialArancelByCuotasRetraso(@Param("cuotasRetraso") int cuotasRetraso);
-
-    /*
-    // Custom query method to get the DetallePago entities associated with a HistorialArancel by HistorialArancel id
-    @Query("SELECT ha.detallePagos FROM HistorialArancelEntity ha WHERE ha.id = :historialArancelId")
-    List<DetallePagoEntity> findDetallePagosByHistorialArancelId(@Param("historialArancelId") Long historialArancelId);
-*/
-    // You can add more custom query methods as needed
 
 }

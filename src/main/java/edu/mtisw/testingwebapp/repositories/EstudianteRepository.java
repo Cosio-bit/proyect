@@ -14,8 +14,6 @@ import java.util.Optional;
 
 @Repository
 public interface EstudianteRepository extends JpaRepository<EstudianteEntity, Long> {
-
-
     @Query("select e from EstudianteEntity e where e.rut = :rut")
     EstudianteEntity findByRut(@Param("rut")String rut);
 
@@ -49,17 +47,5 @@ public interface EstudianteRepository extends JpaRepository<EstudianteEntity, Lo
     @Query("SELECT e FROM EstudianteEntity e WHERE e.periodoInscripcion = :periodoInscripcion")
     EstudianteEntity findEstudiantesByPeriodoInscripcion(@Param("periodoInscripcion") LocalDate periodoInscripcion);
 
-
-
-/*
-    // Custom query method to get the HistorialAcademico for an Estudiante by Estudiante id
-    @Query("SELECT e.historialAcademico FROM EstudianteEntity e WHERE e.id = :estudianteId")
-    Optional<HistorialAcademicoEntity> findHistorialAcademicoByEstudianteId(@Param("estudianteId") Long estudianteId);
-
-    // Custom query method to get the HistorialArancel for an Estudiante by Estudiante id
-    @Query("SELECT e.historialArancel FROM EstudianteEntity e WHERE e.id = :estudianteId")
-    Optional<HistorialArancelEntity> findHistorialArancelByEstudianteId(@Param("estudianteId") Long estudianteId);
-
-    // You can add more custom query methods as needed*/
 
 }

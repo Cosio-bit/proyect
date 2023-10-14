@@ -28,8 +28,6 @@ public class HistorialAcademicoController {
         return "VisualizarHistorialesAcademicos";
     }
 
-
-
     // 3. Obtener las notas de un estudiante en particular (GET)
     @GetMapping("/historialAcademico/{id}")
     public String mostrarHistorialAcademico(@PathVariable Long id, Model model) {
@@ -47,6 +45,12 @@ public class HistorialAcademicoController {
         return "redirect:/estudiantes/historialAcademico/" + id;
     }
 
+    @GetMapping("/crearHistorialAcademico")
+    public String estudianteForm(Model model) {
+        // Puedes agregar lógica para prellenar el formulario si es necesario.
+        model.addAttribute("estudiante", new HistorialAcademicoEntity());
+        return "IngresarHistorialAcademico";
+    }
 
 
 
@@ -64,14 +68,6 @@ public class HistorialAcademicoController {
 
         return modelAndView;
     }*/
-
-
-    @GetMapping("/crearHistorialAcademico")
-    public String estudianteForm(Model model) {
-        // Puedes agregar lógica para prellenar el formulario si es necesario.
-        model.addAttribute("estudiante", new HistorialAcademicoEntity());
-        return "IngresarHistorialAcademico";
-    }
 
 
 

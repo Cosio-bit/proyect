@@ -25,42 +25,23 @@ import java.util.stream.Collectors;
 @Service
 public class OficinaRRHH {
 
-   HistorialAcademicoService historialAcademicoService;
-   HistorialArancelService historialArancelService;
-   EstudianteService estudianteService;
-
-
-
-
    public static LocalDate convertirFecha(String fechaStr) {
-      // Define el formato de fecha esperado en la cadena
-      DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+   // Define el formato de fecha esperado en la cadena
+   DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 
-      try {
-         // Intenta parsear la cadena en un objeto LocalDate
-          return LocalDate.parse(fechaStr, formato);
-      } catch (Exception e) {
-         // En caso de error, maneja la excepción apropiadamente
-         System.out.println("Error al convertir la fecha: " + e.getMessage());
-         return null;
-      }
+   try {
+      // Intenta parsear la cadena en un objeto LocalDate
+       return LocalDate.parse(fechaStr, formato);
+   } catch (Exception e) {
+      // En caso de error, maneja la excepción apropiadamente
+      System.out.println("Error al convertir la fecha: " + e.getMessage());
+      return null;
+   }
    } // Falta cerrar la llave aquí
-
-      // calcula el salario anual del estudiantea
-
-      public int calcularAnnoEgreso(EstudianteEntity estudiante) {
-         // Obtén la fecha actual
-         LocalDate fechaEgreso = estudiante.getAnnoEgreso();
-         LocalDate fechaActual = LocalDate.now(); // Usamos LocalDate.now() para obtener la fecha actual
-
-         // Calcula el período entre la fecha de egreso y la fecha actual
-         Period periodo = Period.between(fechaEgreso, fechaActual);
-
-         return periodo.getYears();
-      }
-
-      public int calcularAnnoEgreso(LocalDate fechaEgreso) {
+   // calcula el salario anual del estudiantea
+   public int calcularAnnoEgreso(EstudianteEntity estudiante) {
       // Obtén la fecha actual
+      LocalDate fechaEgreso = estudiante.getAnnoEgreso();
       LocalDate fechaActual = LocalDate.now(); // Usamos LocalDate.now() para obtener la fecha actual
 
       // Calcula el período entre la fecha de egreso y la fecha actual
@@ -68,166 +49,121 @@ public class OficinaRRHH {
 
       return periodo.getYears();
    }
+   public int calcularAnnoEgreso(LocalDate fechaEgreso) {
+   // Obtén la fecha actual
+   LocalDate fechaActual = LocalDate.now(); // Usamos LocalDate.now() para obtener la fecha actual
 
-      public double calcularArancelNotas(double promedio, double arancel) {
-      if (promedio >= 950 && promedio <= 1000) {
-         arancel = 0.90 * arancel;
-      } else if (promedio >= 900 && promedio <= 949) {
-         arancel = 0.95 * arancel;
-      } else if (promedio >= 850 && promedio <= 899) {
-         arancel = 0.98 * arancel;
-      }
+   // Calcula el período entre la fecha de egreso y la fecha actual
+   Period periodo = Period.between(fechaEgreso, fechaActual);
 
-      return arancel;
+   return periodo.getYears();
+   }
+   public double calcularArancelNotas(double promedio, double arancel) {
+   if (promedio >= 950 && promedio <= 1000) {
+      arancel = 0.90 * arancel;
+   } else if (promedio >= 900 && promedio <= 949) {
+      arancel = 0.95 * arancel;
+   } else if (promedio >= 850 && promedio <= 899) {
+      arancel = 0.98 * arancel;
    }
 
+   return arancel;
+   }
    public double calcularMesesAtraso(LocalDate pagoActual, LocalDate fechaVencimiento) {
-      // Calcula el período entre la fecha del último pago y la fecha actual
-      Period periodo = Period.between(fechaVencimiento, pagoActual);
+   // Calcula el período entre la fecha del último pago y la fecha actual
+   Period periodo = Period.between(fechaVencimiento, pagoActual);
 
-      // Calcula el total de meses de atraso
-      int aniosDiferencia = periodo.getYears();
-      int mesesDiferencia = periodo.getMonths();
+   // Calcula el total de meses de atraso
+   int aniosDiferencia = periodo.getYears();
+   int mesesDiferencia = periodo.getMonths();
 
-      return aniosDiferencia * 12 + mesesDiferencia;
+   return aniosDiferencia * 12 + mesesDiferencia;
    }
+   public double calcularArancelAnnoEgreso(int AnnoEgreso, double arancel) {
 
-   public double calcularArancelInteres(LocalDate pagoActual, LocalDate fechaVencimiento, double arancel){
-      double mesesAtraso= calcularMesesAtraso(pagoActual, fechaVencimiento);
-
-      if (mesesAtraso ==1 ) {
-         arancel = 1.03 * arancel;
-      } else if (mesesAtraso ==2 ) {
-         arancel = 1.06 * arancel;
-      } else if (mesesAtraso==3) {
-         arancel = 1.09 * arancel;
-      } else if (mesesAtraso>3) {
-         arancel = 1.15 * arancel;
-      }
-      return arancel;
-   }
-
-
-
-
-      public double calcularArancelAnnoEgreso(int AnnoEgreso, double arancel) {
-
-         if (AnnoEgreso == 0) {
-            arancel = 0.85 * arancel;
-         } else if (AnnoEgreso == 1 || AnnoEgreso == 2 ) {
-            arancel = 0.92 * arancel;
-         } else if (AnnoEgreso == 3 || AnnoEgreso == 4) {
-            arancel = 0.96 * arancel;
-         } else {
-            arancel = 1 * arancel;
-         }
-         return arancel;
-   }
-
-   public double calcularArancelTipoColegio(String tipoColegio, double arancel) {
-      if (Objects.equals(tipoColegio, "municipal")) {
-         arancel = 0.8 * arancel;
-      }
-      else if (Objects.equals(tipoColegio, "subencionado")) {
-         arancel = 0.9 * arancel;
-      }
-      else if (Objects.equals(tipoColegio, "privado")) {
+      if (AnnoEgreso == 0) {
+         arancel = 0.85 * arancel;
+      } else if (AnnoEgreso == 1 || AnnoEgreso == 2 ) {
+         arancel = 0.92 * arancel;
+      } else if (AnnoEgreso == 3 || AnnoEgreso == 4) {
+         arancel = 0.96 * arancel;
+      } else {
          arancel = 1 * arancel;
       }
       return arancel;
    }
-
-      public double calcularPromedio(String todas) {
-      List<Integer> notas = stringToList(todas);
-
-      if (notas.isEmpty()) {
-         return -1.0; // Retorna -1 si no hay notas disponibles.
-      }
-      double sumatoria = notas.stream().mapToInt(Integer::intValue).sum();
-      return sumatoria / notas.size();
+   public double calcularArancelTipoColegio(String tipoColegio, double arancel) {
+   if (Objects.equals(tipoColegio, "municipal")) {
+      arancel = 0.8 * arancel;
    }
+   else if (Objects.equals(tipoColegio, "subencionado")) {
+      arancel = 0.9 * arancel;
+   }
+   else if (Objects.equals(tipoColegio, "privado")) {
+      arancel = 1 * arancel;
+   }
+   return arancel;
+   }
+   public double calcularPromedio(String todas) {
+   List<Integer> notas = stringToList(todas);
 
-
+   if (notas.isEmpty()) {
+      return -1.0; // Retorna -1 si no hay notas disponibles.
+   }
+   double sumatoria = notas.stream().mapToInt(Integer::intValue).sum();
+   return sumatoria / notas.size();
+   }
    public double calcularDescuentos(String notas, String AnnoEgreso, String tipoColegio){
 
-       return calcularArancelAnnoEgreso(calcularAnnoEgreso(convertirFecha(AnnoEgreso)),
-              calcularArancelTipoColegio(
-                      tipoColegio, 1500000));
+    return calcularArancelAnnoEgreso(calcularAnnoEgreso(convertirFecha(AnnoEgreso)),
+           calcularArancelTipoColegio(
+                   tipoColegio, 1500000));
    }
-
-      ////////////tentative cut up is arancel down is cuotas and maybe payment
-
-      public int maxcuotas(String tipoColegio){
-         int numcuotas;
-         if (Objects.equals(tipoColegio, "municipal")) {
-            numcuotas=10;
-            return numcuotas;
-         }
-         else if (Objects.equals(tipoColegio, "subencionado")) {
-            numcuotas=7;
-            return numcuotas;
-         }
-         else if (Objects.equals(tipoColegio, "privado")) {
-            numcuotas=4;
-            return numcuotas;
-         }
-         numcuotas=0;
-         return numcuotas;
-      }
-
-   public int maxcuotas(EstudianteEntity estudiante){
+   ////////////tentative cut up is arancel down is cuotas and maybe payment
+   public int maxcuotas(String tipoColegio){
       int numcuotas;
-      if (Objects.equals(estudiante.getTipoColegio(), "municipal")) {
+      if (Objects.equals(tipoColegio, "municipal")) {
          numcuotas=10;
          return numcuotas;
       }
-      else if (Objects.equals(estudiante.getTipoColegio(), "subencionado")) {
+      else if (Objects.equals(tipoColegio, "subencionado")) {
          numcuotas=7;
          return numcuotas;
       }
-      else if (Objects.equals(estudiante.getTipoColegio(), "privado")) {
+      else if (Objects.equals(tipoColegio, "privado")) {
          numcuotas=4;
          return numcuotas;
       }
       numcuotas=0;
       return numcuotas;
    }
-
-   public List<DetallePagoEntity> generarCuotas(double arancel, int cuotasDeseadas) {
-      List<DetallePagoEntity> cuotasGeneradas = new ArrayList<>();
-
-      // Calcula el monto de cada cuota
-      double montoCuota = arancel / cuotasDeseadas;
-
-      // Obtén la fecha actual
-      LocalDate fechaActual = LocalDate.now();
-
-      // Genera las cuotas y agrega a la lista
-      for (int i = 0; i < cuotasDeseadas; i++) {
-         DetallePagoEntity cuota = new DetallePagoEntity();
-
-         // Calcula la fecha de vencimiento (puedes definir tus propias reglas)
-         LocalDate fechaVencimiento = fechaActual.plusMonths(i + 1); // Por ejemplo, vencimiento mensual
-
-         cuota.setFechaVencimiento(fechaVencimiento);
-         cuota.setMontoPago(montoCuota);
-         cuota.setPagado(false); // Inicialmente, la cuota no está pagada
-
-         // Agrega la cuota a la lista
-         cuotasGeneradas.add(cuota);
-      }
-
-      return cuotasGeneradas;
+   public int maxcuotas(EstudianteEntity estudiante){
+   int numcuotas;
+   if (Objects.equals(estudiante.getTipoColegio(), "municipal")) {
+      numcuotas=10;
+      return numcuotas;
+   }
+   else if (Objects.equals(estudiante.getTipoColegio(), "subencionado")) {
+      numcuotas=7;
+      return numcuotas;
+   }
+   else if (Objects.equals(estudiante.getTipoColegio(), "privado")) {
+      numcuotas=4;
+      return numcuotas;
+   }
+   numcuotas=0;
+   return numcuotas;
+   }
+   public static List<Integer> stringToList(String input) {
+   String[] valores = input.split(",");
+   return Arrays.stream(valores)
+           .map(Integer::parseInt)
+           .collect(Collectors.toList());
    }
 
 
 
-      public static List<Integer> stringToList(String input) {
-      String[] valores = input.split(",");
-      return Arrays.stream(valores)
-              .map(Integer::parseInt)
-              .collect(Collectors.toList());
-   }
+   /*
 
    public List<List<String>> searchByRut(List<List<String>> dataList, String rut) {
       List<List<String>> matchingRows = new ArrayList<>();
@@ -283,7 +219,34 @@ public class OficinaRRHH {
        return period.getYears() * 12 + period.getMonths();
    }
 
+      public List<DetallePagoEntity> generarCuotas(double arancel, int cuotasDeseadas) {
+      List<DetallePagoEntity> cuotasGeneradas = new ArrayList<>();
 
+      // Calcula el monto de cada cuota
+      double montoCuota = arancel / cuotasDeseadas;
+
+      // Obtén la fecha actual
+      LocalDate fechaActual = LocalDate.now();
+
+      // Genera las cuotas y agrega a la lista
+      for (int i = 0; i < cuotasDeseadas; i++) {
+         DetallePagoEntity cuota = new DetallePagoEntity();
+
+         // Calcula la fecha de vencimiento (puedes definir tus propias reglas)
+         LocalDate fechaVencimiento = fechaActual.plusMonths(i + 1); // Por ejemplo, vencimiento mensual
+
+         cuota.setFechaVencimiento(fechaVencimiento);
+         cuota.setMontoPago(montoCuota);
+         cuota.setPagado(false); // Inicialmente, la cuota no está pagada
+
+         // Agrega la cuota a la lista
+         cuotasGeneradas.add(cuota);
+      }
+
+      return cuotasGeneradas;
+   }
+
+*/
 }
 
 /*
@@ -401,5 +364,22 @@ public class OficinaRRHH {
 
 
 */
+
+
+   /*
+   public double calcularArancelInteres(LocalDate pagoActual, LocalDate fechaVencimiento, double arancel){
+   double mesesAtraso= calcularMesesAtraso(pagoActual, fechaVencimiento);
+
+   if (mesesAtraso ==1 ) {
+      arancel = 1.03 * arancel;
+   } else if (mesesAtraso ==2 ) {
+      arancel = 1.06 * arancel;
+   } else if (mesesAtraso==3) {
+      arancel = 1.09 * arancel;
+   } else if (mesesAtraso>3) {
+      arancel = 1.15 * arancel;
+   }
+   return arancel;
+   }*/
 
 

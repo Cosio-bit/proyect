@@ -33,7 +33,6 @@ public class HistorialAcademicoService {
     public ArrayList<HistorialAcademicoEntity> obtenerHistorialAcademicos(){
         return (ArrayList<HistorialAcademicoEntity>) historialAcademicoRepository.findAll();
     }
-
     public double calcularPromedioHistorial(HistorialAcademicoEntity academico) {
         List<Integer> notas = academico.getNotas();
 
@@ -52,25 +51,9 @@ public class HistorialAcademicoService {
         historialAcademico.setEstudianteID(estudianteID);
         return historialAcademicoRepository.save(historialAcademico);
     }
-
-    public Optional<HistorialAcademicoEntity> obtenerPorId(Long id){
-        return historialAcademicoRepository.findById(id);
-    }
-
     public HistorialAcademicoEntity obtenerPorEstudianteId(Long id){
         return historialAcademicoRepository.findHistorialAcademicoByEstudianteID(id);
     }
-
-
-    public boolean eliminarHistorialAcademico(Long id) {
-        try{
-            historialAcademicoRepository.deleteById(id);
-            return true;
-        }catch(Exception err){
-            return false;
-        }
-    }
-
     public Optional<HistorialAcademicoEntity> anadirNota(Long id, double nuevaNota) {
         // First, check if the entity with the given id exists
         Optional<HistorialAcademicoEntity> optionalHistorial = historialAcademicoRepository.findById(id);
@@ -97,8 +80,6 @@ public class HistorialAcademicoService {
         }
         return optionalHistorial;
     }
-
-
     public int getMonthFromExcelDate(String excelDate) {
         try {
             // Split the Excel date string by '/'
@@ -118,9 +99,6 @@ public class HistorialAcademicoService {
             return -1; // For example, return -1 in case of an error
         }
     }
-
-
-
     public Optional<HistorialAcademicoEntity> anadirNotaConFecha(Long id, double nuevaNota, String fechaEspecifica) {
         Optional<HistorialAcademicoEntity> optionalHistorial = historialAcademicoRepository.findById(id);
         System.out.println(fechaEspecifica);
@@ -155,9 +133,28 @@ public class HistorialAcademicoService {
         }
         return optionalHistorial;
     }
-
-
-
-
+    public boolean eliminarHistorialAcademico(Long id) {
+        try{
+            historialAcademicoRepository.deleteById(id);
+            return true;
+        }catch(Exception err){
+            return false;
+        }
+    }
 
 }
+
+/*
+    public Optional<HistorialAcademicoEntity> obtenerPorId(Long id){
+        return historialAcademicoRepository.findById(id);
+    }
+
+        public boolean eliminarHistorialAcademico(Long id) {
+        try{
+            historialAcademicoRepository.deleteById(id);
+            return true;
+        }catch(Exception err){
+            return false;
+        }
+    }
+ */

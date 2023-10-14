@@ -20,7 +20,6 @@ public class HistorialArancelController {
     @Autowired
     private HistorialArancelService historialArancelService;
 
-
     // 1. Obtener todas las notas de todos los estudiantes (GET)
     @GetMapping("/listarAranceles")
     public String listarAranceles(Model model) {
@@ -28,7 +27,6 @@ public class HistorialArancelController {
         model.addAttribute("historialAranceles", historialAranceles);
         return "VisualizarHistorialesAranceles";
     }
-
 
     // 3. Obtener las notas de un estudiante en particular (GET)
     @GetMapping("/historialArancel/{id}")
@@ -47,6 +45,12 @@ public class HistorialArancelController {
         return "redirect:/estudiantes/historialArancel/" + id;
     }
 
+    @GetMapping("/crearHistorialArancel")
+    public String estudianteForm(Model model) {
+        // Puedes agregar lógica para prellenar el formulario si es necesario.
+        model.addAttribute("estudiante", new HistorialArancelEntity());
+        return "IngresarHistorialArancel";
+    }
 /*
     @PostMapping("/crearHistorialArancel")
     public ModelAndView nuevoHistorialArancel(
@@ -67,11 +71,4 @@ public class HistorialArancelController {
         return modelAndView;
     }*/
 
-
-    @GetMapping("/crearHistorialArancel")
-    public String estudianteForm(Model model) {
-        // Puedes agregar lógica para prellenar el formulario si es necesario.
-        model.addAttribute("estudiante", new HistorialArancelEntity());
-        return "IngresarHistorialArancel";
-    }
 }

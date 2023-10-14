@@ -36,13 +36,9 @@ public class EstudianteService {
     public ArrayList<EstudianteEntity> obtenerEstudiantes() {
         return (ArrayList<EstudianteEntity>) estudianteRepository.findAll();
     }
-
     public ArrayList<String> obtenerRuts() {
         return (ArrayList<String>) estudianteRepository.findAllRuts();
     }
-
-
-
     public EstudianteEntity manageGuardar(String rut, String nombre, String apellido, String fechaNacimiento, String tipoColegio, String nombreColegio, String AnnoEgreso, String tipoPago, String cuotasPactadas, String notas, String periodoInscripcion){
         EstudianteEntity estudiante = guardarEstudiante(rut, nombre, apellido, fechaNacimiento, tipoColegio, nombreColegio, AnnoEgreso, tipoPago, cuotasPactadas, notas, periodoInscripcion);
         HistorialAcademicoEntity historialAcademico = historialAcademicoService.guardarHistorialAcademico( estudiante.getId(), notas);
@@ -50,9 +46,6 @@ public class EstudianteService {
         detallePagoService.guardarDetallesPagos(historialArancel.getId(), historialArancel.getCuotasPactadas(), historialArancel.getMontoTotal());
         return estudiante;
     }
-
-
-
     public EstudianteEntity guardarEstudiante(String rut, String nombre, String apellido, String fechaNacimiento, String tipoColegio, String nombreColegio, String AnnoEgreso, String tipoPago, String cuotasPactadas, String notas, String periodoInscripcion) {
         // Crea un objeto EstudianteEntity y asigna los valores obtenidos de los parámetros
         EstudianteEntity estudiante = new EstudianteEntity();
@@ -66,15 +59,12 @@ public class EstudianteService {
         estudiante.setPeriodoInscripcion(convertirFecha(periodoInscripcion));
         return estudianteRepository.save(estudiante);
     }
-
     public Optional<EstudianteEntity> obtenerPorId(Long id) {
         return estudianteRepository.findById(id);
     }
-
     public Optional<EstudianteEntity>  obtenerPorRut(String rut){
         System.out.println("rut:"+rut);
         return Optional.ofNullable(estudianteRepository.findByRut(rut));}
-
     public boolean eliminarEstudiante(Long id) {
         try {
             estudianteRepository.deleteById(id);
@@ -83,9 +73,6 @@ public class EstudianteService {
             return false;
         }
     }
-
-
-
     public List<List<String>> ExcelImporterToList(String nombre) {
         String fileName = nombre +".xlsx"; // Relative path to the file
         List<List<String>> dataList = new ArrayList<>();
@@ -125,7 +112,6 @@ public class EstudianteService {
 
         return dataList;
     }
-
     public void cuotaUpdate(List<EstudianteEntity> estudianteEntities){
         HistorialAcademicoEntity historialAcademico = historialAcademicoService.obtenerPorEstudianteId(estudianteEntities.get(0).getId());
         double promedio = historialAcademicoService.calcularPromedioHistorial(historialAcademico);
@@ -133,8 +119,6 @@ public class EstudianteService {
         List<DetallePagoEntity> detallesPagos = detallePagoService.findbynotpagado(historialArancel.get().getId());
         detallePagoService.updateDetallesPagos(detallesPagos, promedio);
     }
-
-
     public void agregarNotasAHistorial(String nombreArchivo) {
         // Obtén los datos del archivo Excel
         List<List<String>> excelData = ExcelImporterToList(nombreArchivo);
@@ -170,9 +154,6 @@ public class EstudianteService {
             }
         }
     }
-
-
-
 
 
 }

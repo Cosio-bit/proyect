@@ -19,12 +19,9 @@ public class DetallePagoService {
     DetallePagoRepository detallePagoRepository;
     @Autowired
     HistorialArancelRepository historialArancelRepository;
-
-
     public ArrayList<DetallePagoEntity> obtenerDetallesPagos(){
         return (ArrayList<DetallePagoEntity>) detallePagoRepository.findAll();
     }
-
     public void guardarDetallePago(Long historialArancelID, double cuotasPactadas, double montoTotal, int nroCuota){
         DetallePagoEntity detallePago = new DetallePagoEntity();
         detallePago.setMontoPago(montoTotal/cuotasPactadas);
@@ -33,8 +30,6 @@ public class DetallePagoService {
         detallePago.setFechaVencimiento(LocalDate.now().plusMonths(nroCuota+1));
         detallePagoRepository.save(detallePago);
     }
-
-
     public void updateDetallePago(DetallePagoEntity optionalDetallePago, double promedio, LocalDate fechaActual){
 
         Long historialArancelId = optionalDetallePago.getHistorialArancelID();
@@ -50,7 +45,6 @@ public class DetallePagoService {
         optionalDetallePago.setMontoPago(calcularArancelInteres(historialArancel.getCastigoInteres(), calcularArancelNotas(promedio, originalCuota)));
         detallePagoRepository.save(optionalDetallePago);
     }
-
     public void updateDetallesPagos(List<DetallePagoEntity> detallePagoEntities, double promedio){ //obtener el promedio dada que es el mismo id de estudiante ver como hacerlo porque solo estudiante tiene todos los repos juntos
         LocalDate fechaActual = LocalDate.now();
 
@@ -61,8 +55,6 @@ public class DetallePagoService {
             updateDetallePago(detallePagoEntities.get(i), promedio, fechaActual);
         }
     }// la diferencia se va sumando, ademas de añadir la opcion de los q pagan al contado para retornarles el dinero, diferencia que ganan dadas sus notas
-
-
     public List<DetallePagoEntity> findbynotpagado(Long histAranID){
         return detallePagoRepository.findDetallePagosByNotPagadoAndHistorialArancelID(histAranID);
     }
@@ -77,7 +69,6 @@ public class DetallePagoService {
 
         return arancel;
     }
-
     public int calcularMesesAtraso(LocalDate pagoActual, LocalDate fechaVencimiento) {
         // Calcula el período entre la fecha del último pago y la fecha actual
         Period periodo = Period.between(fechaVencimiento, pagoActual);
@@ -88,7 +79,6 @@ public class DetallePagoService {
 
         return aniosDiferencia * 12 + mesesDiferencia;
     }
-
     public double calcularArancelInteres(int castigoInteres, double arancel){
 
         if (castigoInteres ==1 ) {
@@ -102,11 +92,6 @@ public class DetallePagoService {
         }
         return arancel;
     }
-
-
-
-
-
     public void guardarDetallesPagos(Long historialArancelID, double cuotasPactadas, double montoTotal) {
         for(int i = 0; i!=cuotasPactadas; i++) {
             guardarDetallePago(historialArancelID, cuotasPactadas, montoTotal, i);
@@ -135,24 +120,15 @@ public class DetallePagoService {
             }
         }
     }
-
-
-
     public Optional<DetallePagoEntity> obtenerPorId(Long id){
         return detallePagoRepository.findById(id);
     }
-
-
-
     @Autowired
     public DetallePagoService(DetallePagoRepository detallePagoRepository) {
         this.detallePagoRepository = detallePagoRepository;
     }
-
     public List<DetallePagoEntity> obtenerPorHistorialArancelID(Long id) {
         return detallePagoRepository.findByHistorialArancelID(id);}
-
-
     public boolean eliminarDetallePago(Long id) {
         try{
             detallePagoRepository.deleteById(id);

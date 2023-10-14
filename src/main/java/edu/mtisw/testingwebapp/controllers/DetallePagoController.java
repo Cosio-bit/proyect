@@ -19,15 +19,12 @@ public class DetallePagoController {
 
     @Autowired
     private DetallePagoService detallePagoService;
-
-
     @GetMapping("/listarPagos")
     public String listar(Model model) {
         List<DetallePagoEntity> detallesPagos = detallePagoService.obtenerDetallesPagos();
         model.addAttribute("detallesPagos", detallesPagos);
         return "VisualizarDetallesPagos";
     }
-
     @GetMapping("/nuevoPagos")
     public String detallePagoForm(Model model) {
         // Puedes agregar lógica para prellenar el formulario si es necesario.

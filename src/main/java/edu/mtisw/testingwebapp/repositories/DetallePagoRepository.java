@@ -13,9 +13,6 @@ import java.util.Optional;
 
 @Repository
 public interface DetallePagoRepository extends JpaRepository<DetallePagoEntity, Long> {
-
-
-
     List<DetallePagoEntity> findByFechaPago(LocalDate fechaPago);
 
     List<DetallePagoEntity> findByFechaVencimiento(LocalDate fechaVencimiento);
@@ -46,8 +43,5 @@ public interface DetallePagoRepository extends JpaRepository<DetallePagoEntity, 
     @Query("SELECT dp FROM DetallePagoEntity dp WHERE dp.pagado = false AND dp.historialArancelID = :historialArancelID")
     List<DetallePagoEntity> findDetallePagosByNotPagadoAndHistorialArancelID(@Param("historialArancelID") Long historialArancelID);
 
-
-
-    // You can add more custom query methods as needed
 
 }
