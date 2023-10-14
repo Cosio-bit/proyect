@@ -16,17 +16,16 @@ public class HistorialArancelService {
     @Autowired
     DetallePagoService detallePagoService;
 
-
     public ArrayList<HistorialArancelEntity> obtenerHistorialArancels(){
         return (ArrayList<HistorialArancelEntity>) historialArancelRepository.findAll();
     }
-    public HistorialArancelEntity guardarHistorialArancel(Long estudianteID,  String notas, String tipoColegio, String AnnoEgreso, String tipoPago, String cuotasPactadas){
+    public HistorialArancelEntity guardarHistorialArancel(Long estudianteID, String tipoColegio, String AnnoEgreso, String tipoPago, String cuotasPactadas){
         HistorialArancelEntity historialArancel = new HistorialArancelEntity();
         historialArancel.setMontoTotal(1500000);
         historialArancel.setTipoPago(tipoPago);
 
         OficinaRRHH oficinaRRHH = new OficinaRRHH();
-        historialArancel.setMontoTotal(oficinaRRHH.calcularDescuentos(notas, AnnoEgreso, tipoColegio));
+        historialArancel.setMontoTotal(oficinaRRHH.calcularDescuentos( AnnoEgreso, tipoColegio));
 
         int maxcuotasValue = oficinaRRHH.maxcuotas(tipoColegio);
         int cuotasPactadasValue = Integer.parseInt(cuotasPactadas);

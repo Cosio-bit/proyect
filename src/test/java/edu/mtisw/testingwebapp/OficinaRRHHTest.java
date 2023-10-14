@@ -20,7 +20,6 @@ class OficinaRRHHTest {
     DetallePagoEntity detallePago = new DetallePagoEntity();
     List<DetallePagoEntity> detallePagos = new ArrayList<>();
 
-
     @Test
     void testValidDateConversion() {
         // Input date string in the correct format
@@ -29,10 +28,7 @@ class OficinaRRHHTest {
         LocalDate expected = LocalDate.of(2023, 10, 13);
         assertEquals(expected, result);
     }
-
-
-
-@Test
+    @Test
     void calcArancelTipoColegio(){
         estudiante.setRut("12.345.678-2");
         estudiante.setNombre("Raul");
@@ -205,7 +201,7 @@ class OficinaRRHHTest {
 
         int atraso= (int) oficinaRRHH.calcularMesesAtraso(detallePago.getFechaPago(), detallePago.getFechaVencimiento());
         historialArancel.setCastigoInteres(atraso);
-        double descuentos = oficinaRRHH.calcularDescuentos(nota, annioEgreso, estudiante.getTipoColegio());
+        double descuentos = oficinaRRHH.calcularDescuentos( annioEgreso, estudiante.getTipoColegio());
 
 
         assertEquals(1296000, descuentos, 0.0);}

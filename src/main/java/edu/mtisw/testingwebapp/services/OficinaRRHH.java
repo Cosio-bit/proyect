@@ -8,7 +8,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class OficinaRRHH {
+public class  OficinaRRHH {
 
    public static LocalDate convertirFecha(String fechaStr) {
    // Define el formato de fecha esperado en la cadena
@@ -98,7 +98,7 @@ public class OficinaRRHH {
    double sumatoria = notas.stream().mapToInt(Integer::intValue).sum();
    return sumatoria / notas.size();
    }
-   public double calcularDescuentos(String notas, String AnnoEgreso, String tipoColegio){
+   public double calcularDescuentos( String AnnoEgreso, String tipoColegio){
 
     return calcularArancelAnnoEgreso(calcularAnnoEgreso(convertirFecha(AnnoEgreso)),
            calcularArancelTipoColegio(

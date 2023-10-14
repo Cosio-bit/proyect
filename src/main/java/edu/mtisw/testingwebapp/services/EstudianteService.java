@@ -32,6 +32,11 @@ public class EstudianteService {
     @Autowired
     DetallePagoService detallePagoService;
 
+        @Autowired
+        public EstudianteService(EstudianteRepository estudianteRepository) {
+            this.estudianteRepository = estudianteRepository;
+        }
+
     public ArrayList<EstudianteEntity> obtenerEstudiantes() {
         return (ArrayList<EstudianteEntity>) estudianteRepository.findAll();
     }
@@ -39,13 +44,13 @@ public class EstudianteService {
         return (ArrayList<String>) estudianteRepository.findAllRuts();
     }
     public EstudianteEntity manageGuardar(String rut, String nombre, String apellido, String fechaNacimiento, String tipoColegio, String nombreColegio, String AnnoEgreso, String tipoPago, String cuotasPactadas, String notas, String periodoInscripcion){
-        EstudianteEntity estudiante = guardarEstudiante(rut, nombre, apellido, fechaNacimiento, tipoColegio, nombreColegio, AnnoEgreso, tipoPago, cuotasPactadas, notas, periodoInscripcion);
+        EstudianteEntity estudiante = guardarEstudiante(rut, nombre, apellido, fechaNacimiento, tipoColegio, nombreColegio, AnnoEgreso, periodoInscripcion);
         HistorialAcademicoEntity historialAcademico = historialAcademicoService.guardarHistorialAcademico( estudiante.getId(), notas);
-        HistorialArancelEntity historialArancel = historialArancelService.guardarHistorialArancel(estudiante.getId(), notas, tipoColegio, AnnoEgreso, tipoPago, cuotasPactadas);
+        HistorialArancelEntity historialArancel = historialArancelService.guardarHistorialArancel(estudiante.getId(), tipoColegio, AnnoEgreso, tipoPago, cuotasPactadas);
         detallePagoService.guardarDetallesPagos(historialArancel.getId(), historialArancel.getCuotasPactadas(), historialArancel.getMontoTotal());
         return estudiante;
     }
-    public EstudianteEntity guardarEstudiante(String rut, String nombre, String apellido, String fechaNacimiento, String tipoColegio, String nombreColegio, String AnnoEgreso, String tipoPago, String cuotasPactadas, String notas, String periodoInscripcion) {
+    public EstudianteEntity guardarEstudiante(String rut, String nombre, String apellido, String fechaNacimiento, String tipoColegio, String nombreColegio, String AnnoEgreso, String periodoInscripcion) {
         // Crea un objeto EstudianteEntity y asigna los valores obtenidos de los parámetros
         EstudianteEntity estudiante = new EstudianteEntity();
         estudiante.setRut(rut);
