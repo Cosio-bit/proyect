@@ -9,6 +9,7 @@ import edu.mtisw.testingwebapp.services.HistorialArancelService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 
@@ -28,6 +29,7 @@ public class testHistorialArancel {
     private EstudianteService estudianteService;
 
         @Test
+        @Transactional
         void testHistorialArancelEntityAttributes() {
             //para historial arancel debo tener un estudiante
             String nombre ="John";
@@ -86,6 +88,12 @@ public class testHistorialArancel {
             assertEquals(cuotasRetraso, historialArancel.getCuotasRetraso());
 
             historialArancelService.guardarHistorialArancel(estudiante1.getId(),estudiante1.getTipoColegio(), "2020/02/02",historialArancel.getTipoPago(), String.valueOf(historialArancel.getCuotasPactadas())) ;//lo mismo, crear estudiante primero
+
+            Long historialID = historialArancelService.obtenerPorEstudianteId(estudiante1.getId()).get().getId();
+            System.out.println(historialID);
+
+            historialArancelService.obtenerHistorialArancels();
+
         }
 
 

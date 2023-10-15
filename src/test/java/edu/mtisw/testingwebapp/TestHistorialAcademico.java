@@ -6,46 +6,47 @@ import edu.mtisw.testingwebapp.repositories.EstudianteRepository;
 import edu.mtisw.testingwebapp.repositories.HistorialAcademicoRepository;
 import edu.mtisw.testingwebapp.services.EstudianteService;
 import edu.mtisw.testingwebapp.services.HistorialAcademicoService;
-import edu.mtisw.testingwebapp.services.HistorialArancelService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
 @SpringBootTest
-public class testHistorialAcademico {
+public class TestHistorialAcademico {
+    @Autowired
+    private EstudianteService estudianteService; // Add this annotation
 
     @Autowired
-    private HistorialAcademicoRepository historialAcademicoRepository;
-    @Autowired
-    private HistorialAcademicoService historialAcademicoService;
+    private HistorialAcademicoService historialAcademicoService; // Add this annotation
 
     @Autowired
-    private EstudianteRepository estudianteRepository;
+    private EstudianteRepository estudianteRepository; // Add this annotation if needed
 
     @Autowired
-    private EstudianteService estudianteService;
+    private HistorialAcademicoRepository historialAcademicoRepository; // Add this annotation if needed
 
 
     @Test
+    @Transactional
     void testHistorialAcademicoEntityAttributes() {
-        //para historial academico debo tener un estudiante
-        String nombre ="John";
-        String apellido = "doe";
+
+        // Create a student
+        String nombre = "John";
+        String apellido = "Doe";
         LocalDate fechaNacimiento = LocalDate.of(1990, 5, 15);
         String tipoColegio = "Subvencionado";
         String nombreColegio = "Colegio XYZ";
         String rut = "20623522";
         LocalDate annoEgreso = LocalDate.of(2023, 6, 30);
         LocalDate periodoInscripcion = LocalDate.of(2023, 9, 1);
-        EstudianteEntity estudiante1 = estudianteService.guardarEstudiante(rut, nombre, apellido, "2000/02/02", tipoColegio, nombreColegio,"2020/02/02" , "2020/02/02");
+        EstudianteEntity estudiante1 = estudianteService.guardarEstudiante(rut, nombre, apellido, "2000/02/02", tipoColegio, nombreColegio, "2020/02/02", "2020/02/02");
 
-
+        // Initialize the student's academic history
         HistorialAcademicoEntity historialAcademico = new HistorialAcademicoEntity();
 
         // Test Número de Exámenes
@@ -63,11 +64,22 @@ public class testHistorialAcademico {
         historialAcademico.setNotas(notas);
         assertEquals(notas, historialAcademico.getNotas());
 
+        // Save the academic history for the student
+        HistorialAcademicoEntity historialAcademico1 = historialAcademicoService.guardarHistorialAcademico(estudiante1.getId(), "900,800,700");
 
-        historialAcademicoService.guardarHistorialAcademico(estudiante1.getId(), "900,800,700"); //crear estudiante para ir a buscar cosas al repo
+        // Calculate the average
+        double promedio = historialAcademicoService.calcularPromedioHistorial(historialAcademico1);
+
+        // Access other methods you need to test
+        historialAcademicoService.obtenerHistorialAcademicos();
+
+
+        historialAcademicoService.anadirNota(historialAcademico1.getId(), 900);
+        historialAcademicoService.obtenerPorEstudianteId(estudiante1.getId());
+
+        System.out.println(historialAcademicoService.obtenerPorEstudianteId(estudiante1.getId()).getPromedioExamenes());
+
+
+        historialAcademicoService.anadirNotaConFecha(historialAcademico1.getId(), 900, "2020/02/02");
     }
-
-
-
-
 }

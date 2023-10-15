@@ -22,14 +22,25 @@ public class DetallePagoService {
     public ArrayList<DetallePagoEntity> obtenerDetallesPagos(){
         return (ArrayList<DetallePagoEntity>) detallePagoRepository.findAll();
     }
-    public void guardarDetallePago(Long historialArancelID, double cuotasPactadas, double montoTotal, int nroCuota){
+    public DetallePagoEntity guardarDetallePago(Long historialArancelID, double cuotasPactadas, double montoTotal, int nroCuota){
         DetallePagoEntity detallePago = new DetallePagoEntity();
         detallePago.setMontoPago(montoTotal/cuotasPactadas);
         detallePago.setPagado(false);
         detallePago.setHistorialArancelID(historialArancelID);
         detallePago.setFechaVencimiento(LocalDate.now().plusMonths(nroCuota+1));
-        detallePagoRepository.save(detallePago);
+        return detallePagoRepository.save(detallePago);
     }
+    public List<DetallePagoEntity> guardarDetallesPagos(Long historialArancelID, int cuotasPactadas, double montoTotal) {
+        List<DetallePagoEntity> detallePagoEntities = new ArrayList<>();
+        for(int i = 0; i!=cuotasPactadas; i++) {
+            // Let's iterate through each 'DetallePagoEntity' in the 'detallesPagos' list and save them.
+            detallePagoEntities.add(guardarDetallePago(historialArancelID, cuotasPactadas, montoTotal, i));
+            System.out.println(detallePagoEntities.get(i).getId());
+        }
+        System.out.println(detallePagoEntities.get(0).getId());
+        return detallePagoEntities;
+    }
+
     public void updateDetallePago(DetallePagoEntity optionalDetallePago, double promedio, LocalDate fechaActual){
 
         Long historialArancelId = optionalDetallePago.getHistorialArancelID();
@@ -92,12 +103,6 @@ public class DetallePagoService {
         }
         return arancel;
     }
-    public void guardarDetallesPagos(Long historialArancelID, double cuotasPactadas, double montoTotal) {
-        for(int i = 0; i!=cuotasPactadas; i++) {
-            guardarDetallePago(historialArancelID, cuotasPactadas, montoTotal, i);
-            // Let's iterate through each 'DetallePagoEntity' in the 'detallesPagos' list and save them.
-        }
-    }
     public void pagar(Long idPago) {
         Optional<DetallePagoEntity> optionalDetallePago = detallePagoRepository.findById(idPago);
 
@@ -123,10 +128,13 @@ public class DetallePagoService {
     public Optional<DetallePagoEntity> obtenerPorId(Long id){
         return detallePagoRepository.findById(id);
     }
+    /*
     @Autowired
     public DetallePagoService(DetallePagoRepository detallePagoRepository) {
         this.detallePagoRepository = detallePagoRepository;
     }
+
+     */
     public List<DetallePagoEntity> obtenerPorHistorialArancelID(Long id) {
         return detallePagoRepository.findByHistorialArancelID(id);}
     public boolean eliminarDetallePago(Long id) {
