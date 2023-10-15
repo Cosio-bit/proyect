@@ -12,7 +12,7 @@ services:
       - 5432:5432
   app:
     container_name: top_ed
-    image: cosiobit/top_Ed
+    image: cosiobit/top_ed
     ports:
       - "8090:8090"
     environment:
