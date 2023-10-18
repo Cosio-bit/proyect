@@ -37,7 +37,6 @@ public class DetallePagoService {
             detallePagoEntities.add(guardarDetallePago(historialArancelID, cuotasPactadas, montoTotal, i));
             System.out.println(detallePagoEntities.get(i).getId());
         }
-        System.out.println(detallePagoEntities.get(0).getId());
         return detallePagoEntities;
     }
 
@@ -125,25 +124,9 @@ public class DetallePagoService {
             }
         }
     }
-    public Optional<DetallePagoEntity> obtenerPorId(Long id){
-        return detallePagoRepository.findById(id);
-    }
-    /*
-    @Autowired
-    public DetallePagoService(DetallePagoRepository detallePagoRepository) {
-        this.detallePagoRepository = detallePagoRepository;
-    }
 
-     */
     public List<DetallePagoEntity> obtenerPorHistorialArancelID(Long id) {
         return detallePagoRepository.findByHistorialArancelID(id);}
-    public boolean eliminarDetallePago(Long id) {
-        try{
-            detallePagoRepository.deleteById(id);
-            return true;
-        }catch(Exception err){
-            return false;
-        }
-    }
+
 
 }

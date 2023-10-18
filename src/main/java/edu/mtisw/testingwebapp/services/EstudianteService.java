@@ -69,14 +69,6 @@ public class EstudianteService {
     public Optional<EstudianteEntity>  obtenerPorRut(String rut){
         System.out.println("rut:"+rut);
         return Optional.ofNullable(estudianteRepository.findByRut(rut));}
-    public boolean eliminarEstudiante(Long id) {
-        try {
-            estudianteRepository.deleteById(id);
-            return true;
-        } catch (Exception err) {
-            return false;
-        }
-    }
     public List<List<String>> ExcelImporterToList(String nombre) {
         String fileName = nombre +".xlsx"; // Relative path to the file
         List<List<String>> dataList = new ArrayList<>();

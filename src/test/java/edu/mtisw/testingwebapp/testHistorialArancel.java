@@ -94,6 +94,10 @@ public class testHistorialArancel {
 
             historialArancelService.obtenerHistorialArancels();
 
+            historialArancelService.obtenerPorId(historialID);
+
+            historialArancelService.anadirPago(historialID, 200000);
+
         }
 
 

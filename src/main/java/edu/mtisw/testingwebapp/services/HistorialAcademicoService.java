@@ -118,28 +118,6 @@ public class HistorialAcademicoService {
         }
         return optionalHistorial;
     }
-    public boolean eliminarHistorialAcademico(Long id) {
-        try{
-            historialAcademicoRepository.deleteById(id);
-            return true;
-        }catch(Exception err){
-            return false;
-        }
-    }
 
 }
 
-/*
-    public Optional<HistorialAcademicoEntity> obtenerPorId(Long id){
-        return historialAcademicoRepository.findById(id);
-    }
-
-        public boolean eliminarHistorialAcademico(Long id) {
-        try{
-            historialAcademicoRepository.deleteById(id);
-            return true;
-        }catch(Exception err){
-            return false;
-        }
-    }
- */

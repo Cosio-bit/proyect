@@ -87,17 +87,87 @@ public class testDetallePago {
 
 
         List<DetallePagoEntity> detallePagoEntities =  detallePagoService.guardarDetallesPagos(historialArancel.getId(), cuotasPactadas,historialArancel.getMontoTotal()); //hay que guardarlo en el repo para ir a buscarlo y para eso necesitamos historial arancel
-
+        DetallePagoEntity detallePago1 = detallePagoService.guardarDetallePago(historialArancel.getId(), 6,historialArancel.getMontoTotal(),6);
         //detallePagoService.obtenerPorHistorialArancelID(historialArancel.getId());
 
 
         int size = detallePagoEntities.size();
 
+        detallePagoService.findbynotpagado(historialArancel.getId());
+
         System.out.println(size);
 
         detallePagoService.updateDetallesPagos(detallePagoEntities, 700);
 
+        detallePagoService.updateDetallePago(detallePagoEntities.get(0),900,LocalDate.now());
+
+        detallePagoService.obtenerDetallesPagos();
+
+        detallePagoService.pagar(detallePagoEntities.get(0).getId());
+
+        detallePagoService.obtenerPorHistorialArancelID(historialArancel.getId());
 
     }
 
-}
+
+        @Test
+        public void testCalcularArancelNotas() {
+            // Prueba con un promedio en el rango de 950 a 1000
+            double resultado = detallePagoService.calcularArancelNotas(950, 1000);
+            assertEquals(0.90 * 1000, resultado, 0.01);
+
+            // Prueba con un promedio en el rango de 900 a 949
+            resultado = detallePagoService.calcularArancelNotas(925, 1000);
+            assertEquals(0.95 * 1000, resultado, 0.01);
+
+            // Prueba con un promedio en el rango de 850 a 899
+            resultado = detallePagoService.calcularArancelNotas(875, 1000);
+            assertEquals(0.98 * 1000, resultado, 0.01);
+
+            // Prueba con un promedio fuera de los rangos
+            resultado = detallePagoService.calcularArancelNotas(800, 1000);
+            assertEquals(1000, resultado, 0.01);
+        }
+
+        @Test
+        public void testCalcularMesesAtraso() {
+            // Fecha de pago actual y fecha de vencimiento
+            LocalDate pagoActual = LocalDate.of(2023, 7, 15);
+            LocalDate fechaVencimiento = LocalDate.of(2023, 5, 1);
+
+            // Prueba con las fechas anteriores
+            int resultado = detallePagoService.calcularMesesAtraso(pagoActual, fechaVencimiento);
+            assertEquals(2, resultado);
+
+            // Prueba con las fechas iguales
+            fechaVencimiento = LocalDate.of(2023, 7, 15);
+            resultado = detallePagoService.calcularMesesAtraso(pagoActual, fechaVencimiento);
+            assertEquals(0, resultado);
+
+            // Prueba con las fechas futuras
+            fechaVencimiento = LocalDate.of(2023, 9, 1);
+            resultado = detallePagoService.calcularMesesAtraso(pagoActual, fechaVencimiento);
+            assertEquals(-1, resultado);
+        }
+
+        @Test
+        public void testCalcularArancelInteres() {
+            // Prueba con un castigo de interés igual a 1
+            double resultado = detallePagoService.calcularArancelInteres(1, 1000);
+            assertEquals(1.03 * 1000, resultado, 0.01);
+
+            // Prueba con un castigo de interés igual a 2
+            resultado = detallePagoService.calcularArancelInteres(2, 1000);
+            assertEquals(1.06 * 1000, resultado, 0.01);
+
+            // Prueba con un castigo de interés igual a 3
+            resultado = detallePagoService.calcularArancelInteres(3, 1000);
+            assertEquals(1.09 * 1000, resultado, 0.01);
+
+            // Prueba con un castigo de interés mayor a 3
+            resultado = detallePagoService.calcularArancelInteres(4, 1000);
+            assertEquals(1.15 * 1000, resultado, 0.01);
+        }
+    }
+
+

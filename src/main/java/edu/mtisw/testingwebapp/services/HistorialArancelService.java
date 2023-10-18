@@ -54,14 +54,6 @@ public class HistorialArancelService {
     public Optional<HistorialArancelEntity> obtenerPorEstudianteId(Long id){
         return historialArancelRepository.findHistorialArancelByEstudianteID(id);
     }
-    public boolean eliminarHistorialArancel(Long id) {
-        try{
-            historialArancelRepository.deleteById(id);
-            return true;
-        }catch(Exception err){
-            return false;
-        }
-    }
 
 
 }
