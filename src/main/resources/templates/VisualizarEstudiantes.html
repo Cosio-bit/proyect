@@ -59,7 +59,6 @@
                 <td th:text="${estudiante.tipoColegio}"></td>
                 <td th:text="${estudiante.nombreColegio}"></td>
                 <td th:text="${estudiante.annoEgreso}"></td>
-                <td th:text="${estudiante.periodoInscripcion}"></td>
                 <!-- Add buttons for viewing and creating academic history -->
                 <td>
                     <a th:href="@{'/estudiantes/historialAcademico/' + ${estudiante.id}}">Ver Historial Académico</a>

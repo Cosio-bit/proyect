@@ -49,11 +49,10 @@ public class EstudianteController {
 			@RequestParam("AnnoEgreso") String AnnoEgreso,
 			@RequestParam("tipoPago") String tipoPago,
 			@RequestParam("cuotasPactadas") String cuotasPactadas,
-			@RequestParam("notas") String notas,
-			@RequestParam("periodoInscripcion") String periodoInscripcion){
+			@RequestParam("notas") String notas){
 
 		// Guardar la información del estudiante
-		EstudianteEntity estudiante = estudianteService.manageGuardar(rut, nombre, apellido, fechaNacimiento, tipoColegio, nombreColegio, AnnoEgreso, tipoPago, cuotasPactadas, notas, periodoInscripcion);
+		EstudianteEntity estudiante = estudianteService.manageGuardar(rut,nombre,apellido,fechaNacimiento,tipoColegio,nombreColegio,AnnoEgreso,tipoPago,cuotasPactadas,notas);
 
 
 		// Create a ModelAndView object and add the data you want to pass to the view

@@ -14,10 +14,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static edu.mtisw.testingwebapp.services.OficinaRRHH.convertirFecha;
 
@@ -43,14 +40,16 @@ public class EstudianteService {
     public ArrayList<String> obtenerRuts() {
         return (ArrayList<String>) estudianteRepository.findAllRuts();
     }
-    public EstudianteEntity manageGuardar(String rut, String nombre, String apellido, String fechaNacimiento, String tipoColegio, String nombreColegio, String AnnoEgreso, String tipoPago, String cuotasPactadas, String notas, String periodoInscripcion){
-        EstudianteEntity estudiante = guardarEstudiante(rut, nombre, apellido, fechaNacimiento, tipoColegio, nombreColegio, AnnoEgreso, periodoInscripcion);
-        HistorialAcademicoEntity historialAcademico = historialAcademicoService.guardarHistorialAcademico( estudiante.getId(), notas);
-        HistorialArancelEntity historialArancel = historialArancelService.guardarHistorialArancel(estudiante.getId(), tipoColegio, AnnoEgreso, tipoPago, cuotasPactadas);
-        detallePagoService.guardarDetallesPagos(historialArancel.getId(), historialArancel.getCuotasPactadas(), historialArancel.getMontoTotal());
+    public EstudianteEntity manageGuardar(String rut, String nombre, String apellido, String fechaNacimiento, String tipoColegio, String nombreColegio, String AnnoEgreso, String tipoPago, String cuotasPactadas, String notas){
+            EstudianteEntity estudiante = guardarEstudiante(rut, nombre, apellido, fechaNacimiento, tipoColegio, nombreColegio, AnnoEgreso);
+            HistorialAcademicoEntity historialAcademico = historialAcademicoService.guardarHistorialAcademico( estudiante.getId(), notas);
+            HistorialArancelEntity historialArancel = historialArancelService.guardarHistorialArancel(estudiante.getId(), tipoColegio, AnnoEgreso, tipoPago, cuotasPactadas);
+            List<DetallePagoEntity> detallePagoEntities = detallePagoService.guardarDetallesPagos(historialArancel.getId(), historialArancel.getCuotasPactadas(), historialArancel.getMontoTotal());
+            int size = detallePagoEntities.size();
+            System.out.println(size);
         return estudiante;
     }
-    public EstudianteEntity guardarEstudiante(String rut, String nombre, String apellido, String fechaNacimiento, String tipoColegio, String nombreColegio, String AnnoEgreso, String periodoInscripcion) {
+    public EstudianteEntity guardarEstudiante(String rut, String nombre, String apellido, String fechaNacimiento, String tipoColegio, String nombreColegio, String AnnoEgreso) {
         // Crea un objeto EstudianteEntity y asigna los valores obtenidos de los parámetros
         EstudianteEntity estudiante = new EstudianteEntity();
         estudiante.setRut(rut);
@@ -60,7 +59,6 @@ public class EstudianteService {
         estudiante.setTipoColegio(tipoColegio);
         estudiante.setNombreColegio(nombreColegio);
         estudiante.setAnnoEgreso(convertirFecha(AnnoEgreso));
-        estudiante.setPeriodoInscripcion(convertirFecha(periodoInscripcion));
         return estudianteRepository.save(estudiante);
     }
     public Optional<EstudianteEntity> obtenerPorId(Long id) {
@@ -112,9 +110,14 @@ public class EstudianteService {
         HistorialAcademicoEntity historialAcademico = historialAcademicoService.obtenerPorEstudianteId(estudianteEntities.get(0).getId());
         double promedio = historialAcademicoService.calcularPromedioHistorial(historialAcademico);
         Optional<HistorialArancelEntity> historialArancel = historialArancelService.obtenerPorId(estudianteEntities.get(0).getId());
+        if(historialArancel.get().getTipoPago().equals("cuotas")){
         List<DetallePagoEntity> detallesPagos = detallePagoService.findbynotpagado(historialArancel.get().getId());
-        detallePagoService.updateDetallesPagos(detallesPagos, promedio);
-    }
+        detallePagoService.updateDetallesPagos(detallesPagos, promedio);}
+        else{
+            List<DetallePagoEntity> detallesPagos = detallePagoService.detallePagoRepository.findAll();
+            detallePagoService.updateDetallesPagos(detallesPagos, promedio);}
+        }
+
     public void agregarNotasAHistorial(String nombreArchivo) {
         // Obtén los datos del archivo Excel
         List<List<String>> excelData = ExcelImporterToList(nombreArchivo);

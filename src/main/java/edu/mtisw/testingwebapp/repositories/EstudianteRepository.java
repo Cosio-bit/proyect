@@ -41,8 +41,5 @@ public interface EstudianteRepository extends JpaRepository<EstudianteEntity, Lo
     @Query("SELECT e FROM EstudianteEntity e WHERE e.AnnoEgreso = :AnnoEgreso")
     EstudianteEntity findEstudiantesByAnnoEgreso(@Param("AnnoEgreso") LocalDate AnnoEgreso);
 
-    @Query("SELECT e FROM EstudianteEntity e WHERE e.periodoInscripcion = :periodoInscripcion")
-    EstudianteEntity findEstudiantesByPeriodoInscripcion(@Param("periodoInscripcion") LocalDate periodoInscripcion);
-
 
 }

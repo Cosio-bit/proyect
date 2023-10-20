@@ -98,11 +98,11 @@ public class  OficinaRRHH {
    double sumatoria = notas.stream().mapToInt(Integer::intValue).sum();
    return sumatoria / notas.size();
    }
-   public double calcularDescuentos( String AnnoEgreso, String tipoColegio){
+   public double calcularDescuentos( String AnnoEgreso, String tipoColegio, double arancel){
 
     return calcularArancelAnnoEgreso(calcularAnnoEgreso(convertirFecha(AnnoEgreso)),
            calcularArancelTipoColegio(
-                   tipoColegio, 1500000));
+                   tipoColegio, arancel));
    }
    ////////////tentative cut up is arancel down is cuotas and maybe payment
    public int maxcuotas(String tipoColegio){

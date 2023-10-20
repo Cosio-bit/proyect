@@ -41,7 +41,7 @@ public class testHistorialArancel {
             LocalDate annoEgreso = LocalDate.of(2023, 6, 30);
             LocalDate periodoInscripcion = LocalDate.of(2023, 9, 1);
 
-            EstudianteEntity estudiante1 = estudianteService.guardarEstudiante(rut, nombre, apellido, "2000/02/02", tipoColegio, nombreColegio,"2020/02/02" , "2020/02/02");
+            EstudianteEntity estudiante1 = estudianteService.guardarEstudiante(rut, nombre, apellido, "2000/02/02", tipoColegio, nombreColegio,"2020/02/02");
 
 
 

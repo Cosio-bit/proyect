@@ -23,7 +23,7 @@ public class EstudianteEntity {
     private String tipoColegio;
     private String nombreColegio;
     private LocalDate AnnoEgreso;
-    private LocalDate periodoInscripcion;
+
 
 
     /*

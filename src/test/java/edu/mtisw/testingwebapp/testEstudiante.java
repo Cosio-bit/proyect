@@ -40,49 +40,46 @@ public class testEstudiante {
         void testEstudianteEntityAttributes() {
 
 
-            EstudianteEntity estudiante = new EstudianteEntity();
+        EstudianteEntity estudiante = new EstudianteEntity();
 
-            String nombre ="John";
-            String apellido = "Doe";
-            String tipoColegio = "Subvencionado";
-            String nombreColegio = "Colegio XYZ";
-            String rut = "20623522";
+        String nombre = "John";
+        String apellido = "Doe";
+        String tipoColegio = "Subvencionado";
+        String nombreColegio = "Colegio XYZ";
+        String rut = "20623522";
 
 
-            // Test Nombre
-            estudiante.setNombre(nombre);
-            assertEquals("John", estudiante.getNombre());
+        // Test Nombre
+        estudiante.setNombre(nombre);
+        assertEquals("John", estudiante.getNombre());
 
-            // Test Apellido
-            estudiante.setApellido(apellido);
-            assertEquals("Doe", estudiante.getApellido());
+        // Test Apellido
+        estudiante.setApellido(apellido);
+        assertEquals("Doe", estudiante.getApellido());
 
-            // Test Fecha de Nacimiento
-            LocalDate fechaNacimiento = LocalDate.of(1990, 5, 15);
-            estudiante.setFechaNacimiento(fechaNacimiento);
-            assertEquals(fechaNacimiento, estudiante.getFechaNacimiento());
+        // Test Fecha de Nacimiento
+        LocalDate fechaNacimiento = LocalDate.of(1990, 5, 15);
+        estudiante.setFechaNacimiento(fechaNacimiento);
+        assertEquals(fechaNacimiento, estudiante.getFechaNacimiento());
 
-            // Test Tipo de Colegio
-            estudiante.setTipoColegio(tipoColegio);
-            assertEquals("Subvencionado", estudiante.getTipoColegio());
+        // Test Tipo de Colegio
+        estudiante.setTipoColegio(tipoColegio);
+        assertEquals("Subvencionado", estudiante.getTipoColegio());
 
-            // Test Nombre del Colegio
-            estudiante.setNombreColegio(nombreColegio);
-            assertEquals("Colegio XYZ", estudiante.getNombreColegio());
+        // Test Nombre del Colegio
+        estudiante.setNombreColegio(nombreColegio);
+        assertEquals("Colegio XYZ", estudiante.getNombreColegio());
 
-            // Test Rut
-            estudiante.setRut(rut);
-            assertEquals("20623522", estudiante.getRut());
+        // Test Rut
+        estudiante.setRut(rut);
+        assertEquals("20623522", estudiante.getRut());
 
-            // Test Año de Egreso
-            LocalDate annoEgreso = LocalDate.of(2023, 6, 30);
-            estudiante.setAnnoEgreso(annoEgreso);
-            assertEquals(annoEgreso, estudiante.getAnnoEgreso());
+        // Test Año de Egreso
+        LocalDate annoEgreso = LocalDate.of(2023, 6, 30);
+        estudiante.setAnnoEgreso(annoEgreso);
+        assertEquals(annoEgreso, estudiante.getAnnoEgreso());
 
-            // Test Periodo de Inscripción
-            LocalDate periodoInscripcion = LocalDate.of(2023, 9, 1);
-            estudiante.setPeriodoInscripcion(periodoInscripcion);
-            assertEquals(periodoInscripcion, estudiante.getPeriodoInscripcion());}
+    }
 
 
     @Test
@@ -94,7 +91,7 @@ public class testEstudiante {
             String rut = "20623525";
             //por separado para 1 estudiante
 
-            EstudianteEntity estudiante1 = estudianteService.guardarEstudiante(rut, nombre, apellido, "2000/02/02", tipoColegio, nombreColegio,"2020/02/02" , "2020/02/02");
+            EstudianteEntity estudiante1 = estudianteService.guardarEstudiante(rut, nombre, apellido, "2000/02/02", tipoColegio, nombreColegio,"2020/02/02");
 
             // Save the academic history for the student
             HistorialAcademicoEntity historialAcademico1 = historialAcademicoService.guardarHistorialAcademico(estudiante1.getId(), "900,800,700");
@@ -112,7 +109,7 @@ public class testEstudiante {
         void testManage(){
 
             // Asumiendo que este es el lugar en tu código donde deseas llamar la función manageGuardar
-            EstudianteEntity estudiante2 = estudianteService.manageGuardar("20623522", "andrea", "cosio", "2000/02/02", "Municipal", "cosaco", "2020/02/02", "cuotas", "5", "900,800,700", "2020/02/02");
+            EstudianteEntity estudiante2 = estudianteService.manageGuardar("20623522", "andrea", "cosio", "2000/02/02", "Municipal", "cosaco", "2020/02/02", "cuotas", "5", "900,800,700");
             //estudianteService.manageGuardar(rut, nombre, apellido,"2000/02/02", tipoColegio,nombreColegio,"2020/02/02",tipoPago, "5","900,800,700","2020/02/02");
             //estudianteService.cuotaUpdate(estudianteService.obtenerEstudiantes());
 

@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -24,13 +25,19 @@ public class DetallePagoService {
     }
     public DetallePagoEntity guardarDetallePago(Long historialArancelID, double cuotasPactadas, double montoTotal, int nroCuota){
         DetallePagoEntity detallePago = new DetallePagoEntity();
-        detallePago.setMontoPago(montoTotal/cuotasPactadas);
-        detallePago.setPagado(false);
+        String tipopago = historialArancelRepository.findById(historialArancelID).get().getTipoPago();
+        if(Objects.equals(tipopago, "cuotas")){
+            detallePago.setMontoPago(montoTotal/cuotasPactadas);
+            detallePago.setPagado(false);}
+        else{
+            detallePago.setMontoPago((montoTotal)/cuotasPactadas);
+            detallePago.setPagado(true);}
+
         detallePago.setHistorialArancelID(historialArancelID);
         detallePago.setFechaVencimiento(LocalDate.now().plusMonths(nroCuota+1));
         return detallePagoRepository.save(detallePago);
     }
-    public List<DetallePagoEntity> guardarDetallesPagos(Long historialArancelID, int cuotasPactadas, double montoTotal) {
+    public List<DetallePagoEntity> guardarDetallesPagos(Long historialArancelID,int cuotasPactadas, double montoTotal) {
         List<DetallePagoEntity> detallePagoEntities = new ArrayList<>();
         for(int i = 0; i!=cuotasPactadas; i++) {
             // Let's iterate through each 'DetallePagoEntity' in the 'detallesPagos' list and save them.
@@ -45,21 +52,26 @@ public class DetallePagoService {
         Long historialArancelId = optionalDetallePago.getHistorialArancelID();
         HistorialArancelEntity historialArancel = historialArancelRepository.findById(historialArancelId).orElse(null);
         assert historialArancel != null;
+
         double originalCuota = historialArancel.getMontoTotal()/historialArancel.getCuotasPactadas();
+        if(historialArancel.getTipoPago().equals("cuotas")){
         LocalDate fechaVence = optionalDetallePago.getFechaVencimiento();
         int diferenciaMeses = calcularMesesAtraso(fechaActual, fechaVence);
         int interesActual = historialArancel.getCastigoInteres();
         if(diferenciaMeses>=interesActual){
             historialArancel.setCastigoInteres(diferenciaMeses);
         }
-        optionalDetallePago.setMontoPago(calcularArancelInteres(historialArancel.getCastigoInteres(), calcularArancelNotas(promedio, originalCuota)));
+        optionalDetallePago.setMontoPago(calcularArancelInteres(historialArancel.getCastigoInteres(), calcularArancelNotas(promedio, originalCuota)));}
+        else{
+            historialArancel.setSaldoPorPagar(-(originalCuota-calcularArancelNotas(promedio, originalCuota)));
+        }
+        historialArancelRepository.save(historialArancel);
         detallePagoRepository.save(optionalDetallePago);
     }
     public void updateDetallesPagos(List<DetallePagoEntity> detallePagoEntities, double promedio){ //obtener el promedio dada que es el mismo id de estudiante ver como hacerlo porque solo estudiante tiene todos los repos juntos
         LocalDate fechaActual = LocalDate.now();
-
-        Long historialArancelId = detallePagoEntities.get(0).getHistorialArancelID();
-        HistorialArancelEntity historialArancel = historialArancelRepository.findById(historialArancelId).orElse(null);
+        //Long historialArancelId = detallePagoEntities.get(0).getHistorialArancelID();
+        //HistorialArancelEntity historialArancel = historialArancelRepository.findById(historialArancelId).orElse(null);
 
         for(int i=0; i!=detallePagoEntities.size();i++){
             updateDetallePago(detallePagoEntities.get(i), promedio, fechaActual);

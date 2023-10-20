@@ -55,7 +55,7 @@ public class testDetallePago {
         String nombreColegio = "Colegio XYZ";
         String rut = "20623522";
 
-        EstudianteEntity estudiante = estudianteService.guardarEstudiante(rut, nombre, apellido, "2000/02/02", tipoColegio, nombreColegio,"2020/02/02" , "2020/02/02");
+        EstudianteEntity estudiante = estudianteService.guardarEstudiante(rut, nombre, apellido, "2000/02/02", tipoColegio, nombreColegio,"2020/02/02");
 
 
         String tipoPago = "cuotas";

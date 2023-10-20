@@ -43,50 +43,59 @@
             <ul class="container">
                 <li>
                     <label><strong>Nombre</strong></label>
-                    <input type="text" id="nombre" placeholder="Ingrese el nombre del estudiante" name="nombre" required>
+                    <label for="nombre"></label><input type="text" id="nombre" placeholder="Nombre del estudiante" name="nombre" required>
                 </li>
                 <li>
                     <label><strong>Apellido</strong></label>
-                    <input type="text" id="apellido" placeholder="Ingrese el apellido del estudiante" name="apellido" required>
+                    <label for="apellido"></label><input type="text" id="apellido" placeholder="Apellido del estudiante" name="apellido" required>
                 </li>
                 <li>
                     <label><strong>Fecha de Nacimiento</strong></label>
-                    <input type="text" id="fechaNacimiento" placeholder="Ingrese fecha en formato año/mes/dia" name="fechaNacimiento">
+                    <label for="fechaNacimiento"></label><input type="text" id="fechaNacimiento" placeholder="Formato año/mes/dia" name="fechaNacimiento">
                 </li>
                 <li>
                     <label><strong>RUT</strong></label>
-                    <input type="text" id="rut" placeholder="Ingrese el RUT del estudiante" name="rut" required>
+                    <label for="rut"></label><input type="text" id="rut" placeholder="Sin puntos ni digito verificador" name="rut" required>
                 </li>
                 <li>
                     <label><strong>Tipo Colegio</strong></label>
-                    <input type="text" id="tipoColegio" placeholder="Ingrese el tipo de colegio" name="tipoColegio" required>
+                    <label for="tipoColegio"></label><select id="tipoColegio" name="tipoColegio" required>
+                        <option value="subvencionado">Subvencionado</option>
+                        <option value="privado">Privado</option>
+                        <option value="municipal">Municipal</option>
+                    </select>
                 </li>
+
                 <li>
                     <label><strong>Nombre Colegio</strong></label>
-                    <input type="text" id="nombreColegio" placeholder="Ingrese el nombre del colegio" name="nombreColegio" required>
+                    <label for="nombreColegio"></label><input type="text" id="nombreColegio" placeholder="Nombre del colegio" name="nombreColegio" required>
                 </li>
                 <li>
                     <label><strong>Año de Egreso</strong></label>
-                    <input type="text" id="AnnoEgreso" placeholder="Ingrese fecha en formato año/mes/dia" name="AnnoEgreso">
+                    <label for="AnnoEgreso"></label><input type="text" id="AnnoEgreso" placeholder="Formato año/mes/dia" name="AnnoEgreso">
                 </li>
+                <!-- Campos para ingresar información de Historial de Arancel -->
+                <li>
+                    <label><strong>Tipo de Pago</strong></label>
+                    <label for="tipoPago"></label><select id="tipoPago" name="tipoPago">
+                        <option value="cuotas">Cuotas</option>
+                        <option value="al contado">Al Contado</option>
+                    </select>
+                </li>
+
                 <!-- Campos para ingresar información de Historial de Arancel -->
                 <li>
                     <label><strong>Cantidad de cuotas</strong></label>
-                    <input type="text" id="notasArancel" placeholder="Ingrese las cantidad de cuotas" name="cuotasPactadas">
+                    <label for="cuotasPactadas"></label>
+                    <select id="cuotasPactadas" name="cuotasPactadas">
+                        <!-- This will be populated dynamically based on the selection -->
+                    </select>
                 </li>
-                <!-- Campos para ingresar información de Historial de Arancel -->
-                <li>
-                    <label><strong>tipoPago</strong></label>
-                    <input type="text" id="tipoPago" placeholder="Ingrese tipo Pago" name="tipoPago">
-                </li>
+
                 <!-- Campos para ingresar información de Historial Académico -->
                 <li>
-                    <label><strong>Notas Académicas (separate with commas)</strong></label>
-                    <input type="text" id="notas" placeholder="Ingrese las notas separadas por comas" name="notas">
-                </li>
-                <li>
-                    <label><strong>Periodo de inscripcion</strong></label>
-                    <input type="text" id="periodoInscripcion" placeholder="Ingrese fecha en formato año/mes/dia" name="periodoInscripcion">
+                    <label><strong>Notas Académicas (separe con comas)</strong></label>
+                    <label for="notas"></label><input type="text" id="notas" placeholder="Notas separadas por comas" name="notas">
                 </li>
 
             </ul>
@@ -101,3 +110,57 @@
 
 
 </html>
+
+
+<script>
+    // Get references to the select and input elements
+    const tipoPagoSelect = document.getElementById("tipoPago");
+    const cuotasPactadasInput = document.getElementById("cuotasPactadas");
+
+    // Add an event listener to the select element
+    tipoPagoSelect.addEventListener("change", function() {
+        if (tipoPagoSelect.value === "cuotas") {
+            // If "cuotas" is selected, show the input field
+            cuotasPactadasInput.style.display = "block";
+        } else {
+            // If "al contado" or other option is selected, hide the input field and set its value to 0
+            cuotasPactadasInput.style.display = "none";
+            cuotasPactadasInput.value = "1";
+        }
+    });
+
+
+    // Get references to the select elements
+    const tipoColegioSelect = document.getElementById("tipoColegio");
+    const cuotasPactadasSelect = document.getElementById("cuotasPactadas");
+
+    // Define the options for cuotas based on school type
+    const optionsBySchoolType = {
+        privado: ["1", "2"],
+        subvencionado: ["1", "2", "3", "4", "5", "6", "7"],
+        municipal: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+    };
+
+    // Event listener to update cuotas options when school type changes
+    tipoColegioSelect.addEventListener("change", () => {
+        const selectedSchoolType = tipoColegioSelect.value;
+        const cuotasOptions = optionsBySchoolType[selectedSchoolType];
+
+        // Clear existing options
+        cuotasPactadasSelect.innerHTML = "";
+
+        // Populate with new options
+        cuotasOptions.forEach((cuota) => {
+            const option = document.createElement("option");
+            option.value = cuota;
+            option.text = cuota;
+            cuotasPactadasSelect.appendChild(option);
+        });
+    });
+
+    // Trigger the event once to initialize the options based on the default selection
+    tipoColegioSelect.dispatchEvent(new Event("change"));
+
+
+</script>
+
