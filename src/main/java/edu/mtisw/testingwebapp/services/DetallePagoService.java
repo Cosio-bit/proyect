@@ -55,15 +55,15 @@ public class DetallePagoService {
 
         double originalCuota = historialArancel.getMontoTotal()/historialArancel.getCuotasPactadas();
         if(historialArancel.getTipoPago().equals("cuotas")){
-        LocalDate fechaVence = optionalDetallePago.getFechaVencimiento();
-        int diferenciaMeses = calcularMesesAtraso(fechaActual, fechaVence);
-        int interesActual = historialArancel.getCastigoInteres();
-        if(diferenciaMeses>=interesActual){
-            historialArancel.setCastigoInteres(diferenciaMeses);
-        }
+            LocalDate fechaVence = optionalDetallePago.getFechaVencimiento();
+            int diferenciaMeses = calcularMesesAtraso(fechaActual, fechaVence);
+            int interesActual = historialArancel.getCastigoInteres();
+            if(diferenciaMeses>=interesActual){
+                historialArancel.setCastigoInteres(diferenciaMeses);
+            }
         optionalDetallePago.setMontoPago(calcularArancelInteres(historialArancel.getCastigoInteres(), calcularArancelNotas(promedio, originalCuota)));}
         else{
-            historialArancel.setSaldoPorPagar(-(originalCuota-calcularArancelNotas(promedio, originalCuota)));
+            historialArancel.setSaldoPorPagar(0);
         }
         historialArancelRepository.save(historialArancel);
         detallePagoRepository.save(optionalDetallePago);

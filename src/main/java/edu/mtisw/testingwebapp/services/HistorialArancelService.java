@@ -39,7 +39,7 @@ public class HistorialArancelService {
             historialArancel.setMontoTotal(750000);
             historialArancel.setMontoTotal(oficinaRRHH.calcularDescuentos(AnnoEgreso, tipoColegio, 750000));
             historialArancel.setCuotasPagadas(1);
-            historialArancel.setTotalPagado(oficinaRRHH.calcularDescuentos(AnnoEgreso, tipoColegio, 7500000));
+            historialArancel.setTotalPagado(oficinaRRHH.calcularDescuentos(AnnoEgreso, tipoColegio, 750000));
             historialArancel.setSaldoPorPagar(0);
         }
 

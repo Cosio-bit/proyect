@@ -43,7 +43,7 @@ public class  OficinaRRHH {
 
    return periodo.getYears();
    }
-   public double calcularArancelNotas(double promedio, double arancel) {
+   public static double calcularArancelNotas(double promedio, double arancel) {
    if (promedio >= 950 && promedio <= 1000) {
       arancel = 0.90 * arancel;
    } else if (promedio >= 900 && promedio <= 949) {
@@ -51,6 +51,9 @@ public class  OficinaRRHH {
    } else if (promedio >= 850 && promedio <= 899) {
       arancel = 0.98 * arancel;
    }
+
+
+
 
    return arancel;
    }
