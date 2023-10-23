@@ -201,7 +201,7 @@ class OficinaRRHHTest {
 
         int atraso= (int) oficinaRRHH.calcularMesesAtraso(detallePago.getFechaPago(), detallePago.getFechaVencimiento());
         historialArancel.setCastigoInteres(atraso);
-        double descuentos = oficinaRRHH.calcularDescuentos( annioEgreso, estudiante.getTipoColegio(), detallePago.getMontoPago());
+        double descuentos = oficinaRRHH.calcularDescuentos( annioEgreso, estudiante.getTipoColegio(), historialArancel.getMontoTotal());
 
 
         assertEquals(1296000, descuentos, 0.0);}
