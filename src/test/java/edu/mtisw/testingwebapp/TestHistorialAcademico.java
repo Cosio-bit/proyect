@@ -2,9 +2,9 @@ package edu.mtisw.testingwebapp;
 
 import edu.mtisw.testingwebapp.entities.EstudianteEntity;
 import edu.mtisw.testingwebapp.entities.HistorialAcademicoEntity;
-import edu.mtisw.testingwebapp.repositories.EstudianteRepository;
+import edu.mtisw.testingwebapp.repositories.ProfesorRepository;
 import edu.mtisw.testingwebapp.repositories.HistorialAcademicoRepository;
-import edu.mtisw.testingwebapp.services.EstudianteService;
+import edu.mtisw.testingwebapp.services.ProfesorService;
 import edu.mtisw.testingwebapp.services.HistorialAcademicoService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +19,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 public class TestHistorialAcademico {
     @Autowired
-    private EstudianteService estudianteService; // Add this annotation
+    private ProfesorService estudianteService; // Add this annotation
 
     @Autowired
     private HistorialAcademicoService historialAcademicoService; // Add this annotation
 
     @Autowired
-    private EstudianteRepository estudianteRepository; // Add this annotation if needed
+    private ProfesorRepository estudianteRepository; // Add this annotation if needed
 
     @Autowired
     private HistorialAcademicoRepository historialAcademicoRepository; // Add this annotation if needed

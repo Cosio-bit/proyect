@@ -2,7 +2,7 @@
 <html lang="es-ES" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Información del Estudiante</title>
+    <title>Información del Profesor</title>
     <link rel="stylesheet" href="../static/style.css" type="text/css" th:href="@{/style.css}">
 </head>
 <style>
@@ -30,40 +30,40 @@
 </style>
 <body>
 <header class="header">
-    <h1>Información del Estudiante</h1>
+    <h1>Información del Profesor</h1>
 </header>
 <div class="container">
-    <h2>Información del Estudiante</h2>
-    <p>ID: <span th:text="${estudiante.id}" id="estudianteId"></span></p>
-    <p>RUT: <span th:text="${estudiante.rut}"></span></p>
-    <p>Nombre: <span th:text="${estudiante.nombre}"></span></p>
-    <p>Apellido: <span th:text="${estudiante.apellido}"></span></p>
-    <p>Fecha de Nacimiento: <span th:text="${estudiante.fechaNacimiento}"></span></p>
-    <p>Tipo de Colegio: <span th:text="${estudiante.tipoColegio}"></span></p>
-    <p>Nombre del Colegio: <span th:text="${estudiante.nombreColegio}"></span></p>
-    <p>Año de Egreso: <span th:text="${estudiante.annoEgreso}"></span></p>
+    <h2>Información del Profesor</h2>
+    <p>ID: <span th:text="${profesor.id}" id="estudianteId"></span></p>
+    <p>RUT: <span th:text="${profesor.rut}"></span></p>
+    <p>Nombre: <span th:text="${profesor.nombre}"></span></p>
+    <p>Apellido: <span th:text="${profesor.apellido}"></span></p>
+    <p>Fecha de Nacimiento: <span th:text="${profesor.fechaNacimiento}"></span></p>
+    <p>Tipo de Colegio: <span th:text="${profesor.tipoColegio}"></span></p>
+    <p>Nombre del Colegio: <span th:text="${profesor.nombreColegio}"></span></p>
+    <p>Año de Egreso: <span th:text="${profesor.annoEgreso}"></span></p>
 
     <!-- Use JavaScript to fetch content from links -->
     <div id="VisualizarHistorialAcademico"></div>
     <div id="VisualizarHistorialArancel"></div>
 
 </div>
-<a class="cta-button" href="/estudiantes"><button>Volver a Estudiantes</button></a>
+<a class="cta-button" href="/profesores"><button>Volver a Profesores</button></a>
 
 <!-- Include jQuery library for AJAX requests -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
-        // Get the estudiante.id from the generated HTML and store it in a JavaScript variable
+        // Get the profesor.id from the generated HTML and store it in a JavaScript variable
         var estudianteId = $('#estudianteId').text();
 
         // Fetch and display Historial Académico content
-        $.get('/estudiantes/historialAcademico/' + estudianteId, function (data) {
+        $.get('/profesores/historialAcademico/' + estudianteId, function (data) {
             $('#VisualizarHistorialAcademico').html(data);
         });
 
         // Fetch and display Historial Arancel content
-        $.get('/estudiantes/historialArancel/' + estudianteId, function (data) {
+        $.get('/profesores/historialArancel/' + estudianteId, function (data) {
             $('#VisualizarHistorialArancel').html(data);
         });
     });

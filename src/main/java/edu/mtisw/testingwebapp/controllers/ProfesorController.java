@@ -6,38 +6,38 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.Optional;
 import edu.mtisw.testingwebapp.entities.EstudianteEntity;
-import edu.mtisw.testingwebapp.services.EstudianteService;
+import edu.mtisw.testingwebapp.services.ProfesorService;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping
-public class EstudianteController {
+public class ProfesorController {
 
 	@Autowired
-	private EstudianteService estudianteService;
+	private ProfesorService profesorService;
 
-	@GetMapping("/estudiantes")
+	@GetMapping("/profesores")
 	public String listar(Model model) {
-		List<EstudianteEntity> estudiantes = estudianteService.obtenerEstudiantes();
+		List<ProfesorEntity> profesores = profesorService.obtenerProfesores();
 
-		// Check if the estudiantes list is null or empty before calling cuotaUpdate
-		if (estudiantes != null && !estudiantes.isEmpty()) {
-			estudianteService.cuotaUpdate(estudiantes);
+		// Check if the profesores list is null or empty before calling cuotaUpdate
+		if (profesores != null && !profesores.isEmpty()) {
+			profesorService.cuotaUpdate(profesores);
 		}
 
-		model.addAttribute("estudiantes", estudiantes);
-		return "VisualizarEstudiantes";
+		model.addAttribute("profesores", profesores);
+		return "VisualizarProfesores";
 	}
 
-	@GetMapping("/nuevoEstudiante")
-	public String estudianteForm(Model model) {
+	@GetMapping("/nuevoProfesor")
+	public String profesorForm(Model model) {
 		// Puedes agregar lógica para prellenar el formulario si es necesario.
-		model.addAttribute("estudiante", new EstudianteEntity());
-		return "IngresarEstudiante";
+		model.addAttribute("profesor", new ProfesorEntity());
+		return "IngresarProfesor";
 	}
 
-	@PostMapping("/nuevoEstudiante")
-	public ModelAndView nuevoEstudiante(
+	@PostMapping("/nuevoProfesor")
+	public ModelAndView nuevoProfesor(
 			@RequestBody
 
 			@RequestParam("rut") String rut,
@@ -51,34 +51,34 @@ public class EstudianteController {
 			@RequestParam("cuotasPactadas") String cuotasPactadas,
 			@RequestParam("notas") String notas){
 
-		// Guardar la información del estudiante
-		EstudianteEntity estudiante = estudianteService.manageGuardar(rut,nombre,apellido,fechaNacimiento,tipoColegio,nombreColegio,AnnoEgreso,tipoPago,cuotasPactadas,notas);
+		// Guardar la información del profesor
+		ProfesorEntity profesor = profesorService.manageGuardar(rut,nombre,apellido,fechaNacimiento,tipoColegio,nombreColegio,AnnoEgreso,tipoPago,cuotasPactadas,notas);
 
 
 		// Create a ModelAndView object and add the data you want to pass to the view
-		ModelAndView modelAndView = new ModelAndView("IngresarEstudiante");
+		ModelAndView modelAndView = new ModelAndView("IngresarProfesor");
 
 		// Add the ID of the EstudianteEntity to the model
-		modelAndView.addObject("estudianteID", estudiante.getId());
+		modelAndView.addObject("profesorID", profesor.getId());
 
 		return modelAndView;
 	}
 
 
-	@GetMapping("/estudiantes/{id}")
-	public String mostrarestudiante(@PathVariable Long id, Model model) {
-		Optional<EstudianteEntity> estudiante = estudianteService.obtenerPorId(id);
-		model.addAttribute("estudiante", estudiante.get());
-		return "VisualizarEstudiante";
+	@GetMapping("/profesores/{id}")
+	public String mostrarprofesor(@PathVariable Long id, Model model) {
+		Optional<ProfesorEntity> profesor = profesorService.obtenerPorId(id);
+		model.addAttribute("profesor", profesor.get());
+		return "VisualizarProfesor";
 	}
-
-	// 2. Añadir nuevas notas de estudiantes desde una cadena (POST)
+/*
+	// 2. Añadir nuevas notas de profesores desde una cadena (POST)
 	@PostMapping("/subirNotas")
 	public String subirNotasDesdeString(@RequestParam("datosExcel") String datosExcel) {
 		// Implement your logic here to process 'datosExcel' and add grades to the database.
 		estudianteService.agregarNotasAHistorial(datosExcel);
-		return "redirect:/estudiantes";
-	}
+		return "redirect:/profesores";
+	}*/
 
 
 }

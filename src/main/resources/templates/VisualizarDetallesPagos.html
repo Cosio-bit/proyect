@@ -32,28 +32,28 @@
 			</tr>
 			</thead>
 			<tbody>
-			<!-- Iterate over the list of DetallePago entities -->
-			<tr th:each="detallePago : ${listDetallePago}">
-				<td th:text="${detallePago.id}"></td>
-				<td th:text="${detallePago.fechaPago}"></td>
-				<td th:text="${detallePago.fechaVencimiento}"></td>
-				<td th:text="${detallePago.montoPago}"></td>
-				<td th:text="${detallePago.pagado}"></td>
+			<!-- Iterate over the list of Prestamo entities -->
+			<tr th:each="prestamo : ${listDetallePago}">
+				<td th:text="${prestamo.id}"></td>
+				<td th:text="${prestamo.fechaPago}"></td>
+				<td th:text="${prestamo.fechaVencimiento}"></td>
+				<td th:text="${prestamo.montoPago}"></td>
+				<td th:text="${prestamo.pagado}"></td>
 				<!-- Agrega más columnas según los campos de DetallePagoEntity -->
 
-				<!-- Create a form for each DetallePago -->
+				<!-- Create a form for each Prestamo -->
 				<td>
-					<form th:action="@{'/estudiantes/historialArancel/detallePago/' + ${detallePago.getHistorialArancelID()} + '/' + ${detallePago.id} }" method="post">
+					<form th:action="@{'/profesores/historialArancel/prestamo/' + ${prestamo.getHistorialArancelID()} + '/' + ${prestamo.id} }" method="post">
 						<button type="submit">Pagar</button>
 					</form>
 				</td>
 			</tr>
 			<!-- End of iteration -->
 			<td>
-				<a th:href="@{'/estudiantes/historialArancel/' + ${listDetallePago.get(0).getHistorialArancelID()}}">Ver Historial Arancel</a>
+				<a th:href="@{'/profesores/historialArancel/' + ${listDetallePago.get(0).getHistorialArancelID()}}">Ver Historial Arancel</a>
 			</td>
 			<td>
-				<a th:href="@{'/estudiantes'}">Ver estudiantes</a>
+				<a th:href="@{'/profesores'}">Ver profesores</a>
 			</td>
 			</tbody>
 		</table>

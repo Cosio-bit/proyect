@@ -4,7 +4,7 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Visualizar Estudiantes</title>
+    <title>Visualizar Profesores</title>
     <link rel="stylesheet" href="../static/style.css" type="text/css" th:href="@{/style.css}">
 </head>
 <style>
@@ -24,10 +24,10 @@
 </style>
 <body>
 <header class="header">
-    <h1>Visualizar Estudiantes</h1>
+    <h1>Visualizar Profesores</h1>
     <nav>
     </nav>
-    <a class="cta-button" href="/nuevoEstudiante">Agregar Nuevo Estudiante</a>
+    <a class="cta-button" href="/nuevoEstudiante">Agregar Nuevo Profesor</a>
 </header>
 <div class="f">
     <div class="container my-2">
@@ -45,50 +45,50 @@
                 <th>Periodo de Inscripcion</th>
                 <th>Historial Académico</th>
                 <th>Historial Arancel</th>
-                <th>Resumen estudiante</th> <!-- New column for the Edit button -->
+                <th>Resumen profesor</th> <!-- New column for the Edit button -->
                 <!-- Add more headers for the new columns -->
             </tr>
             </thead>
             <tbody>
-            <tr th:each="estudiante:${estudiantes}">
-                <td th:text="${estudiante.id}"></td>
-                <td th:text="${estudiante.rut}"></td>
-                <td th:text="${estudiante.nombre}"></td>
-                <td th:text="${estudiante.apellido}"></td>
-                <td th:text="${estudiante.fechaNacimiento}"></td>
-                <td th:text="${estudiante.tipoColegio}"></td>
-                <td th:text="${estudiante.nombreColegio}"></td>
-                <td th:text="${estudiante.annoEgreso}"></td>
+            <tr th:each="profesor:${profesores}">
+                <td th:text="${profesor.id}"></td>
+                <td th:text="${profesor.rut}"></td>
+                <td th:text="${profesor.nombre}"></td>
+                <td th:text="${profesor.apellido}"></td>
+                <td th:text="${profesor.fechaNacimiento}"></td>
+                <td th:text="${profesor.tipoColegio}"></td>
+                <td th:text="${profesor.nombreColegio}"></td>
+                <td th:text="${profesor.annoEgreso}"></td>
                 <!-- Add buttons for viewing and creating academic history -->
                 <td>
-                    <a th:href="@{'/estudiantes/historialAcademico/' + ${estudiante.id}}">Ver Historial Académico</a>
+                    <a th:href="@{'/profesores/historialAcademico/' + ${profesor.id}}">Ver Historial Académico</a>
                 </td>
                 <!--
                 <td>
-                    <a th:href="@{'/estudiantes/crearHistorialAcademico'}">Crear Historial Académico</a>
+                    <a th:href="@{'/profesores/crearHistorialAcademico'}">Crear Historial Académico</a>
                 </td>
                 -->
                 <!-- Add buttons for viewing and creating arancel history -->
                 <td>
-                    <a th:href="@{'/estudiantes/historialArancel/' + ${estudiante.id}}">Ver Historial Arancel</a>
+                    <a th:href="@{'/profesores/historialArancel/' + ${profesor.id}}">Ver Historial Arancel</a>
                 </td>
                 <!--
                 <td>
-                    <a th:href="@{'/estudiantes/crearHistorialArancel/' + ${estudiante.id}}">Crear Historial Arancel</a>
+                    <a th:href="@{'/profesores/crearHistorialArancel/' + ${profesor.id}}">Crear Historial Arancel</a>
                 </td>
                 -->
                 <!-- Add an Edit button for each student -->
-                <td><a th:href="@{'/estudiantes/' + ${estudiante.id}}">Ver estudiante</a></td>
+                <td><a th:href="@{'/profesores/' + ${profesor.id}}">Ver profesor</a></td>
                 <!-- Add more columns for additional data if needed -->
             </tr>
             </tbody>
 
             <td>
-                <a th:href="@{'/estudiantes/listarAranceles'}">Ver Historial Arancel</a>
+                <a th:href="@{'/profesores/listarAranceles'}">Ver Historial Arancel</a>
             </td>
 
             <td>
-                <a th:href="@{'/estudiantes/listarNotas'}">Ver Historial Notas</a>
+                <a th:href="@{'/profesores/listarNotas'}">Ver Historial Notas</a>
             </td>
 
         </table>

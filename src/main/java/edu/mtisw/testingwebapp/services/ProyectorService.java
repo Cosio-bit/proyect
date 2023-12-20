@@ -1,7 +1,7 @@
 package edu.mtisw.testingwebapp.services;
 
-import edu.mtisw.testingwebapp.entities.HistorialArancelEntity;
-import edu.mtisw.testingwebapp.repositories.HistorialArancelRepository;
+import edu.mtisw.testingwebapp.entities.ProyectorEntity;
+import edu.mtisw.testingwebapp.repositories.ProyectorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,17 +11,17 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
-public class HistorialArancelService {
+public class ProyectorService {
     @Autowired
-    HistorialArancelRepository historialArancelRepository;
+    ProyectorRepository historialArancelRepository;
     @Autowired
-    DetallePagoService detallePagoService;
+    PrestamoService detallePagoService;
 
-    public ArrayList<HistorialArancelEntity> obtenerHistorialArancels(){
-        return (ArrayList<HistorialArancelEntity>) historialArancelRepository.findAll();
+    public ArrayList<ProyectorEntity> obtenerHistorialArancels(){
+        return (ArrayList<ProyectorEntity>) historialArancelRepository.findAll();
     }
-    public HistorialArancelEntity guardarHistorialArancel(Long estudianteID, String tipoColegio, String AnnoEgreso, String tipoPago, String cuotasPactadas){
-        HistorialArancelEntity historialArancel = new HistorialArancelEntity();
+    public ProyectorEntity guardarHistorialArancel(Long estudianteID, String tipoColegio, String AnnoEgreso, String tipoPago, String cuotasPactadas){
+        ProyectorEntity historialArancel = new ProyectorEntity();
         OficinaRRHH oficinaRRHH = new OficinaRRHH();
 
 
@@ -54,15 +54,15 @@ public class HistorialArancelService {
         //detallePagoService.guardarDetallesPagos(historialArancel.getDetallePagos());
         return historialArancelRepository.save(historialArancel);
     }
-    public Optional<HistorialArancelEntity> anadirPago(Long id, double efectivo) {
+    public Optional<ProyectorEntity> anadirPago(Long id, double efectivo) {
         // First, check if the entity with the given id exists
-        Optional<HistorialArancelEntity> optionalHistorial = historialArancelRepository.findById(id);
+        Optional<ProyectorEntity> optionalHistorial = historialArancelRepository.findById(id);
         return optionalHistorial;
     }
-    public Optional<HistorialArancelEntity> obtenerPorId(Long id){
+    public Optional<ProyectorEntity> obtenerPorId(Long id){
         return historialArancelRepository.findById(id);
     }
-    public Optional<HistorialArancelEntity> obtenerPorEstudianteId(Long id){
+    public Optional<ProyectorEntity> obtenerPorEstudianteId(Long id){
         return historialArancelRepository.findHistorialArancelByEstudianteID(id);
     }
 

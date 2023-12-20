@@ -54,12 +54,12 @@
 	</table>
 
 	<!-- Add a button to add a new note -->
-	<form th:action="@{/estudiantes/historialAcademico/{id}/agregarNota(id=${historialAcademico.id})}" method="post">
+	<form th:action="@{/profesores/historialAcademico/{id}/agregarNota(id=${historialAcademico.id})}" method="post">
 		<label for="nuevaNota">Nueva Nota:</label>
 		<input type="number" id="nuevaNota" name="nuevaNota" required>
 		<button type="submit">Agregar Nota</button>
 	</form>
 </div>
-<a class="cta-button" href="/estudiantes"><button>Volver a estudiantes</button></a>
+<a class="cta-button" href="/profesores"><button>Volver a profesores</button></a>
 </body>
 </html>

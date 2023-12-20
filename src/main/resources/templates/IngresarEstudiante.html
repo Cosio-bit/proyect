@@ -2,7 +2,7 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <link rel="stylesheet" href="../static/style.css" type="text/css" th:href="@{/style.css}">
-    <title>Ingresar Estudiante</title>
+    <title>Ingresar Profesor</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
           crossorigin="anonymous">
@@ -31,23 +31,23 @@
     </div>
     <nav>
     </nav>
-    <a class="cta-button" href="/estudiantes"><button>Volver al menú principal</button></a>
+    <a class="cta-button" href="/profesores"><button>Volver al menú principal</button></a>
 </header>
 <div class="mainclass">
     <form th:action="@{/nuevoEstudiante}" method="POST">
         <div class="logo">
-            <h1><b>Registrar nuevo Estudiante</b></h1>
+            <h1><b>Registrar nuevo Profesor</b></h1>
         </div>
         <ul class="formcontainer">
             <hr/>
             <ul class="container">
                 <li>
                     <label><strong>Nombre</strong></label>
-                    <label for="nombre"></label><input type="text" id="nombre" placeholder="Nombre del estudiante" name="nombre" required>
+                    <label for="nombre"></label><input type="text" id="nombre" placeholder="Nombre del profesor" name="nombre" required>
                 </li>
                 <li>
                     <label><strong>Apellido</strong></label>
-                    <label for="apellido"></label><input type="text" id="apellido" placeholder="Apellido del estudiante" name="apellido" required>
+                    <label for="apellido"></label><input type="text" id="apellido" placeholder="Apellido del profesor" name="apellido" required>
                 </li>
                 <li>
                     <label><strong>Fecha de Nacimiento</strong></label>
@@ -100,7 +100,7 @@
 
             </ul>
             <div class="cta-button">
-                <button type="submit">Registrar Estudiante</button>
+                <button type="submit">Registrar Profesor</button>
             </div>
         </ul>
     </form>

@@ -1,16 +1,16 @@
 package edu.mtisw.testingwebapp;
 
-import edu.mtisw.testingwebapp.entities.DetallePagoEntity;
+import edu.mtisw.testingwebapp.entities.PrestamoEntity;
 import edu.mtisw.testingwebapp.entities.EstudianteEntity;
-import edu.mtisw.testingwebapp.entities.HistorialArancelEntity;
-import edu.mtisw.testingwebapp.repositories.DetallePagoRepository;
-import edu.mtisw.testingwebapp.repositories.EstudianteRepository;
+import edu.mtisw.testingwebapp.entities.ProyectorEntity;
+import edu.mtisw.testingwebapp.repositories.PrestamoRepository;
+import edu.mtisw.testingwebapp.repositories.ProfesorRepository;
 import edu.mtisw.testingwebapp.repositories.HistorialAcademicoRepository;
-import edu.mtisw.testingwebapp.repositories.HistorialArancelRepository;
-import edu.mtisw.testingwebapp.services.DetallePagoService;
-import edu.mtisw.testingwebapp.services.EstudianteService;
+import edu.mtisw.testingwebapp.repositories.ProyectorRepository;
+import edu.mtisw.testingwebapp.services.PrestamoService;
+import edu.mtisw.testingwebapp.services.ProfesorService;
 import edu.mtisw.testingwebapp.services.HistorialAcademicoService;
-import edu.mtisw.testingwebapp.services.HistorialArancelService;
+import edu.mtisw.testingwebapp.services.ProyectorService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,27 +27,27 @@ public class testDetallePago {
 
 
     @Autowired
-    private HistorialArancelRepository historialArancelRepository;
+    private ProyectorRepository historialArancelRepository;
     @Autowired
-    private HistorialArancelService historialArancelService;
+    private ProyectorService historialArancelService;
 
     @Autowired
-    private EstudianteRepository estudianteRepository;
+    private ProfesorRepository estudianteRepository;
 
     @Autowired
-    private EstudianteService estudianteService;
+    private ProfesorService estudianteService;
 
     @Autowired
-    private DetallePagoRepository detallePagoRepository;
+    private PrestamoRepository detallePagoRepository;
 
     @Autowired
-    private DetallePagoService detallePagoService;
+    private PrestamoService detallePagoService;
 
     @Test
     @Transactional
     void testDetallePagoEntityAttributes() {
 
-        //para detalle pago necesito el id de historial arancel y id de estudiante
+        //para detalle pago necesito el id de historial arancel y id de profesor
 
         String nombre ="John";
         String apellido = "doe";
@@ -55,39 +55,39 @@ public class testDetallePago {
         String nombreColegio = "Colegio XYZ";
         String rut = "20623522";
 
-        EstudianteEntity estudiante = estudianteService.guardarEstudiante(rut, nombre, apellido, "2000/02/02", tipoColegio, nombreColegio,"2020/02/02");
+        EstudianteEntity profesor = estudianteService.guardarEstudiante(rut, nombre, apellido, "2000/02/02", tipoColegio, nombreColegio,"2020/02/02");
 
 
         String tipoPago = "cuotas";
         int cuotasPactadas = 5;
-        HistorialArancelEntity historialArancel = historialArancelService.guardarHistorialArancel(estudiante.getId(),tipoColegio, "2020/02/02",tipoPago, "5") ;//lo mismo, crear estudiante primero
+        ProyectorEntity historialArancel = historialArancelService.guardarHistorialArancel(profesor.getId(),tipoColegio, "2020/02/02",tipoPago, "5") ;//lo mismo, crear profesor primero
 
         System.out.println(historialArancel.getId());
 
-        DetallePagoEntity detallePago = new DetallePagoEntity();
+        PrestamoEntity prestamo = new PrestamoEntity();
         // Test Monto de Pago
         double montoPago = 1000.0;
-        detallePago.setMontoPago(montoPago);
-        assertEquals(montoPago, detallePago.getMontoPago());
+        prestamo.setMontoPago(montoPago);
+        assertEquals(montoPago, prestamo.getMontoPago());
 
         // Test Fecha de Pago
         LocalDate fechaPago = LocalDate.of(2023, 10, 13);
-        detallePago.setFechaPago(fechaPago);
-        assertEquals(fechaPago, detallePago.getFechaPago());
+        prestamo.setFechaPago(fechaPago);
+        assertEquals(fechaPago, prestamo.getFechaPago());
 
         // Test Estado de Pago
         boolean notpagado = false;
-        detallePago.setPagado(notpagado);
-        assertEquals(notpagado, detallePago.isPagado());
+        prestamo.setPagado(notpagado);
+        assertEquals(notpagado, prestamo.isPagado());
 
         // Test Fecha de Vencimiento
         LocalDate fechaVencimiento = LocalDate.of(2023, 11, 1);
-        detallePago.setFechaVencimiento(fechaVencimiento);
-        assertEquals(fechaVencimiento, detallePago.getFechaVencimiento());
+        prestamo.setFechaVencimiento(fechaVencimiento);
+        assertEquals(fechaVencimiento, prestamo.getFechaVencimiento());
 
 
-        List<DetallePagoEntity> detallePagoEntities =  detallePagoService.guardarDetallesPagos(historialArancel.getId(), cuotasPactadas,historialArancel.getMontoTotal()); //hay que guardarlo en el repo para ir a buscarlo y para eso necesitamos historial arancel
-        DetallePagoEntity detallePago1 = detallePagoService.guardarDetallePago(historialArancel.getId(), 6,historialArancel.getMontoTotal(),6);
+        List<PrestamoEntity> detallePagoEntities =  detallePagoService.guardarDetallesPagos(historialArancel.getId(), cuotasPactadas,historialArancel.getMontoTotal()); //hay que guardarlo en el repo para ir a buscarlo y para eso necesitamos historial arancel
+        PrestamoEntity detallePago1 = detallePagoService.guardarDetallePago(historialArancel.getId(), 6,historialArancel.getMontoTotal(),6);
         //detallePagoService.obtenerPorHistorialArancelID(historialArancel.getId());
 
 

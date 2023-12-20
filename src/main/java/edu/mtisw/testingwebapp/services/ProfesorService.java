@@ -1,10 +1,10 @@
 package edu.mtisw.testingwebapp.services;
 
-import edu.mtisw.testingwebapp.entities.DetallePagoEntity;
+import edu.mtisw.testingwebapp.entities.PrestamoEntity;
 import edu.mtisw.testingwebapp.entities.EstudianteEntity;
 import edu.mtisw.testingwebapp.entities.HistorialAcademicoEntity;
-import edu.mtisw.testingwebapp.entities.HistorialArancelEntity;
-import edu.mtisw.testingwebapp.repositories.EstudianteRepository;
+import edu.mtisw.testingwebapp.entities.ProyectorEntity;
+import edu.mtisw.testingwebapp.repositories.ProfesorRepository;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,18 +19,18 @@ import java.util.*;
 import static edu.mtisw.testingwebapp.services.OficinaRRHH.convertirFecha;
 
 @Service
-public class EstudianteService {
+public class ProfesorService {
     @Autowired
-    EstudianteRepository estudianteRepository;
+    ProfesorRepository estudianteRepository;
     @Autowired
-    HistorialArancelService historialArancelService;
+    ProyectorService historialArancelService;
     @Autowired
     HistorialAcademicoService historialAcademicoService;
     @Autowired
-    DetallePagoService detallePagoService;
+    PrestamoService detallePagoService;
 
         @Autowired
-        public EstudianteService(EstudianteRepository estudianteRepository) {
+        public ProfesorService(ProfesorRepository estudianteRepository) {
             this.estudianteRepository = estudianteRepository;
         }
 
@@ -41,25 +41,25 @@ public class EstudianteService {
         return (ArrayList<String>) estudianteRepository.findAllRuts();
     }
     public EstudianteEntity manageGuardar(String rut, String nombre, String apellido, String fechaNacimiento, String tipoColegio, String nombreColegio, String AnnoEgreso, String tipoPago, String cuotasPactadas, String notas){
-            EstudianteEntity estudiante = guardarEstudiante(rut, nombre, apellido, fechaNacimiento, tipoColegio, nombreColegio, AnnoEgreso);
-            HistorialAcademicoEntity historialAcademico = historialAcademicoService.guardarHistorialAcademico( estudiante.getId(), notas);
-            HistorialArancelEntity historialArancel = historialArancelService.guardarHistorialArancel(estudiante.getId(), tipoColegio, AnnoEgreso, tipoPago, cuotasPactadas);
-            List<DetallePagoEntity> detallePagoEntities = detallePagoService.guardarDetallesPagos(historialArancel.getId(), historialArancel.getCuotasPactadas(), historialArancel.getMontoTotal());
+            EstudianteEntity profesor = guardarEstudiante(rut, nombre, apellido, fechaNacimiento, tipoColegio, nombreColegio, AnnoEgreso);
+            HistorialAcademicoEntity historialAcademico = historialAcademicoService.guardarHistorialAcademico( profesor.getId(), notas);
+            ProyectorEntity historialArancel = historialArancelService.guardarHistorialArancel(profesor.getId(), tipoColegio, AnnoEgreso, tipoPago, cuotasPactadas);
+            List<PrestamoEntity> detallePagoEntities = detallePagoService.guardarDetallesPagos(historialArancel.getId(), historialArancel.getCuotasPactadas(), historialArancel.getMontoTotal());
             int size = detallePagoEntities.size();
             System.out.println(size);
-        return estudiante;
+        return profesor;
     }
     public EstudianteEntity guardarEstudiante(String rut, String nombre, String apellido, String fechaNacimiento, String tipoColegio, String nombreColegio, String AnnoEgreso) {
         // Crea un objeto EstudianteEntity y asigna los valores obtenidos de los parámetros
-        EstudianteEntity estudiante = new EstudianteEntity();
-        estudiante.setRut(rut);
-        estudiante.setNombre(nombre);
-        estudiante.setApellido(apellido);
-        estudiante.setFechaNacimiento(convertirFecha(fechaNacimiento));
-        estudiante.setTipoColegio(tipoColegio);
-        estudiante.setNombreColegio(nombreColegio);
-        estudiante.setAnnoEgreso(convertirFecha(AnnoEgreso));
-        return estudianteRepository.save(estudiante);
+        EstudianteEntity profesor = new EstudianteEntity();
+        profesor.setRut(rut);
+        profesor.setNombre(nombre);
+        profesor.setApellido(apellido);
+        profesor.setFechaNacimiento(convertirFecha(fechaNacimiento));
+        profesor.setTipoColegio(tipoColegio);
+        profesor.setNombreColegio(nombreColegio);
+        profesor.setAnnoEgreso(convertirFecha(AnnoEgreso));
+        return estudianteRepository.save(profesor);
     }
     public Optional<EstudianteEntity> obtenerPorId(Long id) {
         return estudianteRepository.findById(id);
@@ -109,12 +109,12 @@ public class EstudianteService {
     public void cuotaUpdate(List<EstudianteEntity> estudianteEntities){
         HistorialAcademicoEntity historialAcademico = historialAcademicoService.obtenerPorEstudianteId(estudianteEntities.get(0).getId());
         double promedio = historialAcademicoService.calcularPromedioHistorial(historialAcademico);
-        Optional<HistorialArancelEntity> historialArancel = historialArancelService.obtenerPorId(estudianteEntities.get(0).getId());
+        Optional<ProyectorEntity> historialArancel = historialArancelService.obtenerPorId(estudianteEntities.get(0).getId());
         if(historialArancel.get().getTipoPago().equals("cuotas")){
-        List<DetallePagoEntity> detallesPagos = detallePagoService.findbynotpagado(historialArancel.get().getId());
+        List<PrestamoEntity> detallesPagos = detallePagoService.findbynotpagado(historialArancel.get().getId());
         detallePagoService.updateDetallesPagos(detallesPagos, promedio);}
         else{
-            List<DetallePagoEntity> detallesPagos = detallePagoService.detallePagoRepository.findAll();
+            List<PrestamoEntity> detallesPagos = detallePagoService.detallePagoRepository.findAll();
             detallePagoService.updateDetallesPagos(detallesPagos, promedio);}
         }
 
@@ -131,19 +131,19 @@ public class EstudianteService {
                 try {
                     double nota = Double.parseDouble(notaStr);
 
-                    // Busca al estudiante por su RUT en la base de datos
-                    Optional<EstudianteEntity> estudiante = obtenerPorRut(rut);
+                    // Busca al profesor por su RUT en la base de datos
+                    Optional<EstudianteEntity> profesor = obtenerPorRut(rut);
 
 
-                    if (estudiante.isPresent()) {
-                        // Obtén el historial académico del estudiante
-                        HistorialAcademicoEntity historialAcademico = historialAcademicoService.obtenerPorEstudianteId(estudiante.get().getId());
+                    if (profesor.isPresent()) {
+                        // Obtén el historial académico del profesor
+                        HistorialAcademicoEntity historialAcademico = historialAcademicoService.obtenerPorEstudianteId(profesor.get().getId());
 
                         // Guarda el historial académico actualizado en la base de datos
                         historialAcademicoService.anadirNotaConFecha(historialAcademico.getId(),nota, fechaStr);
 
                     }
-                    // Si el estudiante no se encuentra en la base de datos, simplemente lo omite.
+                    // Si el profesor no se encuentra en la base de datos, simplemente lo omite.
 
                 } catch (DateTimeParseException | NumberFormatException e) {
 

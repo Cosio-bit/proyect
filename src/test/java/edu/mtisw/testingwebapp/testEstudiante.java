@@ -1,14 +1,14 @@
 package edu.mtisw.testingwebapp;
 
-import edu.mtisw.testingwebapp.entities.DetallePagoEntity;
+import edu.mtisw.testingwebapp.entities.PrestamoEntity;
 import edu.mtisw.testingwebapp.entities.EstudianteEntity;
 import edu.mtisw.testingwebapp.entities.HistorialAcademicoEntity;
-import edu.mtisw.testingwebapp.entities.HistorialArancelEntity;
-import edu.mtisw.testingwebapp.repositories.EstudianteRepository;
-import edu.mtisw.testingwebapp.services.DetallePagoService;
-import edu.mtisw.testingwebapp.services.EstudianteService;
+import edu.mtisw.testingwebapp.entities.ProyectorEntity;
+import edu.mtisw.testingwebapp.repositories.ProfesorRepository;
+import edu.mtisw.testingwebapp.services.PrestamoService;
+import edu.mtisw.testingwebapp.services.ProfesorService;
 import edu.mtisw.testingwebapp.services.HistorialAcademicoService;
-import edu.mtisw.testingwebapp.services.HistorialArancelService;
+import edu.mtisw.testingwebapp.services.ProyectorService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,26 +21,26 @@ import static org.junit.jupiter.api.Assertions.*;
 public class testEstudiante {
 
     @Autowired
-    private EstudianteRepository estudianteRepository;
+    private ProfesorRepository estudianteRepository;
 
     @Autowired
-    private EstudianteService estudianteService;
+    private ProfesorService estudianteService;
 
     @Autowired
     private HistorialAcademicoService historialAcademicoService;
 
     @Autowired
-    private HistorialArancelService historialArancelService;
+    private ProyectorService historialArancelService;
 
     @Autowired
-    private DetallePagoService detallePagoService;
+    private PrestamoService detallePagoService;
 
 
     @Test
         void testEstudianteEntityAttributes() {
 
 
-        EstudianteEntity estudiante = new EstudianteEntity();
+        EstudianteEntity profesor = new EstudianteEntity();
 
         String nombre = "John";
         String apellido = "Doe";
@@ -50,34 +50,34 @@ public class testEstudiante {
 
 
         // Test Nombre
-        estudiante.setNombre(nombre);
-        assertEquals("John", estudiante.getNombre());
+        profesor.setNombre(nombre);
+        assertEquals("John", profesor.getNombre());
 
         // Test Apellido
-        estudiante.setApellido(apellido);
-        assertEquals("Doe", estudiante.getApellido());
+        profesor.setApellido(apellido);
+        assertEquals("Doe", profesor.getApellido());
 
         // Test Fecha de Nacimiento
         LocalDate fechaNacimiento = LocalDate.of(1990, 5, 15);
-        estudiante.setFechaNacimiento(fechaNacimiento);
-        assertEquals(fechaNacimiento, estudiante.getFechaNacimiento());
+        profesor.setFechaNacimiento(fechaNacimiento);
+        assertEquals(fechaNacimiento, profesor.getFechaNacimiento());
 
         // Test Tipo de Colegio
-        estudiante.setTipoColegio(tipoColegio);
-        assertEquals("Subvencionado", estudiante.getTipoColegio());
+        profesor.setTipoColegio(tipoColegio);
+        assertEquals("Subvencionado", profesor.getTipoColegio());
 
         // Test Nombre del Colegio
-        estudiante.setNombreColegio(nombreColegio);
-        assertEquals("Colegio XYZ", estudiante.getNombreColegio());
+        profesor.setNombreColegio(nombreColegio);
+        assertEquals("Colegio XYZ", profesor.getNombreColegio());
 
         // Test Rut
-        estudiante.setRut(rut);
-        assertEquals("20623522", estudiante.getRut());
+        profesor.setRut(rut);
+        assertEquals("20623522", profesor.getRut());
 
         // Test Año de Egreso
         LocalDate annoEgreso = LocalDate.of(2023, 6, 30);
-        estudiante.setAnnoEgreso(annoEgreso);
-        assertEquals(annoEgreso, estudiante.getAnnoEgreso());
+        profesor.setAnnoEgreso(annoEgreso);
+        assertEquals(annoEgreso, profesor.getAnnoEgreso());
 
     }
 
@@ -89,7 +89,7 @@ public class testEstudiante {
             String tipoColegio = "Subvencionado";
             String nombreColegio = "Colegio XYZ";
             String rut = "20623525";
-            //por separado para 1 estudiante
+            //por separado para 1 profesor
 
             EstudianteEntity estudiante1 = estudianteService.guardarEstudiante(rut, nombre, apellido, "2000/02/02", tipoColegio, nombreColegio,"2020/02/02");
 
@@ -98,9 +98,9 @@ public class testEstudiante {
 
             String tipoPago = "cuotas";
             int cuotasPactadas = 5;
-            HistorialArancelEntity historialArancel = historialArancelService.guardarHistorialArancel(estudiante1.getId(),tipoColegio, "2020/02/02",tipoPago, "5") ;//lo mismo, crear estudiante primero
+            ProyectorEntity historialArancel = historialArancelService.guardarHistorialArancel(estudiante1.getId(),tipoColegio, "2020/02/02",tipoPago, "5") ;//lo mismo, crear profesor primero
 
-            List<DetallePagoEntity> detallePagoEntities =  detallePagoService.guardarDetallesPagos(historialArancel.getId(), cuotasPactadas,historialArancel.getMontoTotal()); //hay que guardarlo en el repo para ir a buscarlo y para eso necesitamos historial arancel
+            List<PrestamoEntity> detallePagoEntities =  detallePagoService.guardarDetallesPagos(historialArancel.getId(), cuotasPactadas,historialArancel.getMontoTotal()); //hay que guardarlo en el repo para ir a buscarlo y para eso necesitamos historial arancel
         }
 
 

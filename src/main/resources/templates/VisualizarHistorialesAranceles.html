@@ -42,7 +42,7 @@
                 <th>Último Pago</th>
                 <th>Saldo Por Pagar</th>
                 <th>Cuotas de Retraso</th>
-                <th>Estudiante</th>
+                <th>Profesor</th>
                 <th>Editar</th>
                 <!-- Add more headers for the new columns -->
             </tr>
@@ -58,7 +58,7 @@
                 <td th:text="${historialArancel.ultimoPago}"></td>
                 <td th:text="${historialArancel.saldoPorPagar}"></td>
                 <td th:text="${historialArancel.cuotasRetraso}"></td>
-                <td><a th:href="@{'/estudiantes/historialArancel/' + ${historialArancel.estudianteID}}">Ver Historial Arancel Estudiante</a></td>
+                <td><a th:href="@{'/profesores/historialArancel/' + ${historialArancel.estudianteID}}">Ver Historial Arancel Profesor</a></td>
                 <!-- Add an Edit button for each Historial de Arancel entry -->
                 <td><a th:href="@{'/editarHistorialArancel/' + ${historialArancel.id}}">Editar</a></td>
                 <!-- Add more columns for additional data if needed -->
@@ -80,7 +80,7 @@
             </tfoot>
         </table>
 
-        <a class="cta-button" href="/estudiantes"><button>Volver a estudiantes</button></a>
+        <a class="cta-button" href="/profesores"><button>Volver a profesores</button></a>
     </div>
 </div>
 <br>

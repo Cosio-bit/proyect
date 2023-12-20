@@ -24,9 +24,9 @@ public class  OficinaRRHH {
    }
    } // Falta cerrar la llave aquí
    // calcula el salario anual del estudiantea
-   public int calcularAnnoEgreso(EstudianteEntity estudiante) {
+   public int calcularAnnoEgreso(EstudianteEntity profesor) {
       // Obtén la fecha actual
-      LocalDate fechaEgreso = estudiante.getAnnoEgreso();
+      LocalDate fechaEgreso = profesor.getAnnoEgreso();
       LocalDate fechaActual = LocalDate.now(); // Usamos LocalDate.now() para obtener la fecha actual
 
       // Calcula el período entre la fecha de egreso y la fecha actual
@@ -125,17 +125,17 @@ public class  OficinaRRHH {
       numcuotas=0;
       return numcuotas;
    }
-   public int maxcuotas(EstudianteEntity estudiante){
+   public int maxcuotas(EstudianteEntity profesor){
    int numcuotas;
-   if (Objects.equals(estudiante.getTipoColegio(), "municipal")) {
+   if (Objects.equals(profesor.getTipoColegio(), "municipal")) {
       numcuotas=10;
       return numcuotas;
    }
-   else if (Objects.equals(estudiante.getTipoColegio(), "subencionado")) {
+   else if (Objects.equals(profesor.getTipoColegio(), "subencionado")) {
       numcuotas=7;
       return numcuotas;
    }
-   else if (Objects.equals(estudiante.getTipoColegio(), "privado")) {
+   else if (Objects.equals(profesor.getTipoColegio(), "privado")) {
       numcuotas=4;
       return numcuotas;
    }
@@ -238,22 +238,22 @@ public class  OficinaRRHH {
 }
 
 /*
-     public double calcularArancelTipoColegio(EstudianteEntity estudiante) {
-         double arancel = estudiante.getHistorialArancel().getMontoTotal();
-         if (Objects.equals(estudiante.getTipoColegio(), "municipal")) {
+     public double calcularArancelTipoColegio(EstudianteEntity profesor) {
+         double arancel = profesor.getHistorialArancel().getMontoTotal();
+         if (Objects.equals(profesor.getTipoColegio(), "municipal")) {
             arancel = 0.8 * arancel;
          }
-         else if (Objects.equals(estudiante.getTipoColegio(), "subencionado")) {
+         else if (Objects.equals(profesor.getTipoColegio(), "subencionado")) {
             arancel = 0.9 * arancel;
          }
-         else if (Objects.equals(estudiante.getTipoColegio(), "privado")) {
+         else if (Objects.equals(profesor.getTipoColegio(), "privado")) {
             arancel = 1 * arancel;
          }
          return arancel;
       }
-   public double calcularArancelAnnoEgreso(EstudianteEntity estudiante) {
-      int AnnoEgreso = calcularAnnoEgreso(estudiante);
-      double arancel = estudiante.getHistorialArancel().getMontoTotal();
+   public double calcularArancelAnnoEgreso(EstudianteEntity profesor) {
+      int AnnoEgreso = calcularAnnoEgreso(profesor);
+      double arancel = profesor.getHistorialArancel().getMontoTotal();
       if (AnnoEgreso == 0) {
          arancel = 0.85 * arancel;
       } else if (AnnoEgreso == 1 || AnnoEgreso == 2 ) {
@@ -265,9 +265,9 @@ public class  OficinaRRHH {
       }
       return arancel;
    }
-   public double calcularArancelNotas(EstudianteEntity estudiante) {
-      double promedio = calcularPromedio(estudiante);
-      double arancel = estudiante.getHistorialArancel().getMontoTotal(); // Asegurémonos de que arancel tenga un valor inicial
+   public double calcularArancelNotas(EstudianteEntity profesor) {
+      double promedio = calcularPromedio(profesor);
+      double arancel = profesor.getHistorialArancel().getMontoTotal(); // Asegurémonos de que arancel tenga un valor inicial
 
       if (promedio >= 950 && promedio <= 1000) {
          arancel = 0.90 * arancel;
@@ -279,8 +279,8 @@ public class  OficinaRRHH {
 
       return arancel;
    }
-   public double calcularPromedio(EstudianteEntity estudiante) {
-      List<Integer> notas = estudiante.getHistorialAcademico().getNotas();
+   public double calcularPromedio(EstudianteEntity profesor) {
+      List<Integer> notas = profesor.getHistorialAcademico().getNotas();
 
       if (notas.isEmpty()) {
          return -1.0; // Retorna -1 si no hay notas disponibles.
@@ -288,9 +288,9 @@ public class  OficinaRRHH {
       double sumatoria = notas.stream().mapToInt(Integer::intValue).sum();
       return sumatoria / notas.size();
    }
-   public double calcularArancelInteres(EstudianteEntity estudiante){
-      double arancel= estudiante.getHistorialArancel().getMontoTotal();
-      double mesesAtraso= calcularMesesAtraso(estudiante);
+   public double calcularArancelInteres(EstudianteEntity profesor){
+      double arancel= profesor.getHistorialArancel().getMontoTotal();
+      double mesesAtraso= calcularMesesAtraso(profesor);
 
       if (mesesAtraso ==1 ) {
          arancel = 1.03 * arancel;
@@ -303,10 +303,10 @@ public class  OficinaRRHH {
       }
       return arancel;
    }
-   public double calcularMesesAtraso(EstudianteEntity estudiante) {
-      LocalDate ultimoPago = estudiante.getHistorialArancel().getUltimoPago();
-      int ultimaCuotaPagada = estudiante.getHistorialArancel().getCuotasPagadas();
-      LocalDate vencimientoUltimaCuota = estudiante.getHistorialArancel().getDetallePagos().get(ultimaCuotaPagada).getFechaVencimiento();
+   public double calcularMesesAtraso(EstudianteEntity profesor) {
+      LocalDate ultimoPago = profesor.getHistorialArancel().getUltimoPago();
+      int ultimaCuotaPagada = profesor.getHistorialArancel().getCuotasPagadas();
+      LocalDate vencimientoUltimaCuota = profesor.getHistorialArancel().getDetallePagos().get(ultimaCuotaPagada).getFechaVencimiento();
       LocalDate fechaActual = LocalDate.now(); // Obtén la fecha actual como un objeto LocalDate
 
       // Calcula el período entre la fecha del último pago y la fecha actual
@@ -318,23 +318,23 @@ public class  OficinaRRHH {
 
       return aniosDiferencia * 12 + mesesDiferencia;
    }
-   public double calcularDescuentos(EstudianteEntity estudiante){
-      estudiante.getHistorialArancel().setMontoTotal(calcularArancelNotas(estudiante));
-      estudiante.getHistorialArancel().setMontoTotal(calcularArancelAnnoEgreso(estudiante));
-      estudiante.getHistorialArancel().setMontoTotal(calcularArancelTipoColegio(estudiante));
+   public double calcularDescuentos(EstudianteEntity profesor){
+      profesor.getHistorialArancel().setMontoTotal(calcularArancelNotas(profesor));
+      profesor.getHistorialArancel().setMontoTotal(calcularArancelAnnoEgreso(profesor));
+      profesor.getHistorialArancel().setMontoTotal(calcularArancelTipoColegio(profesor));
 
-      return estudiante.getHistorialArancel().getMontoTotal();
+      return profesor.getHistorialArancel().getMontoTotal();
    }
-   public void pagarCuota(EstudianteEntity estudiante){
-      int cuotaActual = estudiante.getHistorialArancel().getCuotasPagadas()+1;
-      estudiante.getHistorialArancel().setCuotasPagadas(cuotaActual);
-      DetallePagoEntity detallePago = estudiante.getHistorialArancel().getDetallePagos().get(cuotaActual);
-      detallePago.setPagado(true);
-      estudiante.getHistorialArancel().setTotalPagado(estudiante.getHistorialArancel().getTotalPagado()+detallePago.getMontoPago());
+   public void pagarCuota(EstudianteEntity profesor){
+      int cuotaActual = profesor.getHistorialArancel().getCuotasPagadas()+1;
+      profesor.getHistorialArancel().setCuotasPagadas(cuotaActual);
+      DetallePagoEntity prestamo = profesor.getHistorialArancel().getDetallePagos().get(cuotaActual);
+      prestamo.setPagado(true);
+      profesor.getHistorialArancel().setTotalPagado(profesor.getHistorialArancel().getTotalPagado()+prestamo.getMontoPago());
    }
 
-   public List<String> listarEstadoCuotas(EstudianteEntity estudiante) {
-      List<DetallePagoEntity> detallePagos = estudiante.getHistorialArancel().getDetallePagos();
+   public List<String> listarEstadoCuotas(EstudianteEntity profesor) {
+      List<DetallePagoEntity> detallePagos = profesor.getHistorialArancel().getDetallePagos();
       List<String> cuotasStatus = new ArrayList<>();
 
       for (int i = 0; i < detallePagos.size(); i++) {

@@ -1,11 +1,11 @@
 package edu.mtisw.testingwebapp;
 
 import edu.mtisw.testingwebapp.entities.EstudianteEntity;
-import edu.mtisw.testingwebapp.entities.HistorialArancelEntity;
-import edu.mtisw.testingwebapp.repositories.EstudianteRepository;
-import edu.mtisw.testingwebapp.repositories.HistorialArancelRepository;
-import edu.mtisw.testingwebapp.services.EstudianteService;
-import edu.mtisw.testingwebapp.services.HistorialArancelService;
+import edu.mtisw.testingwebapp.entities.ProyectorEntity;
+import edu.mtisw.testingwebapp.repositories.ProfesorRepository;
+import edu.mtisw.testingwebapp.repositories.ProyectorRepository;
+import edu.mtisw.testingwebapp.services.ProfesorService;
+import edu.mtisw.testingwebapp.services.ProyectorService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,19 +19,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class testHistorialArancel {
 
     @Autowired
-    private HistorialArancelRepository historialArancelRepository;
+    private ProyectorRepository historialArancelRepository;
     @Autowired
-    private HistorialArancelService historialArancelService;
+    private ProyectorService historialArancelService;
 
     @Autowired
-    private EstudianteRepository estudianteRepository;
+    private ProfesorRepository estudianteRepository;
     @Autowired
-    private EstudianteService estudianteService;
+    private ProfesorService estudianteService;
 
         @Test
         @Transactional
         void testHistorialArancelEntityAttributes() {
-            //para historial arancel debo tener un estudiante
+            //para historial arancel debo tener un profesor
             String nombre ="John";
             String apellido = "doe";
             LocalDate fechaNacimiento = LocalDate.of(1990, 5, 15);
@@ -45,7 +45,7 @@ public class testHistorialArancel {
 
 
 
-            HistorialArancelEntity historialArancel = new HistorialArancelEntity();
+            ProyectorEntity historialArancel = new ProyectorEntity();
 
             // Test Monto Total
             double monto = 1500.0;
@@ -87,7 +87,7 @@ public class testHistorialArancel {
             historialArancel.setCuotasRetraso(cuotasRetraso);
             assertEquals(cuotasRetraso, historialArancel.getCuotasRetraso());
 
-            historialArancelService.guardarHistorialArancel(estudiante1.getId(),estudiante1.getTipoColegio(), "2020/02/02",historialArancel.getTipoPago(), String.valueOf(historialArancel.getCuotasPactadas())) ;//lo mismo, crear estudiante primero
+            historialArancelService.guardarHistorialArancel(estudiante1.getId(),estudiante1.getTipoColegio(), "2020/02/02",historialArancel.getTipoPago(), String.valueOf(historialArancel.getCuotasPactadas())) ;//lo mismo, crear profesor primero
 
             Long historialID = historialArancelService.obtenerPorEstudianteId(estudiante1.getId()).get().getId();
             System.out.println(historialID);

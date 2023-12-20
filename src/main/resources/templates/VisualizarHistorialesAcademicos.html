@@ -35,7 +35,7 @@
                 <th>ID</th>
                 <th>Número de Exámenes</th>
                 <th>Promedio de Exámenes</th>
-                <th>Estudiante</th>
+                <th>Profesor</th>
                 <th>Editar</th>
                 <!-- Agregar encabezados de columna dinámicos para las notas -->
                 <th th:each="nota, iterStat : ${historialesAcademicos[0].notas}" th:text="${'Nota ' + iterStat.count}"></th>
@@ -46,7 +46,7 @@
                 <td th:text="${historialAcademico.id}"></td>
                 <td th:text="${historialAcademico.nroExamenes}"></td>
                 <td th:text="${historialAcademico.promedioExamenes}"></td>
-                <td><a th:href="@{'/estudiantes/historialAcademico/' + ${historialAcademico.estudianteID}}">Ver Historial Academico Estudiante</a></td>
+                <td><a th:href="@{'/profesores/historialAcademico/' + ${historialAcademico.estudianteID}}">Ver Historial Academico Profesor</a></td>
                 <td><a th:href="@{'/editarHistorial/' + ${historialAcademico.id}}">Editar</a></td>
                 <!-- Agregar celdas dinámicas para las notas -->
                 <td th:each="nota : ${historialAcademico.notas}" th:text="${nota}"></td>
@@ -55,7 +55,7 @@
 
 
         </table>
-        <a class="cta-button" href="/estudiantes"><button>Volver a estudiantes</button></a>
+        <a class="cta-button" href="/profesores"><button>Volver a profesores</button></a>
     </div>
 </div>
 <br>

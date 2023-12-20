@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class EstudianteEntity {
+public class ProfesorEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,18 +19,7 @@ public class EstudianteEntity {
     private String rut;
     private String nombre;
     private String apellido;
-    private LocalDate fechaNacimiento;
-    private String tipoProyector;
-    private String nombreColegio;
-    private LocalDate AnnoEgreso;
-
-
-    /*
-    @OneToOne(cascade = CascadeType.ALL, optional = true)
-    private HistorialAcademicoEntity historialAcademico;
-
-    @OneToOne(cascade = CascadeType.ALL, optional = true)
-    private HistorialArancelEntity historialArancel;*/
-
-
+    private int infracciones;
+    private int atrasos; //reset cada 1 semana
+    
 }

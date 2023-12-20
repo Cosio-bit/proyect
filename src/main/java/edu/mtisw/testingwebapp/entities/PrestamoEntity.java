@@ -6,23 +6,24 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "detalle_pagos")
+@Table(name = "prestamos")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DetallePagoEntity {
+public class PrestamoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
     private Long id;
-    private LocalDate fechaPago;
-    private LocalDate fechaVencimiento;
-    private double montoPago;
-    //pagado true, no pagado false
-    private boolean pagado;
 
-    private Long historialArancelID;
+    private LocalDate fechaPrestamo;
+    private LocalDate fechaEntrega;
+    private LocalDate fechaDevolucion;
+    private String estado;
+
+    private Long proyectorID;
+    private Long profesorID;
 
     /*
     @ManyToOne
