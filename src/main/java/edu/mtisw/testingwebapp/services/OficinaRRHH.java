@@ -93,13 +93,13 @@ public class  OficinaRRHH {
    return arancel;
    }
    public double calcularPromedio(String todas) {
-   List<Integer> notas = stringToList(todas);
+      List<Integer> notas = stringToList(todas);
 
-   if (notas.isEmpty()) {
-      return -1.0; // Retorna -1 si no hay notas disponibles.
-   }
-   double sumatoria = notas.stream().mapToInt(Integer::intValue).sum();
-   return sumatoria / notas.size();
+      if (notas.isEmpty()) {
+         return -1.0; // Retorna -1 si no hay notas disponibles.
+      }
+      double sumatoria = notas.stream().mapToInt(Integer::intValue).sum();
+      return sumatoria / notas.size();
    }
    public double calcularDescuentos( String AnnoEgreso, String tipoColegio, double arancel){
 

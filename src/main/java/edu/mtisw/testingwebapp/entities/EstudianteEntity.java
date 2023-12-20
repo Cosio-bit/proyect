@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "estudiantes")
+@Table(name = "profesores")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,10 +20,9 @@ public class EstudianteEntity {
     private String nombre;
     private String apellido;
     private LocalDate fechaNacimiento;
-    private String tipoColegio;
+    private String tipoProyector;
     private String nombreColegio;
     private LocalDate AnnoEgreso;
-
 
 
     /*
