@@ -1,19 +1,38 @@
 <!DOCTYPE html>
-<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-
+<html lang="es-ES" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Visualizar Detalles de Pagos</title>
+	<title>Información del Profesor</title>
 	<link rel="stylesheet" href="../static/style.css" type="text/css" th:href="@{/style.css}">
-	<style>
-		/* Estilos CSS aquí (si es necesario) */
-	</style>
 </head>
+<style>
+	body {
+		background-color: #BAF4FA;
+		color: #6889BC;
+		font-family: Calibri, sans-serif;
+		margin: 0;
+		padding: 0;
+	}
+
+	.header {
+		background-color: #7AF4FA;
+		padding: 10px;
+		text-align: center;
+	}
+
+	.container {
+		margin: 20px;
+		padding: 20px;
+		background-color: #fff;
+		border-radius: 5px;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	}
+</style>
+
 
 <body>
 <header class="header">
-	<h1>Visualizar Detalles de Pagos</h1>
+	<h1>Visualizar Prestamos</h1>
 	<nav>
 		<!-- Puedes agregar enlaces de navegación si es necesario -->
 	</nav>
@@ -24,34 +43,27 @@
 			<thead>
 			<tr>
 				<th>ID</th>
-				<th>Fecha de Pago</th>
-				<th>Fecha de Vencimiento</th>
-				<th>Monto de Pago</th>
-				<th>Pagado</th>
+				<th>ID Projector</th>
+				<th>ID Profesor</th>
+				<th>Fecha de Prestamo</th>
+				<th>Fecha de Devolucion</th>
+				<th>Fecha de Entrega</th>
+				<th>Estado</th>
 				<!-- Agrega más encabezados según los campos de DetallePagoEntity -->
 			</tr>
 			</thead>
 			<tbody>
 			<!-- Iterate over the list of Prestamo entities -->
-			<tr th:each="prestamo : ${listDetallePago}">
+			<tr th:each="prestamo : ${prestamos}">
 				<td th:text="${prestamo.id}"></td>
-				<td th:text="${prestamo.fechaPago}"></td>
-				<td th:text="${prestamo.fechaVencimiento}"></td>
-				<td th:text="${prestamo.montoPago}"></td>
-				<td th:text="${prestamo.pagado}"></td>
+				<td th:text="${prestamo.projectorID}"></td>
+				<td th:text="${prestamo.profesorID}"></td>
+				<td th:text="${prestamo.fechaPrestamo}"></td>
+				<td th:text="${prestamo.fechaDevolucion}"></td>
+				<td th:text="${prestamo.fechaEntrega}"></td>
+				<td th:text="${prestamo.estado}"></td>
 				<!-- Agrega más columnas según los campos de DetallePagoEntity -->
-
-				<!-- Create a form for each Prestamo -->
-				<td>
-					<form th:action="@{'/profesores/projector/prestamo/' + ${prestamo.getProjectorID()} + '/' + ${prestamo.id} }" method="post">
-						<button type="submit">Pagar</button>
-					</form>
-				</td>
 			</tr>
-			<!-- End of iteration -->
-			<td>
-				<a th:href="@{'/profesores/projector/' + ${listDetallePago.get(0).getProjectorID()}}">Ver Historial Arancel</a>
-			</td>
 			<td>
 				<a th:href="@{'/profesores'}">Ver profesores</a>
 			</td>

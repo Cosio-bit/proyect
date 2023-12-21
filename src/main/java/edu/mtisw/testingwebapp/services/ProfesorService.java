@@ -1,18 +1,12 @@
 package edu.mtisw.testingwebapp.services;
 
-import edu.mtisw.testingwebapp.entities.PrestamoEntity;
+
 import edu.mtisw.testingwebapp.entities.ProfesorEntity;
-import edu.mtisw.testingwebapp.entities.ProjectorEntity;
+
 import edu.mtisw.testingwebapp.repositories.ProfesorRepository;
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.time.format.DateTimeParseException;
 import java.util.*;
 
 //import static edu.mtisw.testingwebapp.services.OficinaRRHH.convertirFecha;
@@ -45,6 +39,8 @@ public class ProfesorService {
         profesor.setRut(rut);
         profesor.setNombre(nombre);
         profesor.setApellido(apellido);
+        profesor.setInfracciones(0);
+        profesor.setAtrasos(0);
         return profesorRepository.save(profesor);
     }
     public Optional<ProfesorEntity> obtenerPorId(Long id) {

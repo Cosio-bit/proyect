@@ -32,29 +32,27 @@
 	}
 </style><body>
 <header class="header">
-	<h1>Detalle del Historial de Arancel</h1>
+	<h1>Detalle del projector</h1>
 	<nav>
 	</nav>
 </header>
 <div class="container my-2">
-	<h2>Detalles del Historial de Arancel</h2>
+	<h2>Detalles del projector</h2>
 	<p>ID: <span th:text="${projector.id}"></span></p>
 	<p>Nombre: <span th:text="${projector.nombre}"></span></p>
 	<p>Tipo: <span th:text="${projector.tipo}"></span></p>
 	<p>Estado: <span th:text="${projector.estado}"></span></p>
 
 
-
-
 	<td>
-		<a th:href="@{'/projector/projectores/prestamos/' + ${projector.id}}">Ver Detalle de los pagos</a>
+		<a th:href="@{'/projectores/prestamos/' + ${projector.id}}">Ver prestamos</a>
 	</td>
 
 	<!-- Add more details about the projector as needed -->
 
 	<!-- Add a button or link to go back to the list of historiales if needed -->
-	<a class="cta-button" href="/profesores/listarAranceles">Volver a la Lista de Historiales</a>
-	<a class="cta-button" href="/profesores"><button>Volver a profesores</button></a>
+	<a class="cta-button" href="/projectores">Volver a la Lista de projectores</a>
+	<a class="cta-button" href="/profesores"><button>Volver a lista de profesores</button></a>
 </div>
 
 </body>

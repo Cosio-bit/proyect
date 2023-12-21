@@ -35,40 +35,29 @@
             <thead>
             <tr>
                 <th>ID</th>
-                <th>RUT</th>
                 <th>Nombre</th>
                 <th>Apellido</th>
-                <th>Historial Académico</th>
-                <th>Historial Arancel</th>
-                <th>Resumen profesor</th> <!-- New column for the Edit button -->
+                <th>RUT</th>
+                <th>Infracciones</th>
+                <th>Atrasos</th>
+                <th>Editar</th>
+                <th>Eliminar</th>
                 <!-- Add more headers for the new columns -->
             </tr>
             </thead>
             <tbody>
             <tr th:each="profesor:${profesores}">
                 <td th:text="${profesor.id}"></td>
-                <td th:text="${profesor.rut}"></td>
                 <td th:text="${profesor.nombre}"></td>
                 <td th:text="${profesor.apellido}"></td>
-
-                
-                <td><a th:href="@{'/profesores/' + ${profesor.id}}">Ver profesor</a></td>
-                <!-- Add more columns for additional data if needed -->
+                <td th:text="${profesor.rut}"></td>
+                <td th:text="${profesor.infracciones}"></td>
+                <td th:text="${profesor.atrasos}"></td>
+                <td><a th:href="@{'/profesores/profesor/' + ${profesor.id}}">Ver Detalles</a></td>
             </tr>
             </tbody>
-
-            <td>
-                <a th:href="@{'/profesores/listarAranceles'}">Ver Historial Arancel</a>
-            </td>
-
-            <td>
-                <a th:href="@{'/profesores/listarNotas'}">Ver Historial Notas</a>
-            </td>
-
+            <tfoot>
+            </tfoot>
         </table>
+        <a class="cta-button" href="/profesores"><button>Volver a profesores</button></a>
     </div>
-</div>
-<br>
-<hr>
-</body>
-</html>

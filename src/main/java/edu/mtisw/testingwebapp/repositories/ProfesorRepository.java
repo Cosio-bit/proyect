@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -37,6 +36,7 @@ public interface ProfesorRepository extends JpaRepository<ProfesorEntity, Long> 
     @Query(value = "SELECT * FROM profesores", nativeQuery = true)
     List<ProfesorEntity> findAllProfesores();
 
+    @Query(value = "SELECT * FROM profesores WHERE rut = :rut", nativeQuery = true)
     ArrayList<String> findAllRuts();
 
 

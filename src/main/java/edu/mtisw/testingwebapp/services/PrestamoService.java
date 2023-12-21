@@ -11,7 +11,6 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -24,14 +23,19 @@ public class PrestamoService {
     public ArrayList<PrestamoEntity> obtenerPrestamos(){
         return (ArrayList<PrestamoEntity>) prestamoRepository.findAll();
     }
-    public PrestamoEntity guardarPrestamo(LocalDate fechaPrestamo, LocalDate fechaEntrega, LocalDate fechaDevolucion, String estado, Long projectorID, Long profesorID){
+    public PrestamoEntity guardarPrestamo(String fechaPrestamo, String fechaEntrega, String fechaDevolucion, String estado, Long projectorID, Long profesorID){
         PrestamoEntity prestamo = new PrestamoEntity();
+
+        //string to localdate
+        LocalDate fechaPrestamo1 = LocalDate.parse(fechaPrestamo);
+        LocalDate fechaEntrega1 = LocalDate.parse(fechaEntrega);
+        LocalDate fechaDevolucion1 = LocalDate.parse(fechaDevolucion);
         
         prestamo.setProjectorID(projectorID);
         prestamo.setProfesorID(profesorID);
-        prestamo.setFechaPrestamo(fechaPrestamo);
-        prestamo.setFechaEntrega(fechaEntrega);
-        prestamo.setFechaDevolucion(fechaDevolucion);
+        prestamo.setFechaPrestamo(fechaPrestamo1);
+        prestamo.setFechaEntrega(fechaEntrega1);
+        prestamo.setFechaDevolucion(fechaDevolucion1);
         prestamo.setEstado(estado);
 
         return prestamoRepository.save(prestamo);
@@ -50,14 +54,11 @@ public class PrestamoService {
     }
 
     public void updatePrestamos(List<PrestamoEntity> prestamoEntities){ //obtener el promedio dada que es el mismo id de profesor ver como hacerlo porque solo profesor tiene todos los repos juntos
-        LocalDate fechaActual = LocalDate.now();
+        //LocalDate fechaActual = LocalDate.now();
 
         for(int i=0; i!=prestamoEntities.size();i++){
             updatePrestamo(prestamoEntities.get(i), "Devuelto"); //actualiza el estado de los prestamos a lo que realmente utilizaremos
         }
-    }// la diferencia se va sumando, ademas de añadir la opcion de los q pagan al contado para retornarles el dinero, diferencia que ganan dadas sus notas
-    public List<PrestamoEntity> findbynotEntregado(Long projectorID){
-        return prestamoRepository.findProjectorByNotEntregado(projectorID);
     }
 
 

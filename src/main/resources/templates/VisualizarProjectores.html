@@ -4,7 +4,7 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Visualizar Historiales de Arancel</title>
+    <title>Visualizar projectores</title>
     <link rel="stylesheet" href="../static/style.css" type="text/css" th:href="@{/style.css}">
 </head>
 <style>
@@ -22,46 +22,278 @@
         text-align: center;
     }
 </style>
-<body>
-<header class="header">
-    <h1>Visualizar Projectores</h1>
-    <nav>
-    </nav>
-</header>
+
+<a class="cta-button" href="/nuevoProjector">Agregar Nuevo Projector</a>
+
+
 <div class="f">
     <div class="container my-2">
         <table border="1" class="content-table">
             <thead>
             <tr>
                 <th>ID</th>
-                <th>nombre</th>
-                <th>tipo</th>
-                <th>estado</th>
-
-                <th>historial</th>
-                <th>Editar</th>
-                <!-- Add more headers for the new columns -->
+                <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Estado</th>
+                <th>Acciones</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="projector:${projectores}">
+            <tr th:each="projector : ${projectores}">
                 <td th:text="${projector.id}"></td>
                 <td th:text="${projector.nombre}"></td>
                 <td th:text="${projector.tipo}"></td>
                 <td th:text="${projector.estado}"></td>
-                <td><a th:href="@{'/projectores/projector/' + ${projector.projectorID}}">Ver Historial Prestamos</a></td>
+                <td>
+                    <button th:id="'startButton' + ${projector.id}" th:data-estado="${projector.estado}"
+                            th:disabled="${projector.estado != 'disponible'}"> Pedir Proyector</button>
+                    <button th:id="'returnButton' + ${projector.id}" disabled> Devolver Proyector</button>
+
+                    <select th:id="'profesorSelector' + ${projector.id}">
+                        <option value="">Seleccionar Profesor</option>
+                        <option th:each="profesor : ${profesores}"
+                                th:value="${profesor.id}"
+                                th:text="${profesor.nombre} + ' ' + ${profesor.apellido}">
+                        </option>
+                    </select>
+                    <p th:id="'timer' + ${projector.id}">06:00:00</p>
+                    <div th:id="'damageReport' + ${projector.id}" style="display: none;">
+                        <label><input type="radio" th:name="'damage' + ${projector.id}" value="no" checked> No Dañado</label>
+                        <label><input type="radio" th:name="'damage' + ${projector.id}" value="yes"> Dañado</label>
+                    </div>
+
+                    <button th:id="'repairButton' + ${projector.id}" style="display: none;">Marcar como Reparado</button>
+
+                    <input type="text" th:id="'skipTime' + ${projector.id}" placeholder="HH:MM:SS">
+                    <button th:id="'skipButton' + ${projector.id}">Aplicar Timeskip</button>
+
+                    <p th:id="'resultado' + ${projector.id}"></p>
+                </td>
             </tr>
             </tbody>
             <tfoot>
-
+            <!-- Contenido del tfoot si lo hay -->
             </tfoot>
         </table>
-
         <a class="cta-button" href="/profesores"><button>Volver a profesores</button></a>
     </div>
 </div>
 <br>
 <hr>
-</body>
+
+<script src="../static/script.js"></script>
+
+
 
 </html>
+
+<script>
+    let tiempoTotalSegundos = 6 * 3600; // 6 horas
+    let interval;
+    let tiempoInicial = tiempoTotalSegundos;
+    let proyectorDisponible = true;
+    let horaPrestamo;
+
+    document.querySelector('.container').addEventListener('click', function(event) {
+        if (event.target && event.target.matches("[id^='startButton']")) {
+            const idProyector = event.target.id.replace('startButton', '');
+            const proyectorEstado = event.target.getAttribute('data-estado');
+
+            if (proyectorEstado === 'disponible') {
+                event.target.disabled = true;
+                document.getElementById('returnButton' + idProyector).disabled = false;
+                document.getElementById('damageReport' + idProyector).style.display = 'block';
+                iniciarContador(idProyector);
+                event.target.setAttribute('data-estado', 'ocupado');
+                horaPrestamo = new Date().toLocaleTimeString();
+            }
+        }
+    });
+
+
+
+
+    document.querySelectorAll("[id^='returnButton']").forEach(button => {
+        button.addEventListener("click", function() {
+            const idProyector = this.id.replace('returnButton', '');
+            const fila = this.closest('tr');
+
+            this.disabled = true;
+
+            // Detiene el intervalo específico del proyector
+            if (projectoresTimers[idProyector] && projectoresTimers[idProyector].interval) {
+                clearInterval(projectoresTimers[idProyector].interval);
+            }
+
+            registrarTiempoUsado(idProyector);
+
+        const idProfesor = fila.querySelector('#profesorSelector' + idProyector).value;
+        const danado = fila.querySelector('input[name="damage' + idProyector + '"]:checked').value;
+        const atrasado = fila.querySelector('#timer' + idProyector).textContent === "Atrasado";
+        const horaDevolucion = new Date().toLocaleTimeString();
+
+        enviarDatosPrestamo(horaPrestamo, horaDevolucion, atrasado, idProyector, idProfesor);
+
+        if (danado === "no") {
+            fila.querySelector('#startButton' + idProyector).disabled = false;
+        } else {
+            fila.querySelector('#repairButton' + idProyector).style.display = "block";
+        }
+        fila.querySelector('#damageReport' + idProyector).style.display = "none";
+        projectoresTimers[idProyector].tiempoTotalSegundos = projectoresTimers[idProyector].tiempoInicial;
+        actualizarTiempo(idProyector); // Actualiza la interfaz de usuario para mostrar el contador restablecido
+        });
+    });
+
+    
+    document.querySelectorAll("[id^='repairButton']").forEach(button => {
+    button.addEventListener("click", function() {
+        const idProyector = this.id.replace('repairButton', '');
+        this.style.display = "none"; // Oculta este botón de "Reparado"
+        const fila = this.closest('tr');
+        fila.querySelector('#startButton' + idProyector).disabled = false; // Habilita el botón de "Pedir" correspondiente
+
+        // Aquí puedes agregar lógica adicional si necesitas actualizar el estado del proyector en el backend
+    });
+});
+
+
+    document.querySelectorAll("[id^='skipButton']").forEach(button => {
+    button.addEventListener("click", function() {
+        const idProyector = this.id.replace('skipButton', '');
+        const fila = this.closest('tr');
+        const skipTime = fila.querySelector('#skipTime' + idProyector).value;
+        const [horas, minutos, segundos] = skipTime.split(":").map(Number);
+
+        if (!isNaN(horas) && !isNaN(minutos) && !isNaN(segundos)) {
+            const skipTotalSegundos = horas * 3600 + minutos * 60 + segundos;
+            // Aquí necesitas ajustar para actualizar el tiempo específico de este proyector
+            actualizarTiempo(idProyector, skipTotalSegundos);
+
+            if (tiempoTotalSegundos < 0) {
+                clearInterval(interval); // Asegúrate de manejar intervalos específicos del proyector
+                fila.querySelector('#timer' + idProyector).innerText = "Atrasado";
+                registrarTiempoUsado(fila, idProyector);
+                fila.querySelector('#returnButton' + idProyector).disabled = true;
+                fila.querySelector('#startButton' + idProyector).disabled = false;
+                // Aquí puedes actualizar el estado del proyector si es necesario
+            }
+        }
+    });
+});
+
+    // Objeto para manejar los tiempos e intervalos de cada proyector
+    let projectoresTimers = {};
+    function iniciarContador(idProyector) {
+        // Comprobación e inicialización para un nuevo proyector
+        if (!projectoresTimers[idProyector]) {
+            projectoresTimers[idProyector] = {
+                tiempoTotalSegundos: 6 * 3600, // 6 horas
+                tiempoInicial: 6 * 3600,       // Tiempo inicial
+                interval: null
+            };
+        } else {
+            // Reiniciar el tiempo para un proyector existente
+            clearInterval(projectoresTimers[idProyector].interval);
+            projectoresTimers[idProyector].tiempoTotalSegundos = 6 * 3600;
+            projectoresTimers[idProyector].tiempoInicial = 6 * 3600;
+        }
+
+        actualizarTiempo(idProyector);
+        projectoresTimers[idProyector].interval = setInterval(function() {
+            projectoresTimers[idProyector].tiempoTotalSegundos--;
+
+            actualizarTiempo(idProyector);
+
+            if (projectoresTimers[idProyector].tiempoTotalSegundos <= 0) {
+                clearInterval(projectoresTimers[idProyector].interval);
+                document.getElementById('timer' + idProyector).innerText = "Atrasado";
+                registrarTiempoUsado(idProyector);
+            }
+        }, 1000);
+        // Guarda el tiempo restante en el almacenamiento local
+        localStorage.setItem('tiempoRestante' + idProyector, projectoresTimers[idProyector].tiempoTotalSegundos);
+    }
+
+    window.addEventListener('load', function() {
+        // Recorre todos los proyectores y verifica si hay tiempo guardado en el almacenamiento local
+        Object.keys(projectoresTimers).forEach(function(idProyector) {
+            const tiempoGuardado = localStorage.getItem('tiempoRestante' + idProyector);
+
+            if (tiempoGuardado !== null) {
+                projectoresTimers[idProyector].tiempoTotalSegundos = parseInt(tiempoGuardado, 10);
+                actualizarTiempo(idProyector);
+
+                // Si el contador estaba en cero, realiza las acciones necesarias aquí
+                if (projectoresTimers[idProyector].tiempoTotalSegundos <= 0) {
+                    // Realiza las acciones necesarias para un contador en cero al cargar la página
+                }
+            }
+        });
+    });
+
+
+    function registrarTiempoUsado(idProyector) {
+        // Asegúrate de que tiempoTotalSegundos y tiempoInicial estén correctamente definidos para cada proyector.
+        const tiempoUsado = projectoresTimers[idProyector].tiempoInicial - projectoresTimers[idProyector].tiempoTotalSegundos;
+        const horas = Math.floor(tiempoUsado / 3600);
+        const minutos = Math.floor((tiempoUsado % 3600) / 60);
+        const segundos = tiempoUsado % 60;
+
+        let mensaje;
+        if (projectoresTimers[idProyector].tiempoTotalSegundos < 0) {
+            mensaje = "Atrasado";
+        } else {
+            mensaje = `Tiempo utilizado: ${horas} horas, ${minutos} minutos y ${segundos} segundos.`;
+        }
+
+        // Actualiza el valor en el almacenamiento local antes de reiniciar el contador
+        localStorage.setItem('tiempoRestante' + idProyector, projectoresTimers[idProyector].tiempoTotalSegundos);
+
+        document.getElementById('resultado' + idProyector).innerText = mensaje;
+    }
+
+
+    function actualizarTiempo(idProyector) {
+        let tiempo = projectoresTimers[idProyector].tiempoTotalSegundos;
+        let horas = Math.floor(tiempo / 3600);
+        let minutos = Math.floor((tiempo % 3600) / 60);
+        let segundos = tiempo % 60;
+
+        horas = horas < 10 ? '0' + horas : horas;
+        minutos = minutos < 10 ? '0' + minutos : minutos;
+        segundos = segundos < 10 ? '0' + segundos : segundos;
+
+        document.getElementById('timer' + idProyector).innerText = `${horas}:${minutos}:${segundos}`;
+    }
+
+
+
+
+
+function enviarDatosPrestamo(fechaPrestamo, fechaEntrega, fechaDevolucion, estado, projectorID, profesorID) {
+    const params = new URLSearchParams();
+    params.append('fechaPrestamo', fechaPrestamo);
+    params.append('fechaEntrega', fechaEntrega);
+    params.append('fechaDevolucion', fechaDevolucion);
+    params.append('estado', estado);
+    params.append('projectorID', projectorID);
+    params.append('profesorID', profesorID);
+
+    fetch('/prestamos', {
+        method: 'POST',
+        body: params
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Préstamo registrado:', data);
+        // Aquí puedes actualizar la interfaz de usuario si es necesario
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}
+
+
+
+    </script>

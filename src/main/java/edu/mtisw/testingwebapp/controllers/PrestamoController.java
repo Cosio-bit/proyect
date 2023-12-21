@@ -3,10 +3,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
 import java.util.List;
 import edu.mtisw.testingwebapp.entities.PrestamoEntity;
 import edu.mtisw.testingwebapp.services.PrestamoService;
-
+import edu.mtisw.testingwebapp.services.ProfesorService;
 @Controller
 @RequestMapping
 public class PrestamoController {
@@ -14,21 +17,39 @@ public class PrestamoController {
     @Autowired
     private PrestamoService prestamoService;
 
-    @GetMapping("/listarPrestamos")
+    @GetMapping("/prestamos")
     public String listar(Model model) {
         List<PrestamoEntity> prestamos = prestamoService.obtenerPrestamos();
         model.addAttribute("prestamos", prestamos);
         return "VisualizarPrestamos";
     }
-    @GetMapping("/nuevoPrestamo")
-    public String prestamoForm(Model model) {
-        // Puedes agregar lógica para prellenar el formulario si es necesario.
-        model.addAttribute("prestamo", new PrestamoEntity());
-        return "IngresarPrestamo";
-    }
 
-    // 3. Obtener los pagos de un profesor en particular (GET)
-    @GetMapping("/projectores/prestamo/{id}")
+    @PostMapping("/prestamos")
+    public ResponseEntity<?> agregarPrestamo(@RequestParam("fechaPrestamo") String fechaPrestamo,
+                                             @RequestParam("fechaEntrega") String fechaEntrega,
+                                             @RequestParam("fechaDevolucion") String fechaDevolucion,
+                                             @RequestParam("estado") String estado,
+                                             @RequestParam("projectorID") Long projectorID,
+                                             @RequestParam("profesorID") Long profesorID) {
+        try {
+            PrestamoEntity nuevoPrestamo = prestamoService.guardarPrestamo(
+                    fechaPrestamo, fechaEntrega, fechaDevolucion, estado, projectorID, profesorID);
+
+            if (nuevoPrestamo != null) {
+                return ResponseEntity.ok(nuevoPrestamo);
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No se pudo crear el préstamo");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al procesar la solicitud: " + e.getMessage());
+        }
+    }
+}
+
+
+    /*
+    // 3. Obtener los prestamos de un projector en particular
+    @GetMapping("/projectores/projector/prestamo/{id}")
     public String mostrarPrestamos(@PathVariable Long projectorID, Model model) {
         //List<DetallePagoEntity> listNotPagados = prestamoService.findbynotpagado(id);
         //prestamoService.updateDetallesPagos(listNotPagados); //sepan tyche como traer el promedio hasta aca
@@ -36,18 +57,7 @@ public class PrestamoController {
         model.addAttribute("listPrestamo", listPrestamo);
         return "VisualizarPrestamos";
 
-    }
-
-    // 4. Agregar una nueva nota a un profesor (POST)
-    @PostMapping("/projectores/prestamo/{id}/{prestamoID}")
-    public String agregarPrestamo(@PathVariable Long id, @PathVariable Long prestamoID) {
-        // Implementa aquí la lógica para marcar el detalle de pago como pagado.
-        // Utiliza el prestamoId para identificar el detalle de pago que se debe marcar como pagado.
-        //PrestamoService.prestar(idpago);
-        // Después de procesar el pago, puedes redirigir al usuario a una página de confirmación o a la página de detalles de pagos.
-        return "redirect:/projectores/prestamo/" + id;
-    }
-
+    }*/
 
 /*
     @GetMapping("/crearDetallePago")
@@ -75,6 +85,14 @@ public class PrestamoController {
         prestamoService.anadirDetalle(projectorId, cuotasPactadas, montoTotal);
         return "redirect:/profesores/projector/" + id;
     }
+
+
+     @GetMapping("/nuevoPrestamo")
+    public String prestamoForm(Model model) {
+        // Puedes agregar lógica para prellenar el formulario si es necesario.
+        model.addAttribute("prestamo", new PrestamoEntity());
+        return "IngresarPrestamo";
+    }
     */
 
-}
+

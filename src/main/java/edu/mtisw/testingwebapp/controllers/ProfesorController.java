@@ -42,9 +42,7 @@ public class ProfesorController {
 
 			@RequestParam("rut") String rut,
 			@RequestParam("nombre") String nombre,
-			@RequestParam("apellido") String apellido,
-			@RequestParam("infracciones") int infracciones,
-			@RequestParam("atrasos") int atrasos){
+			@RequestParam("apellido") String apellido){
 
 		// Guardar la información del profesor
 		ProfesorEntity profesor = profesorService.guardarProfesor(rut, nombre, apellido);
@@ -59,7 +57,7 @@ public class ProfesorController {
 	}
 
 
-	@GetMapping("/profesores/{id}")
+	@GetMapping("/profesores/profesor/{id}")
 	public String mostrarprofesor(@PathVariable Long id, Model model) {
 		Optional<ProfesorEntity> profesor = profesorService.obtenerPorId(id);
 		model.addAttribute("profesor", profesor.get());

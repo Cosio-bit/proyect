@@ -1,5 +1,6 @@
 package edu.mtisw.testingwebapp.services;
 
+import edu.mtisw.testingwebapp.entities.PrestamoEntity;
 import edu.mtisw.testingwebapp.entities.ProjectorEntity;
 import edu.mtisw.testingwebapp.repositories.ProjectorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Objects;
+
 import java.util.Optional;
 
 @Service
@@ -20,13 +21,17 @@ public class ProjectorService {
     public ArrayList<ProjectorEntity> obtenerProjectores(){
         return (ArrayList<ProjectorEntity>) projectorRepository.findAll();
     }
-    public ProjectorEntity guardarProjector(String nombre, String tipo, String estado){
+    public ProjectorEntity guardarProjector(String nombre, String tipo){
         ProjectorEntity projector = new ProjectorEntity();
         //OficinaRRHH oficinaRRHH = new OficinaRRHH();
         projector.setNombre(nombre);
         projector.setTipo(tipo);
-        projector.setEstado(estado);
+        projector.setEstado("disponible");
         return projectorRepository.save(projector);
+    }
+
+    public PrestamoEntity guardarPrestamo(String fechaPrestamo, String fechaEntrega, String fechaDevolucion, String estado, Long projectorID, Long profesorID){
+        return prestamoService.guardarPrestamo(fechaPrestamo, fechaEntrega, fechaDevolucion, estado, projectorID, profesorID);
     }
 
     

@@ -37,7 +37,7 @@
     <a class="cta-button" href="/projectores"><button>Volver al menú principal</button></a>
 </header>
 <div class="mainclass">
-    <form th:action="@{'/projectores/crearProjector/'}" method="POST">
+    <form th:action="@{/nuevoProjector}" method="POST">
         <div class="logo">
             <h1><b>Registrar nuevo Projector</b></h1>
         </div>
@@ -46,22 +46,13 @@
             <ul class="container">
                 <li>
                     <label><strong>nombre</strong></label>
-                    <input type="text" id="nombre" placeholder="Ingrese nombre" name="nombre">
+                    <input type="text" id="nombre" placeholder="Ingrese nombre del projector" name="nombre">
                 </li>
                 <li>
                     <label><strong>Tipo</strong></label>
                     <label for="tipo"></label><select id="tipo" name="tipo" required>
-                        <option value="reuniones">Subvencionado</option>
-                        <option value="etc">Privado</option>
-                        <option value="etc etc">Municipal</option>
-                    </select>
-                </li>
-                <li>
-                    <label><strong>Daño</strong></label>
-                    <label for="estado"></label><select id="estado" name="estado" required>
-                        <option value="reuniones">Subvencionado</option>
-                        <option value="etc">Privado</option>
-                        <option value="etc etc">Municipal</option>
+                        <option value="Epson">epson</option>
+                        <option value="ViewSonic">viewSonic</option>
                     </select>
                 </li>
 

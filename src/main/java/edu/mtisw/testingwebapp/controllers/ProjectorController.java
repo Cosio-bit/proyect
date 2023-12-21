@@ -1,6 +1,5 @@
 package edu.mtisw.testingwebapp.controllers;
 import edu.mtisw.testingwebapp.entities.ProfesorEntity;
-import edu.mtisw.testingwebapp.entities.ProfesorEntity;
 import edu.mtisw.testingwebapp.entities.ProjectorEntity;
 import edu.mtisw.testingwebapp.services.ProfesorService;
 import edu.mtisw.testingwebapp.services.ProjectorService;
@@ -19,14 +18,9 @@ import java.util.Optional;
 public class ProjectorController {
     @Autowired
     private ProjectorService projectorService;
+    @Autowired
+    private ProfesorService profesorService;
 
-    // 1. Obtener todas las notas de todos los profesores (GET)
-    @GetMapping("/listarProjectores")
-    public String listarProjectores(Model model) {
-        List<ProjectorEntity> projectores = projectorService.obtenerProjectores();
-        model.addAttribute("projectores", projectores);
-        return "VisualizarProjectores";
-    }
 
     @GetMapping("/projector/{id}")
     public String mostrarProjector(@PathVariable Long id, Model model) {
@@ -47,7 +41,7 @@ public class ProjectorController {
     }
 
 
-    @GetMapping("/crearProjector")
+    @GetMapping("/nuevoProjector")
     public String ProjectorForm(Model model) {
         // Puedes agregar lógica para prellenar el formulario si es necesario.
         model.addAttribute("projector", new ProjectorEntity());
@@ -59,6 +53,7 @@ public class ProjectorController {
 	@GetMapping("/projectores")
 	public String listar(Model model) {
 		List<ProjectorEntity> projectores = projectorService.obtenerProjectores();
+        List<ProfesorEntity> profesores = profesorService.obtenerProfesores();
 
 		// Check if the profesores list is null or empty before calling cuotaUpdate
 		if (projectores != null && !projectores.isEmpty()) {
@@ -67,6 +62,7 @@ public class ProjectorController {
 		}
 
 		model.addAttribute("projectores", projectores);
+        model.addAttribute("profesores", profesores);
 		return "VisualizarProjectores";
 	}
 
@@ -76,11 +72,10 @@ public class ProjectorController {
 			@RequestBody
 
 			@RequestParam("nombre") String nombre,
-			@RequestParam("tipo") String tipo,
-			@RequestParam("estado") String estado){
+			@RequestParam("tipo") String tipo){
 
 		// Guardar la información del profesor
-		ProjectorEntity projector = projectorService.guardarProjector(nombre,tipo,estado);
+		ProjectorEntity projector = projectorService.guardarProjector(nombre,tipo);
 
 		// Create a ModelAndView object and add the data you want to pass to the view
 		ModelAndView modelAndView = new ModelAndView("IngresarProjector");

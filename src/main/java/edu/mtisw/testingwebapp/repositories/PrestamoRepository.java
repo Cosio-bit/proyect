@@ -38,9 +38,6 @@ public interface PrestamoRepository extends JpaRepository<PrestamoEntity, Long> 
     @Query(value = "SELECT * FROM prestamos", nativeQuery = true)
     List<PrestamoEntity> findAllPrestamos();
 
-    @Query(value = "SELECT * FROM prestamos WHERE estado = :estado", nativeQuery = true)
-    List<PrestamoEntity> findProjectorByNotEntregado(Long projectorID);
-
     @Query(value = "SELECT * FROM prestamos WHERE projector_id = :projectorID", nativeQuery = true)
     List<PrestamoEntity> findProjectorByProjectorID(Long projectorID);
 
