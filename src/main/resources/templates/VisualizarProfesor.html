@@ -38,10 +38,6 @@
     <p>RUT: <span th:text="${profesor.rut}"></span></p>
     <p>Nombre: <span th:text="${profesor.nombre}"></span></p>
     <p>Apellido: <span th:text="${profesor.apellido}"></span></p>
-    <p>Fecha de Nacimiento: <span th:text="${profesor.fechaNacimiento}"></span></p>
-    <p>Tipo de Colegio: <span th:text="${profesor.tipoColegio}"></span></p>
-    <p>Nombre del Colegio: <span th:text="${profesor.nombreColegio}"></span></p>
-    <p>Año de Egreso: <span th:text="${profesor.annoEgreso}"></span></p>
 
     <!-- Use JavaScript to fetch content from links -->
     <div id="VisualizarHistorialAcademico"></div>
@@ -50,23 +46,6 @@
 </div>
 <a class="cta-button" href="/profesores"><button>Volver a Profesores</button></a>
 
-<!-- Include jQuery library for AJAX requests -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function () {
-        // Get the profesor.id from the generated HTML and store it in a JavaScript variable
-        var profesorId = $('#profesorId').text();
 
-        // Fetch and display Historial Académico content
-        $.get('/profesores/historialAcademico/' + profesorId, function (data) {
-            $('#VisualizarHistorialAcademico').html(data);
-        });
-
-        // Fetch and display Historial Arancel content
-        $.get('/profesores/projector/' + profesorId, function (data) {
-            $('#VisualizarProjector').html(data);
-        });
-    });
-</script>
 </body>
 </html>

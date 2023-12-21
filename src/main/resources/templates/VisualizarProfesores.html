@@ -38,11 +38,6 @@
                 <th>RUT</th>
                 <th>Nombre</th>
                 <th>Apellido</th>
-                <th>Fecha de Nacimiento</th>
-                <th>Tipo Colegio</th>
-                <th>Nombre Colegio</th>
-                <th>Año de Egreso</th>
-                <th>Periodo de Inscripcion</th>
                 <th>Historial Académico</th>
                 <th>Historial Arancel</th>
                 <th>Resumen profesor</th> <!-- New column for the Edit button -->
@@ -55,29 +50,8 @@
                 <td th:text="${profesor.rut}"></td>
                 <td th:text="${profesor.nombre}"></td>
                 <td th:text="${profesor.apellido}"></td>
-                <td th:text="${profesor.fechaNacimiento}"></td>
-                <td th:text="${profesor.tipoColegio}"></td>
-                <td th:text="${profesor.nombreColegio}"></td>
-                <td th:text="${profesor.annoEgreso}"></td>
-                <!-- Add buttons for viewing and creating academic history -->
-                <td>
-                    <a th:href="@{'/profesores/historialAcademico/' + ${profesor.id}}">Ver Historial Académico</a>
-                </td>
-                <!--
-                <td>
-                    <a th:href="@{'/profesores/crearHistorialAcademico'}">Crear Historial Académico</a>
-                </td>
-                -->
-                <!-- Add buttons for viewing and creating arancel history -->
-                <td>
-                    <a th:href="@{'/profesores/projector/' + ${profesor.id}}">Ver Historial Arancel</a>
-                </td>
-                <!--
-                <td>
-                    <a th:href="@{'/profesores/crearProjector/' + ${profesor.id}}">Crear Historial Arancel</a>
-                </td>
-                -->
-                <!-- Add an Edit button for each student -->
+
+                
                 <td><a th:href="@{'/profesores/' + ${profesor.id}}">Ver profesor</a></td>
                 <!-- Add more columns for additional data if needed -->
             </tr>
@@ -93,14 +67,6 @@
 
         </table>
     </div>
-
-    <tbody>
-    <form th:action="@{'/subirNotas'}" method="post">
-        <label for="datosExcel">Nombre Archivo Excel:</label>
-        <input type="string" id="datosExcel" name="datosExcel" required>
-        <button type="submit">Agregar Notas</button>
-    </form>
-    </tbody>
 </div>
 <br>
 <hr>

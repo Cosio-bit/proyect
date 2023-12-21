@@ -3,7 +3,7 @@
 
 <head>
     <link rel="stylesheet" href="../static/style.css" type="text/css" th:href="@{/style.css}">
-    <title>Ingresar Historial Académico</title>
+    <title>Ingresar Detalle de Pago</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
           crossorigin="anonymous">
@@ -34,24 +34,36 @@
     </div>
     <nav>
     </nav>
-    <a class="cta-button" href="/profesores"><button>Volver al menú principal</button></a>
+    <a class="cta-button" href="/proyectores"><button>Volver al menú principal</button></a>
 </header>
 <div class="mainclass">
-    <form th:action="@{'/profesores/crearHistorialAcademico/'}" method="POST">
-        <!-- Add a hidden input field to store the 'id' -->
+    <form th:action="@{/profesores/crearPrestamo/}" method="POST">
         <div class="logo">
-            <h1><b>Registrar nuevo Historial Académico</b></h1>
+            <h1><b>Registrar nuevo Prestamo</b></h1>
         </div>
         <ul class="formcontainer">
+            <hr/>
+
             <ul class="container">
                 <li>
-                    <label><strong>Notas (separate with commas)</strong></label>
-                    <input type="text" id="notas" placeholder="Ingrese las notas separadas por comas" name="notas">
+                    <label><strong>Fecha de Pago</strong></label>
+                    <input type="date" id="fechaPago" name="fechaPago" required>
                 </li>
-                <!-- Agrega más campos según los atributos de tu entidad HistorialAcademicoEntity -->
+                <li>
+                    <label><strong>Fecha de Vencimiento</strong></label>
+                    <input type="date" id="fechaVencimiento" name="fechaVencimiento" required>
+                </li>
+                <li>
+                    <label><strong>Pagado</strong></label>
+                    <select id="pagado" name="pagado" required>
+                        <option value="true">Pagado</option>
+                        <option value="false">No Pagado</option>
+                    </select>
+                </li>
+
             </ul>
             <div class="cta-button">
-                <button type="submit">Registrar Historial Académico</button>
+                <button type="submit">Registrar Prestamo</button>
             </div>
         </ul>
     </form>

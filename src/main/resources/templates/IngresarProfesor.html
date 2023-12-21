@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <link rel="stylesheet" href="../static/style.css" type="text/css" th:href="@{/style.css}">
-    <title>Ingresar Detalle de Pago</title>
+    <title>Ingresar Profesor</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
           crossorigin="anonymous">
@@ -11,7 +10,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 </head>
-
 <style>
     body {
         background-color: #BAF4FA;
@@ -27,7 +25,6 @@
         text-align: center;
     }
 </style>
-
 <body>
 <header class="header">
     <div class="logo">
@@ -37,42 +34,37 @@
     <a class="cta-button" href="/profesores"><button>Volver al menú principal</button></a>
 </header>
 <div class="mainclass">
-    <form th:action="@{/profesores/crearDetallePago/}" method="POST">
+    <form th:action="@{/nuevoProfesor}" method="POST">
         <div class="logo">
-            <h1><b>Registrar nuevo Detalle de Pago</b></h1>
+            <h1><b>Registrar nuevo Profesor</b></h1>
         </div>
         <ul class="formcontainer">
             <hr/>
-
             <ul class="container">
                 <li>
-                    <label><strong>Fecha de Pago</strong></label>
-                    <input type="date" id="fechaPago" name="fechaPago" required>
+                    <label><strong>Nombre</strong></label>
+                    <label for="nombre"></label><input type="text" id="nombre" placeholder="Nombre del profesor" name="nombre" required>
                 </li>
                 <li>
-                    <label><strong>Fecha de Vencimiento</strong></label>
-                    <input type="date" id="fechaVencimiento" name="fechaVencimiento" required>
+                    <label><strong>Apellido</strong></label>
+                    <label for="apellido"></label><input type="text" id="apellido" placeholder="Apellido del profesor" name="apellido" required>
                 </li>
                 <li>
-                    <label><strong>Monto de Pago</strong></label>
-                    <input type="number" id="montoPago" placeholder="Ingrese el monto de pago" name="montoPago"
-                           required>
+                    <label><strong>Fecha de Nacimiento</strong></label>
+                    <label for="fechaNacimiento"></label><input type="text" id="fechaNacimiento" placeholder="Formato año/mes/dia" name="fechaNacimiento">
                 </li>
-                <li>
-                    <label><strong>Pagado</strong></label>
-                    <select id="pagado" name="pagado" required>
-                        <option value="true">Pagado</option>
-                        <option value="false">No Pagado</option>
-                    </select>
-                </li>
-                <!-- Agrega más campos según los atributos de tu entidad DetallePagoEntity -->
             </ul>
+
+            
             <div class="cta-button">
-                <button type="submit">Registrar Detalle de Pago</button>
+                <button type="submit">Registrar Profesor</button>
             </div>
         </ul>
     </form>
 </div>
 </body>
 
+
+
 </html>
+

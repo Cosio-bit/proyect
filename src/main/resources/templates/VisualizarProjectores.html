@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es-ES"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Visualizar Historiales de Arancel</title>
+    <link rel="stylesheet" href="../static/style.css" type="text/css" th:href="@{/style.css}">
+</head>
+<style>
+    body {
+        background-color: #BAF4FA;
+        color: #6889BC;
+        font-family: Calibri, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .header {
+        background-color: #7AF4FA;
+        padding: 10px;
+        text-align: center;
+    }
+</style>
+<body>
+<header class="header">
+    <h1>Visualizar Projectores</h1>
+    <nav>
+    </nav>
+</header>
+<div class="f">
+    <div class="container my-2">
+        <table border="1" class="content-table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>nombre</th>
+                <th>tipo</th>
+                <th>estado</th>
+
+                <th>historial</th>
+                <th>Editar</th>
+                <!-- Add more headers for the new columns -->
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="projector:${projectores}">
+                <td th:text="${projector.id}"></td>
+                <td th:text="${projector.nombre}"></td>
+                <td th:text="${projector.tipo}"></td>
+                <td th:text="${projector.estado}"></td>
+                <td><a th:href="@{'/projectores/projector/' + ${projector.projectorID}}">Ver Historial Prestamos</a></td>
+            </tr>
+            </tbody>
+            <tfoot>
+
+            </tfoot>
+        </table>
+
+        <a class="cta-button" href="/profesores"><button>Volver a profesores</button></a>
+    </div>
+</div>
+<br>
+<hr>
+</body>
+
+</html>

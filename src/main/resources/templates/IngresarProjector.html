@@ -34,43 +34,41 @@
     </div>
     <nav>
     </nav>
-    <a class="cta-button" href="/profesores"><button>Volver al menú principal</button></a>
+    <a class="cta-button" href="/projectores"><button>Volver al menú principal</button></a>
 </header>
 <div class="mainclass">
-    <form th:action="@{'/profesores/crearProjector/'}" method="POST">
+    <form th:action="@{'/projectores/crearProjector/'}" method="POST">
         <div class="logo">
-            <h1><b>Registrar nuevo Historial Académico</b></h1>
+            <h1><b>Registrar nuevo Projector</b></h1>
         </div>
         <ul class="formcontainer">
 
-            @RequestParam("cuotasPactadas") String cuotasPactadas)
-
             <ul class="container">
                 <li>
-                    <label><strong>notas</strong></label>
-                    <input type="text" id="notas" placeholder="Ingrese notas" name="notas">
+                    <label><strong>nombre</strong></label>
+                    <input type="text" id="nombre" placeholder="Ingrese nombre" name="nombre">
                 </li>
                 <li>
-                    <label><strong>tipoColegio</strong></label>
-                    <input type="text" id="tipoColegio" placeholder="Ingrese tipoColegio" name="tipoColegio">
+                    <label><strong>Tipo</strong></label>
+                    <label for="tipo"></label><select id="tipo" name="tipo" required>
+                        <option value="reuniones">Subvencionado</option>
+                        <option value="etc">Privado</option>
+                        <option value="etc etc">Municipal</option>
+                    </select>
                 </li>
                 <li>
-                    <label><strong>AnnoEgreso</strong></label>
-                    <input type="text" id="AnnoEgreso" placeholder="Ingrese AnnoEgreso" name="AnnoEgreso">
-                </li>
-                <li>
-                    <label><strong>tipoPago</strong></label>
-                    <input type="text" id="tipoPago" placeholder="Ingrese tipoPago" name="tipoPago">
-                </li>
-                <li>
-                    <label><strong>Notas</strong></label>
-                    <input type="text" id="cuotasPactadas" placeholder="Ingrese cuotasPactadas" name="cuotasPactadas">
+                    <label><strong>Daño</strong></label>
+                    <label for="estado"></label><select id="estado" name="estado" required>
+                        <option value="reuniones">Subvencionado</option>
+                        <option value="etc">Privado</option>
+                        <option value="etc etc">Municipal</option>
+                    </select>
                 </li>
 
                 <!-- Agrega más campos según los atributos de tu entidad ProjectorEntity -->
             </ul>
             <div class="cta-button">
-                <button type="submit">Registrar Historial Académico</button>
+                <button type="submit">Registrar Projector</button>
             </div>
         </ul>
     </form>

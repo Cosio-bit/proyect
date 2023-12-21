@@ -39,8 +39,8 @@ public class PrestamoController {
     }
 
     // 4. Agregar una nueva nota a un profesor (POST)
-    @PostMapping("/projectores/prestamo/{id}/{idprestamo}")
-    public String agregarPrestamo(@PathVariable Long id, @PathVariable Long idpago) {
+    @PostMapping("/projectores/prestamo/{id}/{prestamoID}")
+    public String agregarPrestamo(@PathVariable Long id, @PathVariable Long prestamoID) {
         // Implementa aquí la lógica para marcar el detalle de pago como pagado.
         // Utiliza el prestamoId para identificar el detalle de pago que se debe marcar como pagado.
         //PrestamoService.prestar(idpago);
