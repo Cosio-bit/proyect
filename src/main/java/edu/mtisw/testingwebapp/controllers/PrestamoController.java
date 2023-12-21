@@ -16,7 +16,7 @@ public class PrestamoController {
 
     @GetMapping("/listarPrestamos")
     public String listar(Model model) {
-        List<PrestamoEntity> prestamos = PrestamoService.obtenerPrestamos();
+        List<PrestamoEntity> prestamos = prestamoService.obtenerPrestamos();
         model.addAttribute("prestamos", prestamos);
         return "VisualizarPrestamos";
     }
@@ -29,10 +29,10 @@ public class PrestamoController {
 
     // 3. Obtener los pagos de un profesor en particular (GET)
     @GetMapping("/projectores/prestamo/{id}")
-    public String mostrarPrestamos(@PathVariable Long id, Model model) {
+    public String mostrarPrestamos(@PathVariable Long projectorID, Model model) {
         //List<DetallePagoEntity> listNotPagados = prestamoService.findbynotpagado(id);
         //prestamoService.updateDetallesPagos(listNotPagados); //sepan tyche como traer el promedio hasta aca
-        List<PrestamoEntity> listPrestamo = PrestamoService.obtenerPorProjectorID(id); //supongo que aqui ya estaran updateados
+        List<PrestamoEntity> listPrestamo = prestamoService.obtenerPrestamosPorProjectorID(projectorID);
         model.addAttribute("listPrestamo", listPrestamo);
         return "VisualizarPrestamos";
 
@@ -43,7 +43,7 @@ public class PrestamoController {
     public String agregarPrestamo(@PathVariable Long id, @PathVariable Long idpago) {
         // Implementa aquí la lógica para marcar el detalle de pago como pagado.
         // Utiliza el prestamoId para identificar el detalle de pago que se debe marcar como pagado.
-        PrestamoService.prestar(idpago);
+        //PrestamoService.prestar(idpago);
         // Después de procesar el pago, puedes redirigir al usuario a una página de confirmación o a la página de detalles de pagos.
         return "redirect:/projectores/prestamo/" + id;
     }

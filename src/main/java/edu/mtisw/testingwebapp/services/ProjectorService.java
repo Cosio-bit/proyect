@@ -20,10 +20,9 @@ public class ProjectorService {
     public ArrayList<ProjectorEntity> obtenerProjectores(){
         return (ArrayList<ProjectorEntity>) projectorRepository.findAll();
     }
-    public ProjectorEntity guardarProjector(Long projectorID, String nombre, String tipo, String estado){
+    public ProjectorEntity guardarProjector(String nombre, String tipo, String estado){
         ProjectorEntity projector = new ProjectorEntity();
         //OficinaRRHH oficinaRRHH = new OficinaRRHH();
-        projector.setId(projectorID);
         projector.setNombre(nombre);
         projector.setTipo(tipo);
         projector.setEstado(estado);
@@ -38,6 +37,14 @@ public class ProjectorService {
         return projector;
     }
     public Optional<ProjectorEntity> obtenerPorId(Long id){
+        return projectorRepository.findById(id);
+    }
+
+    public Optional<ProjectorEntity> obtenerPorNombre(String nombre){
+        return projectorRepository.findByNombre(nombre);
+    }
+
+    public Optional<ProjectorEntity> obtenerPorID(Long id){
         return projectorRepository.findById(id);
     }
 

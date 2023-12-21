@@ -20,9 +20,9 @@ public class ProfesorController {
 	public String listar(Model model) {
 		List<ProfesorEntity> profesores = profesorService.obtenerProfesores();
 
-		// Check if the profesores list is null or empty before calling cuotaUpdate
+		// Check if the profesores list is null or empty before calling updateInfraccion
 		if (profesores != null && !profesores.isEmpty()) {
-			profesorService.cuotaUpdate(profesores);
+			//profesorService.updateInfraccion(profesores);
 		}
 
 		model.addAttribute("profesores", profesores);
@@ -43,17 +43,11 @@ public class ProfesorController {
 			@RequestParam("rut") String rut,
 			@RequestParam("nombre") String nombre,
 			@RequestParam("apellido") String apellido,
-			@RequestParam("fechaNacimiento") String fechaNacimiento,
-			@RequestParam("tipoColegio") String tipoColegio,
-			@RequestParam("nombreColegio") String nombreColegio,
-			@RequestParam("AnnoEgreso") String AnnoEgreso,
-			@RequestParam("tipoPago") String tipoPago,
-			@RequestParam("cuotasPactadas") String cuotasPactadas,
-			@RequestParam("notas") String notas){
+			@RequestParam("infracciones") int infracciones,
+			@RequestParam("atrasos") int atrasos){
 
 		// Guardar la información del profesor
-		ProfesorEntity profesor = profesorService.manageGuardar(rut,nombre,apellido,fechaNacimiento,tipoColegio,nombreColegio,AnnoEgreso,tipoPago,cuotasPactadas,notas);
-
+		ProfesorEntity profesor = profesorService.guardarProfesor(rut, nombre, apellido);
 
 		// Create a ModelAndView object and add the data you want to pass to the view
 		ModelAndView modelAndView = new ModelAndView("IngresarProfesor");
@@ -71,14 +65,5 @@ public class ProfesorController {
 		model.addAttribute("profesor", profesor.get());
 		return "VisualizarProfesor";
 	}
-/*
-	// 2. Añadir nuevas notas de profesores desde una cadena (POST)
-	@PostMapping("/subirNotas")
-	public String subirNotasDesdeString(@RequestParam("datosExcel") String datosExcel) {
-		// Implement your logic here to process 'datosExcel' and add grades to the database.
-		profesorService.agregarNotasAHistorial(datosExcel);
-		return "redirect:/profesores";
-	}*/
-
 
 }
