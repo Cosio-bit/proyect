@@ -6,18 +6,18 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "proyectores")
+@Table(name = "projectores")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProyectorEntity {
+public class ProjectorEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
     private Long id;
-    private String proyector;
-    private String tipoProyector;
+    private String nombre;
+    private String tipo;
     private String estado;
 
 }

@@ -48,19 +48,19 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="historialArancel:${historialAranceles}">
-                <td th:text="${historialArancel.id}"></td>
-                <td th:text="${historialArancel.montoTotal}"></td>
-                <td th:text="${historialArancel.tipoPago}"></td>
-                <td th:text="${historialArancel.cuotasPactadas}"></td>
-                <td th:text="${historialArancel.cuotasPagadas}"></td>
-                <td th:text="${historialArancel.totalPagado}"></td>
-                <td th:text="${historialArancel.ultimoPago}"></td>
-                <td th:text="${historialArancel.saldoPorPagar}"></td>
-                <td th:text="${historialArancel.cuotasRetraso}"></td>
-                <td><a th:href="@{'/profesores/historialArancel/' + ${historialArancel.estudianteID}}">Ver Historial Arancel Profesor</a></td>
+            <tr th:each="projector:${projectores}">
+                <td th:text="${projector.id}"></td>
+                <td th:text="${projector.montoTotal}"></td>
+                <td th:text="${projector.tipoPago}"></td>
+                <td th:text="${projector.cuotasPactadas}"></td>
+                <td th:text="${projector.cuotasPagadas}"></td>
+                <td th:text="${projector.totalPagado}"></td>
+                <td th:text="${projector.ultimoPago}"></td>
+                <td th:text="${projector.saldoPorPagar}"></td>
+                <td th:text="${projector.cuotasRetraso}"></td>
+                <td><a th:href="@{'/profesores/projector/' + ${projector.profesorID}}">Ver Historial Arancel Profesor</a></td>
                 <!-- Add an Edit button for each Historial de Arancel entry -->
-                <td><a th:href="@{'/editarHistorialArancel/' + ${historialArancel.id}}">Editar</a></td>
+                <td><a th:href="@{'/editarProjector/' + ${projector.id}}">Editar</a></td>
                 <!-- Add more columns for additional data if needed -->
             </tr>
             </tbody>
@@ -98,9 +98,9 @@
         cuotasRetraso: 0
     };
 
-    var historialAranceles = document.querySelectorAll("tbody tr");
+    var projectores = document.querySelectorAll("tbody tr");
 
-    historialAranceles.forEach(function (row) {
+    projectores.forEach(function (row) {
         var cells = row.querySelectorAll("td");
         columnSums.montoTotal += parseFloat(cells[1].textContent);
         columnSums.cuotasPactadas += parseFloat(cells[3].textContent);

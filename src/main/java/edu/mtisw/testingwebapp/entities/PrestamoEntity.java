@@ -22,12 +22,7 @@ public class PrestamoEntity {
     private LocalDate fechaDevolucion;
     private String estado;
 
-    private Long proyectorID;
+    private Long projectorID;
     private Long profesorID;
-
-    /*
-    @ManyToOne
-    @JoinColumn(name = "historial_arancel")
-    private HistorialArancelEntity historialArancel;*/
 
 }

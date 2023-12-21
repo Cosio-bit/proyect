@@ -1,14 +1,14 @@
 package edu.mtisw.testingwebapp;
 
 import edu.mtisw.testingwebapp.entities.PrestamoEntity;
-import edu.mtisw.testingwebapp.entities.EstudianteEntity;
+import edu.mtisw.testingwebapp.entities.ProfesorEntity;
 import edu.mtisw.testingwebapp.entities.HistorialAcademicoEntity;
-import edu.mtisw.testingwebapp.entities.ProyectorEntity;
+import edu.mtisw.testingwebapp.entities.ProjectorEntity;
 import edu.mtisw.testingwebapp.repositories.ProfesorRepository;
 import edu.mtisw.testingwebapp.services.PrestamoService;
 import edu.mtisw.testingwebapp.services.ProfesorService;
 import edu.mtisw.testingwebapp.services.HistorialAcademicoService;
-import edu.mtisw.testingwebapp.services.ProyectorService;
+import edu.mtisw.testingwebapp.services.ProjectorService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,29 +18,29 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
-public class testEstudiante {
+public class testProfesor {
 
     @Autowired
-    private ProfesorRepository estudianteRepository;
+    private ProfesorRepository profesorRepository;
 
     @Autowired
-    private ProfesorService estudianteService;
+    private ProfesorService profesorService;
 
     @Autowired
     private HistorialAcademicoService historialAcademicoService;
 
     @Autowired
-    private ProyectorService historialArancelService;
+    private ProjectorService projectorService;
 
     @Autowired
-    private PrestamoService detallePagoService;
+    private PrestamoService prestamoService;
 
 
     @Test
-        void testEstudianteEntityAttributes() {
+        void testProfesorEntityAttributes() {
 
 
-        EstudianteEntity profesor = new EstudianteEntity();
+        ProfesorEntity profesor = new ProfesorEntity();
 
         String nombre = "John";
         String apellido = "Doe";
@@ -91,16 +91,16 @@ public class testEstudiante {
             String rut = "20623525";
             //por separado para 1 profesor
 
-            EstudianteEntity estudiante1 = estudianteService.guardarEstudiante(rut, nombre, apellido, "2000/02/02", tipoColegio, nombreColegio,"2020/02/02");
+            ProfesorEntity profesor1 = profesorService.guardarProfesor(rut, nombre, apellido, "2000/02/02", tipoColegio, nombreColegio,"2020/02/02");
 
             // Save the academic history for the student
-            HistorialAcademicoEntity historialAcademico1 = historialAcademicoService.guardarHistorialAcademico(estudiante1.getId(), "900,800,700");
+            HistorialAcademicoEntity historialAcademico1 = historialAcademicoService.guardarHistorialAcademico(profesor1.getId(), "900,800,700");
 
             String tipoPago = "cuotas";
             int cuotasPactadas = 5;
-            ProyectorEntity historialArancel = historialArancelService.guardarHistorialArancel(estudiante1.getId(),tipoColegio, "2020/02/02",tipoPago, "5") ;//lo mismo, crear profesor primero
+            ProjectorEntity projector = projectorService.guardarProjector(profesor1.getId(),tipoColegio, "2020/02/02",tipoPago, "5") ;//lo mismo, crear profesor primero
 
-            List<PrestamoEntity> detallePagoEntities =  detallePagoService.guardarDetallesPagos(historialArancel.getId(), cuotasPactadas,historialArancel.getMontoTotal()); //hay que guardarlo en el repo para ir a buscarlo y para eso necesitamos historial arancel
+            List<PrestamoEntity> prestamoEntities =  prestamoService.guardarDetallesPagos(projector.getId(), cuotasPactadas,projector.getMontoTotal()); //hay que guardarlo en el repo para ir a buscarlo y para eso necesitamos historial arancel
         }
 
 
@@ -109,24 +109,24 @@ public class testEstudiante {
         void testManage(){
 
             // Asumiendo que este es el lugar en tu código donde deseas llamar la función manageGuardar
-            EstudianteEntity estudiante2 = estudianteService.manageGuardar("20623522", "andrea", "cosio", "2000/02/02", "Municipal", "cosaco", "2020/02/02", "cuotas", "5", "900,800,700");
-            //estudianteService.manageGuardar(rut, nombre, apellido,"2000/02/02", tipoColegio,nombreColegio,"2020/02/02",tipoPago, "5","900,800,700","2020/02/02");
-            //estudianteService.cuotaUpdate(estudianteService.obtenerEstudiantes());
+            ProfesorEntity profesor2 = profesorService.manageGuardar("20623522", "andrea", "cosio", "2000/02/02", "Municipal", "cosaco", "2020/02/02", "cuotas", "5", "900,800,700");
+            //profesorService.manageGuardar(rut, nombre, apellido,"2000/02/02", tipoColegio,nombreColegio,"2020/02/02",tipoPago, "5","900,800,700","2020/02/02");
+            //profesorService.cuotaUpdate(profesorService.obtenerProfesors());
 
-            estudianteService.obtenerPorId(estudiante2.getId());
+            profesorService.obtenerPorId(profesor2.getId());
 
-            //estudianteService.obtenerPorRut(estudiante2.getRut());
+            //profesorService.obtenerPorRut(profesor2.getRut());
 
-            List<EstudianteEntity> estudianteEntities = estudianteService.obtenerEstudiantes();
+            List<ProfesorEntity> profesorEntities = profesorService.obtenerProfesors();
 
-            estudianteService.obtenerRuts();
-            estudianteService.obtenerPorRut(estudiante2.getRut());
+            profesorService.obtenerRuts();
+            profesorService.obtenerPorRut(profesor2.getRut());
 
-            List<List<String>> lista = estudianteService.ExcelImporterToList("examen");
+            List<List<String>> lista = profesorService.ExcelImporterToList("examen");
 
-            //estudianteService.agregarNotasAHistorial("examen");
+            //profesorService.agregarNotasAHistorial("examen");
 
-            //estudianteService.cuotaUpdate(estudianteEntities);
+            //profesorService.cuotaUpdate(profesorEntities);
 
 
 

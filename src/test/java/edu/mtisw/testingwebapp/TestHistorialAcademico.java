@@ -1,6 +1,6 @@
 package edu.mtisw.testingwebapp;
 
-import edu.mtisw.testingwebapp.entities.EstudianteEntity;
+import edu.mtisw.testingwebapp.entities.ProfesorEntity;
 import edu.mtisw.testingwebapp.entities.HistorialAcademicoEntity;
 import edu.mtisw.testingwebapp.repositories.ProfesorRepository;
 import edu.mtisw.testingwebapp.repositories.HistorialAcademicoRepository;
@@ -19,13 +19,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 public class TestHistorialAcademico {
     @Autowired
-    private ProfesorService estudianteService; // Add this annotation
+    private ProfesorService profesorService; // Add this annotation
 
     @Autowired
     private HistorialAcademicoService historialAcademicoService; // Add this annotation
 
     @Autowired
-    private ProfesorRepository estudianteRepository; // Add this annotation if needed
+    private ProfesorRepository profesorRepository; // Add this annotation if needed
 
     @Autowired
     private HistorialAcademicoRepository historialAcademicoRepository; // Add this annotation if needed
@@ -44,7 +44,7 @@ public class TestHistorialAcademico {
         String rut = "20623522";
         LocalDate annoEgreso = LocalDate.of(2023, 6, 30);
         LocalDate periodoInscripcion = LocalDate.of(2023, 9, 1);
-        EstudianteEntity estudiante1 = estudianteService.guardarEstudiante(rut, nombre, apellido, "2000/02/02", tipoColegio, nombreColegio, "2020/02/02");
+        ProfesorEntity profesor1 = profesorService.guardarProfesor(rut, nombre, apellido, "2000/02/02", tipoColegio, nombreColegio, "2020/02/02");
 
         // Initialize the student's academic history
         HistorialAcademicoEntity historialAcademico = new HistorialAcademicoEntity();
@@ -65,7 +65,7 @@ public class TestHistorialAcademico {
         assertEquals(notas, historialAcademico.getNotas());
 
         // Save the academic history for the student
-        HistorialAcademicoEntity historialAcademico1 = historialAcademicoService.guardarHistorialAcademico(estudiante1.getId(), "900,800,700");
+        HistorialAcademicoEntity historialAcademico1 = historialAcademicoService.guardarHistorialAcademico(profesor1.getId(), "900,800,700");
 
         // Calculate the average
         double promedio = historialAcademicoService.calcularPromedioHistorial(historialAcademico1);
@@ -75,9 +75,9 @@ public class TestHistorialAcademico {
 
 
         historialAcademicoService.anadirNota(historialAcademico1.getId(), 900);
-        historialAcademicoService.obtenerPorEstudianteId(estudiante1.getId());
+        historialAcademicoService.obtenerPorProfesorId(profesor1.getId());
 
-        System.out.println(historialAcademicoService.obtenerPorEstudianteId(estudiante1.getId()).getPromedioExamenes());
+        System.out.println(historialAcademicoService.obtenerPorProfesorId(profesor1.getId()).getPromedioExamenes());
 
 
         historialAcademicoService.anadirNotaConFecha(historialAcademico1.getId(), 900, "2020/02/02");

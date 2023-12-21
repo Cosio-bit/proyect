@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.Optional;
-import edu.mtisw.testingwebapp.entities.EstudianteEntity;
+import edu.mtisw.testingwebapp.entities.ProfesorEntity;
 import edu.mtisw.testingwebapp.services.ProfesorService;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -58,7 +58,7 @@ public class ProfesorController {
 		// Create a ModelAndView object and add the data you want to pass to the view
 		ModelAndView modelAndView = new ModelAndView("IngresarProfesor");
 
-		// Add the ID of the EstudianteEntity to the model
+		// Add the ID of the ProfesorEntity to the model
 		modelAndView.addObject("profesorID", profesor.getId());
 
 		return modelAndView;
@@ -76,7 +76,7 @@ public class ProfesorController {
 	@PostMapping("/subirNotas")
 	public String subirNotasDesdeString(@RequestParam("datosExcel") String datosExcel) {
 		// Implement your logic here to process 'datosExcel' and add grades to the database.
-		estudianteService.agregarNotasAHistorial(datosExcel);
+		profesorService.agregarNotasAHistorial(datosExcel);
 		return "redirect:/profesores";
 	}*/
 

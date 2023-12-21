@@ -1,9 +1,9 @@
 package edu.mtisw.testingwebapp.services;
 
 import edu.mtisw.testingwebapp.entities.PrestamoEntity;
-import edu.mtisw.testingwebapp.entities.ProyectorEntity;
+import edu.mtisw.testingwebapp.entities.ProjectorEntity;
 import edu.mtisw.testingwebapp.repositories.PrestamoRepository;
-import edu.mtisw.testingwebapp.repositories.ProyectorRepository;
+import edu.mtisw.testingwebapp.repositories.ProjectorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,68 +17,58 @@ import java.util.Optional;
 @Service
 public class PrestamoService {
     @Autowired
-    PrestamoRepository detallePagoRepository;
+    PrestamoRepository prestamoRepository;
     @Autowired
-    ProyectorRepository historialArancelRepository;
-    public ArrayList<PrestamoEntity> obtenerDetallesPagos(){
-        return (ArrayList<PrestamoEntity>) detallePagoRepository.findAll();
+    ProjectorRepository projectorRepository;
+    public ArrayList<PrestamoEntity> obtenerPrestamo(){
+        return (ArrayList<PrestamoEntity>) prestamoRepository.findAll();
     }
-    public PrestamoEntity guardarDetallePago(Long proyectorID, double cuotasPactadas, double montoTotal, int nroCuota){
+    public PrestamoEntity guardarPrestamo(LocalDate fechaPrestamo, LocalDate fechaEntrega, LocalDate fechaDevolucion, String estado, Long projectorID, Long profesorID){
         PrestamoEntity prestamo = new PrestamoEntity();
-        String tipopago = historialArancelRepository.findById(historialArancelID).get().getTipoPago();
-        if(Objects.equals(tipopago, "cuotas")){
-            prestamo.setMontoPago(montoTotal/cuotasPactadas);
-            prestamo.setPagado(false);}
-        else{
-            prestamo.setMontoPago((montoTotal)/cuotasPactadas);
-            prestamo.setPagado(true);}
+        
+        prestamo.setProjectorID(projectorID);
+        prestamo.setProfesorID(profesorID);
+        prestamo.setFechaPrestamo(fechaPrestamo);
+        prestamo.setFechaEntrega(fechaEntrega);
+        prestamo.setFechaDevolucion(fechaDevolucion);
+        prestamo.setEstado(estado);
 
-        prestamo.setHistorialArancelID(historialArancelID);
-        prestamo.setFechaVencimiento(LocalDate.now().plusMonths(nroCuota+1));
-        return detallePagoRepository.save(prestamo);
+        return prestamoRepository.save(prestamo);
     }
-    public List<PrestamoEntity> guardarDetallesPagos(Long historialArancelID,int cuotasPactadas, double montoTotal) {
-        List<PrestamoEntity> detallePagoEntities = new ArrayList<>();
-        for(int i = 0; i!=cuotasPactadas; i++) {
-            // Let's iterate through each 'DetallePagoEntity' in the 'detallesPagos' list and save them.
-            detallePagoEntities.add(guardarDetallePago(historialArancelID, cuotasPactadas, montoTotal, i));
-            System.out.println(detallePagoEntities.get(i).getId());
-        }
-        return detallePagoEntities;
-    }
+
 
     public void updateDetallePago(PrestamoEntity optionalDetallePago, double promedio, LocalDate fechaActual){
 
-        Long historialArancelId = optionalDetallePago.getHistorialArancelID();
-        ProyectorEntity historialArancel = historialArancelRepository.findById(historialArancelId).orElse(null);
-        assert historialArancel != null;
+        Long projectorId = optionalDetallePago.getProjectorID();
+        ProjectorEntity projector = projectorRepository.findById(projectorId).orElse(null);
+        assert projector != null;
 
-        double originalCuota = historialArancel.getMontoTotal()/historialArancel.getCuotasPactadas();
-        if(historialArancel.getTipoPago().equals("cuotas")){
+        double originalCuota = projector.getMontoTotal()/projector.getCuotasPactadas();
+        if(projector.getTipoPago().equals("cuotas")){
             LocalDate fechaVence = optionalDetallePago.getFechaVencimiento();
             int diferenciaMeses = calcularMesesAtraso(fechaActual, fechaVence);
-            int interesActual = historialArancel.getCastigoInteres();
+            int interesActual = projector.getCastigoInteres();
             if(diferenciaMeses>=interesActual){
-                historialArancel.setCastigoInteres(diferenciaMeses);
+                projector.setCastigoInteres(diferenciaMeses);
             }
-        optionalDetallePago.setMontoPago(calcularArancelInteres(historialArancel.getCastigoInteres(), calcularArancelNotas(promedio, originalCuota)));}
+        optionalDetallePago.setMontoPago(calcularArancelInteres(projector.getCastigoInteres(), calcularArancelNotas(promedio, originalCuota)));}
         else{
-            historialArancel.setSaldoPorPagar(0);
+            projector.setSaldoPorPagar(0);
         }
-        historialArancelRepository.save(historialArancel);
-        detallePagoRepository.save(optionalDetallePago);
+        projectorRepository.save(projector);
+        prestamoRepository.save(optionalDetallePago);
     }
-    public void updateDetallesPagos(List<PrestamoEntity> detallePagoEntities, double promedio){ //obtener el promedio dada que es el mismo id de profesor ver como hacerlo porque solo profesor tiene todos los repos juntos
+    public void updateDetallesPagos(List<PrestamoEntity> prestamoEntities, double promedio){ //obtener el promedio dada que es el mismo id de profesor ver como hacerlo porque solo profesor tiene todos los repos juntos
         LocalDate fechaActual = LocalDate.now();
-        //Long historialArancelId = detallePagoEntities.get(0).getHistorialArancelID();
-        //HistorialArancelEntity historialArancel = historialArancelRepository.findById(historialArancelId).orElse(null);
+        //Long projectorId = prestamoEntities.get(0).getProjectorID();
+        //ProjectorEntity projector = projectorRepository.findById(projectorId).orElse(null);
 
-        for(int i=0; i!=detallePagoEntities.size();i++){
-            updateDetallePago(detallePagoEntities.get(i), promedio, fechaActual);
+        for(int i=0; i!=prestamoEntities.size();i++){
+            updateDetallePago(prestamoEntities.get(i), promedio, fechaActual);
         }
     }// la diferencia se va sumando, ademas de añadir la opcion de los q pagan al contado para retornarles el dinero, diferencia que ganan dadas sus notas
     public List<PrestamoEntity> findbynotpagado(Long histAranID){
-        return detallePagoRepository.findDetallePagosByNotPagadoAndHistorialArancelID(histAranID);
+        return prestamoRepository.findDetallePagosByNotPagadoAndProjectorID(histAranID);
     }
     public double calcularArancelNotas(double promedio, double arancel) {
         if (promedio >= 950 && promedio <= 1000) {
@@ -115,30 +105,30 @@ public class PrestamoService {
         return arancel;
     }
     public void pagar(Long idPago) {
-        Optional<PrestamoEntity> optionalDetallePago = detallePagoRepository.findById(idPago);
+        Optional<PrestamoEntity> optionalDetallePago = prestamoRepository.findById(idPago);
 
         if (optionalDetallePago.isPresent()) {
             PrestamoEntity prestamo = optionalDetallePago.get();
             prestamo.setPagado(true); // Establece el estado pagado en true
-            detallePagoRepository.save(prestamo); // Guarda la entidad actualizada
+            prestamoRepository.save(prestamo); // Guarda la entidad actualizada
 
             // Calcula el nuevo monto total para el historial de arancel
-            Long historialArancelId = prestamo.getHistorialArancelID();
-            ProyectorEntity historialArancel = historialArancelRepository.findById(historialArancelId).orElse(null);
+            Long projectorId = prestamo.getProjectorID();
+            ProjectorEntity projector = projectorRepository.findById(projectorId).orElse(null);
 
-            if (historialArancel != null) {
-                double nuevoMonto = historialArancel.getMontoTotal() - prestamo.getMontoPago();
-                historialArancel.setUltimoPago(LocalDate.now());
-                historialArancel.setSaldoPorPagar(nuevoMonto);
-                historialArancel.setCuotasPagadas(historialArancel.getCuotasPagadas()+1);
-                historialArancel.setTotalPagado(historialArancel.getTotalPagado()+ prestamo.getMontoPago());
-                historialArancelRepository.save(historialArancel);
+            if (projector != null) {
+                double nuevoMonto = projector.getMontoTotal() - prestamo.getMontoPago();
+                projector.setUltimoPago(LocalDate.now());
+                projector.setSaldoPorPagar(nuevoMonto);
+                projector.setCuotasPagadas(projector.getCuotasPagadas()+1);
+                projector.setTotalPagado(projector.getTotalPagado()+ prestamo.getMontoPago());
+                projectorRepository.save(projector);
             }
         }
     }
 
-    public List<PrestamoEntity> obtenerPorHistorialArancelID(Long id) {
-        return detallePagoRepository.findByHistorialArancelID(id);}
+    public List<PrestamoEntity> obtenerPorProjectorID(Long id) {
+        return prestamoRepository.findByProjectorID(id);}
 
 
 }

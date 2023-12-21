@@ -38,28 +38,28 @@
 </header>
 <div class="container my-2">
 	<h2>Detalles del Historial de Arancel</h2>
-	<p>ID: <span th:text="${historialArancel.id}"></span></p>
-	<p>Monto Total: <span th:text="${historialArancel.montoTotal}"></span></p>
-	<p>Tipo de Pago: <span th:text="${historialArancel.tipoPago}"></span></p>
-	<p>Cuotas Pactadas: <span th:text="${historialArancel.cuotasPactadas}"></span></p>
-	<p>Cuotas Pagadas: <span th:text="${historialArancel.cuotasPagadas}"></span></p>
-	<p>Total Pagado: <span th:text="${historialArancel.totalPagado}"></span></p>
-	<p>Último Pago: <span th:text="${historialArancel.ultimoPago}"></span></p>
-	<p>Saldo Por Pagar: <span th:text="${historialArancel.saldoPorPagar}"></span></p>
-	<p>Cuotas de Retraso: <span th:text="${historialArancel.cuotasRetraso}"></span></p>
+	<p>ID: <span th:text="${projector.id}"></span></p>
+	<p>Monto Total: <span th:text="${projector.montoTotal}"></span></p>
+	<p>Tipo de Pago: <span th:text="${projector.tipoPago}"></span></p>
+	<p>Cuotas Pactadas: <span th:text="${projector.cuotasPactadas}"></span></p>
+	<p>Cuotas Pagadas: <span th:text="${projector.cuotasPagadas}"></span></p>
+	<p>Total Pagado: <span th:text="${projector.totalPagado}"></span></p>
+	<p>Último Pago: <span th:text="${projector.ultimoPago}"></span></p>
+	<p>Saldo Por Pagar: <span th:text="${projector.saldoPorPagar}"></span></p>
+	<p>Cuotas de Retraso: <span th:text="${projector.cuotasRetraso}"></span></p>
 
 	<!-- Verifica si el tipo de pago es "contado" antes de mostrar el monto del reembolso -->
-	<th:block th:if="${historialArancel.tipoPago == 'al contado'}">
+	<th:block th:if="${projector.tipoPago == 'al contado'}">
 		<p>Monto del Reembolso: <span th:text="${refundAmount}">Calculando...</span></p>
 	</th:block>
 
 
 
 	<td>
-		<a th:href="@{'/profesores/historialArancel/detallePagos/' + ${historialArancel.id}}">Ver Detalle de los pagos</a>
+		<a th:href="@{'/profesores/projector/prestamos/' + ${projector.id}}">Ver Detalle de los pagos</a>
 	</td>
 
-	<!-- Add more details about the historialArancel as needed -->
+	<!-- Add more details about the projector as needed -->
 
 	<!-- Add a button or link to go back to the list of historiales if needed -->
 	<a class="cta-button" href="/profesores/listarAranceles">Volver a la Lista de Historiales</a>

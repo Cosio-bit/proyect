@@ -34,7 +34,7 @@
 </header>
 <div class="container">
     <h2>Información del Profesor</h2>
-    <p>ID: <span th:text="${profesor.id}" id="estudianteId"></span></p>
+    <p>ID: <span th:text="${profesor.id}" id="profesorId"></span></p>
     <p>RUT: <span th:text="${profesor.rut}"></span></p>
     <p>Nombre: <span th:text="${profesor.nombre}"></span></p>
     <p>Apellido: <span th:text="${profesor.apellido}"></span></p>
@@ -45,7 +45,7 @@
 
     <!-- Use JavaScript to fetch content from links -->
     <div id="VisualizarHistorialAcademico"></div>
-    <div id="VisualizarHistorialArancel"></div>
+    <div id="VisualizarProjector"></div>
 
 </div>
 <a class="cta-button" href="/profesores"><button>Volver a Profesores</button></a>
@@ -55,16 +55,16 @@
 <script>
     $(document).ready(function () {
         // Get the profesor.id from the generated HTML and store it in a JavaScript variable
-        var estudianteId = $('#estudianteId').text();
+        var profesorId = $('#profesorId').text();
 
         // Fetch and display Historial Académico content
-        $.get('/profesores/historialAcademico/' + estudianteId, function (data) {
+        $.get('/profesores/historialAcademico/' + profesorId, function (data) {
             $('#VisualizarHistorialAcademico').html(data);
         });
 
         // Fetch and display Historial Arancel content
-        $.get('/profesores/historialArancel/' + estudianteId, function (data) {
-            $('#VisualizarHistorialArancel').html(data);
+        $.get('/profesores/projector/' + profesorId, function (data) {
+            $('#VisualizarProjector').html(data);
         });
     });
 </script>

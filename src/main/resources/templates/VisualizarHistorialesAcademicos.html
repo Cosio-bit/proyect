@@ -46,7 +46,7 @@
                 <td th:text="${historialAcademico.id}"></td>
                 <td th:text="${historialAcademico.nroExamenes}"></td>
                 <td th:text="${historialAcademico.promedioExamenes}"></td>
-                <td><a th:href="@{'/profesores/historialAcademico/' + ${historialAcademico.estudianteID}}">Ver Historial Academico Profesor</a></td>
+                <td><a th:href="@{'/profesores/historialAcademico/' + ${historialAcademico.profesorID}}">Ver Historial Academico Profesor</a></td>
                 <td><a th:href="@{'/editarHistorial/' + ${historialAcademico.id}}">Editar</a></td>
                 <!-- Agregar celdas dinámicas para las notas -->
                 <td th:each="nota : ${historialAcademico.notas}" th:text="${nota}"></td>

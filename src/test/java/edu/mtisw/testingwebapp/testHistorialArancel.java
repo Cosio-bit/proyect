@@ -1,11 +1,11 @@
 package edu.mtisw.testingwebapp;
 
-import edu.mtisw.testingwebapp.entities.EstudianteEntity;
-import edu.mtisw.testingwebapp.entities.ProyectorEntity;
+import edu.mtisw.testingwebapp.entities.ProfesorEntity;
+import edu.mtisw.testingwebapp.entities.ProjectorEntity;
 import edu.mtisw.testingwebapp.repositories.ProfesorRepository;
-import edu.mtisw.testingwebapp.repositories.ProyectorRepository;
+import edu.mtisw.testingwebapp.repositories.ProjectorRepository;
 import edu.mtisw.testingwebapp.services.ProfesorService;
-import edu.mtisw.testingwebapp.services.ProyectorService;
+import edu.mtisw.testingwebapp.services.ProjectorService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,21 +16,21 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-public class testHistorialArancel {
+public class testProjector {
 
     @Autowired
-    private ProyectorRepository historialArancelRepository;
+    private ProjectorRepository projectorRepository;
     @Autowired
-    private ProyectorService historialArancelService;
+    private ProjectorService projectorService;
 
     @Autowired
-    private ProfesorRepository estudianteRepository;
+    private ProfesorRepository profesorRepository;
     @Autowired
-    private ProfesorService estudianteService;
+    private ProfesorService profesorService;
 
         @Test
         @Transactional
-        void testHistorialArancelEntityAttributes() {
+        void testProjectorEntityAttributes() {
             //para historial arancel debo tener un profesor
             String nombre ="John";
             String apellido = "doe";
@@ -41,62 +41,62 @@ public class testHistorialArancel {
             LocalDate annoEgreso = LocalDate.of(2023, 6, 30);
             LocalDate periodoInscripcion = LocalDate.of(2023, 9, 1);
 
-            EstudianteEntity estudiante1 = estudianteService.guardarEstudiante(rut, nombre, apellido, "2000/02/02", tipoColegio, nombreColegio,"2020/02/02");
+            ProfesorEntity profesor1 = profesorService.guardarProfesor(rut, nombre, apellido, "2000/02/02", tipoColegio, nombreColegio,"2020/02/02");
 
 
 
-            ProyectorEntity historialArancel = new ProyectorEntity();
+            ProjectorEntity projector = new ProjectorEntity();
 
             // Test Monto Total
             double monto = 1500.0;
-            historialArancel.setMontoTotal(monto);
-            assertEquals(monto, historialArancel.getMontoTotal());
+            projector.setMontoTotal(monto);
+            assertEquals(monto, projector.getMontoTotal());
 
             // Test Tipo de Pago
             String tipoPago = "cuotas";
-            historialArancel.setTipoPago(tipoPago);
-            assertEquals(tipoPago, historialArancel.getTipoPago());
+            projector.setTipoPago(tipoPago);
+            assertEquals(tipoPago, projector.getTipoPago());
 
             // Test Cuotas Pactadas
             int cuotasPactadas = 5;
-            historialArancel.setCuotasPactadas(cuotasPactadas);
-            assertEquals(cuotasPactadas, historialArancel.getCuotasPactadas());
+            projector.setCuotasPactadas(cuotasPactadas);
+            assertEquals(cuotasPactadas, projector.getCuotasPactadas());
 
             // Test Cuotas Pagadas
             int cuotasPagadas = 3;
-            historialArancel.setCuotasPagadas(cuotasPagadas);
-            assertEquals(cuotasPagadas, historialArancel.getCuotasPagadas());
+            projector.setCuotasPagadas(cuotasPagadas);
+            assertEquals(cuotasPagadas, projector.getCuotasPagadas());
 
             // Test Total Pagado
             double totalPagado = 1200.0;
-            historialArancel.setTotalPagado(totalPagado);
-            assertEquals(totalPagado, historialArancel.getTotalPagado());
+            projector.setTotalPagado(totalPagado);
+            assertEquals(totalPagado, projector.getTotalPagado());
 
             // Test Último Pago
             LocalDate ultimoPago = LocalDate.of(2023, 10, 13);
-            historialArancel.setUltimoPago(ultimoPago);
-            assertEquals(ultimoPago, historialArancel.getUltimoPago());
+            projector.setUltimoPago(ultimoPago);
+            assertEquals(ultimoPago, projector.getUltimoPago());
 
             // Test Saldo por Pagar
             double saldoPorPagar = 300.0;
-            historialArancel.setSaldoPorPagar(saldoPorPagar);
-            assertEquals(saldoPorPagar, historialArancel.getSaldoPorPagar());
+            projector.setSaldoPorPagar(saldoPorPagar);
+            assertEquals(saldoPorPagar, projector.getSaldoPorPagar());
 
             // Test Cuotas de Retraso
             int cuotasRetraso = 2;
-            historialArancel.setCuotasRetraso(cuotasRetraso);
-            assertEquals(cuotasRetraso, historialArancel.getCuotasRetraso());
+            projector.setCuotasRetraso(cuotasRetraso);
+            assertEquals(cuotasRetraso, projector.getCuotasRetraso());
 
-            historialArancelService.guardarHistorialArancel(estudiante1.getId(),estudiante1.getTipoColegio(), "2020/02/02",historialArancel.getTipoPago(), String.valueOf(historialArancel.getCuotasPactadas())) ;//lo mismo, crear profesor primero
+            projectorService.guardarProjector(profesor1.getId(),profesor1.getTipoColegio(), "2020/02/02",projector.getTipoPago(), String.valueOf(projector.getCuotasPactadas())) ;//lo mismo, crear profesor primero
 
-            Long historialID = historialArancelService.obtenerPorEstudianteId(estudiante1.getId()).get().getId();
+            Long historialID = projectorService.obtenerPorProfesorId(profesor1.getId()).get().getId();
             System.out.println(historialID);
 
-            historialArancelService.obtenerHistorialArancels();
+            projectorService.obtenerProjectors();
 
-            historialArancelService.obtenerPorId(historialID);
+            projectorService.obtenerPorId(historialID);
 
-            historialArancelService.anadirPago(historialID, 200000);
+            projectorService.anadirPago(historialID, 200000);
 
         }
 

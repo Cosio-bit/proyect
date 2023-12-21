@@ -27,7 +27,7 @@
     <h1>Visualizar Profesores</h1>
     <nav>
     </nav>
-    <a class="cta-button" href="/nuevoEstudiante">Agregar Nuevo Profesor</a>
+    <a class="cta-button" href="/nuevoProfesor">Agregar Nuevo Profesor</a>
 </header>
 <div class="f">
     <div class="container my-2">
@@ -70,11 +70,11 @@
                 -->
                 <!-- Add buttons for viewing and creating arancel history -->
                 <td>
-                    <a th:href="@{'/profesores/historialArancel/' + ${profesor.id}}">Ver Historial Arancel</a>
+                    <a th:href="@{'/profesores/projector/' + ${profesor.id}}">Ver Historial Arancel</a>
                 </td>
                 <!--
                 <td>
-                    <a th:href="@{'/profesores/crearHistorialArancel/' + ${profesor.id}}">Crear Historial Arancel</a>
+                    <a th:href="@{'/profesores/crearProjector/' + ${profesor.id}}">Crear Historial Arancel</a>
                 </td>
                 -->
                 <!-- Add an Edit button for each student -->

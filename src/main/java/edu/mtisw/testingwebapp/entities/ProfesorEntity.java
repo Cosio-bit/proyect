@@ -19,7 +19,7 @@ public class ProfesorEntity {
     private String rut;
     private String nombre;
     private String apellido;
-    private int infracciones;
+    private int infracciones; //inborrable, 3 veces y se bloquea
     private int atrasos; //reset cada 1 semana
-    
+
 }

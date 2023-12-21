@@ -43,14 +43,14 @@
 
 				<!-- Create a form for each Prestamo -->
 				<td>
-					<form th:action="@{'/profesores/historialArancel/prestamo/' + ${prestamo.getHistorialArancelID()} + '/' + ${prestamo.id} }" method="post">
+					<form th:action="@{'/profesores/projector/prestamo/' + ${prestamo.getProjectorID()} + '/' + ${prestamo.id} }" method="post">
 						<button type="submit">Pagar</button>
 					</form>
 				</td>
 			</tr>
 			<!-- End of iteration -->
 			<td>
-				<a th:href="@{'/profesores/historialArancel/' + ${listDetallePago.get(0).getHistorialArancelID()}}">Ver Historial Arancel</a>
+				<a th:href="@{'/profesores/projector/' + ${listDetallePago.get(0).getProjectorID()}}">Ver Historial Arancel</a>
 			</td>
 			<td>
 				<a th:href="@{'/profesores'}">Ver profesores</a>
