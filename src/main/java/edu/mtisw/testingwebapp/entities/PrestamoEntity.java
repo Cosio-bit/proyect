@@ -17,12 +17,14 @@ public class PrestamoEntity {
     @Column(unique = true, nullable = false)
     private Long id;
 
-    private LocalDate fechaPrestamo;
-    private LocalDate fechaEntrega;
-    private LocalDate fechaDevolucion;
-    private String estado;
+    String fechaPrestamo;
+    String horaPrestamo;
+    String utilizacionHoras;
+    String fechaDevolucion;
+    String horaDevolucion;
+    String estadoDanado;
 
-    private Long projectorID;
-    private Long profesorID;
+    String idProjector;
+    String idProfesor;
 
 }

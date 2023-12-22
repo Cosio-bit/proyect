@@ -16,29 +16,32 @@ public interface PrestamoRepository extends JpaRepository<PrestamoEntity, Long> 
     @Query(value = "SELECT * FROM prestamos WHERE id = :id", nativeQuery = true)
     Optional<PrestamoEntity> findById(@Param("id") Long id);
 
-    @Query(value = "SELECT * FROM prestamos WHERE fecha_prestamo = :fechaPrestamo", nativeQuery = true)
-    Optional<PrestamoEntity> findByFechaPrestamo(@Param("fechaPrestamo") LocalDate fechaPrestamo);
+    @Query(value = "SELECT * FROM prestamos WHERE id_projector = :idProjector", nativeQuery = true)
+    List<PrestamoEntity> findByIdProjector(@Param("idProjector") String idProjector);
 
-    @Query(value = "SELECT * FROM prestamos WHERE fecha_entrega = :fechaEntrega", nativeQuery = true)
-    Optional<PrestamoEntity> findByFechaEntrega(@Param("fechaEntrega") LocalDate fechaEntrega);
+    @Query(value = "SELECT * FROM prestamos WHERE id_profesor = :idProfesor", nativeQuery = true)
+    Optional<PrestamoEntity> findByIdProfesor(@Param("idProfesor") String idProfesor);
+
+    @Query(value = "SELECT * FROM prestamos WHERE fecha_prestamo = :fechaPrestamo", nativeQuery = true)
+    Optional<PrestamoEntity> findByFechaPrestamo(@Param("fechaPrestamo") String fechaPrestamo);
+
+    @Query(value = "SELECT * FROM prestamos WHERE hora_prestamo = :horaPrestamo", nativeQuery = true)
+    Optional<PrestamoEntity> findByHoraPrestamo(@Param("horaPrestamo") String horaPrestamo);
+
+    @Query(value = "SELECT * FROM prestamos WHERE utilizacion_horas = :utilizacionHoras", nativeQuery = true)
+    Optional<PrestamoEntity> findByUtilizacionHoras(@Param("utilizacionHoras") String utilizacionHoras);
 
     @Query(value = "SELECT * FROM prestamos WHERE fecha_devolucion = :fechaDevolucion", nativeQuery = true)
-    Optional<PrestamoEntity> findByFechaDevolucion(@Param("fechaDevolucion") LocalDate fechaDevolucion);
+    Optional<PrestamoEntity> findByFechaDevolucion(@Param("fechaDevolucion") String fechaDevolucion);
 
-    @Query(value = "SELECT * FROM prestamos WHERE estado = :estado", nativeQuery = true)
-    Optional<PrestamoEntity> findByEstado(@Param("estado") String estado);
+    @Query(value = "SELECT * FROM prestamos WHERE hora_devolucion = :horaDevolucion", nativeQuery = true)
+    Optional<PrestamoEntity> findByHoraDevolucion(@Param("horaDevolucion") String horaDevolucion);
 
-    @Query(value = "SELECT * FROM prestamos WHERE projector_id = :projectorID", nativeQuery = true)
-    Optional<PrestamoEntity> findByProjectorID(@Param("projectorID") Long projectorID);
+    @Query(value = "SELECT * FROM prestamos WHERE estado_danado = :estadoDanado", nativeQuery = true)
+    Optional<PrestamoEntity> findByEstadoDanado(@Param("estadoDanado") String estadoDanado);
 
-    @Query(value = "SELECT * FROM prestamos WHERE profesor_id = :profesorID", nativeQuery = true)
-    Optional<PrestamoEntity> findByProfesorID(@Param("profesorID") Long profesorID);
+    @Query(value = "SELECT * FROM prestamos WHERE id_projector = :idProjector AND id_profesor = :idProfesor", nativeQuery = true)
+    Optional<PrestamoEntity> findByIdProjectorAndIdProfesor(@Param("idProjector") String idProjector, @Param("idProfesor") String idProfesor);
 
-    //find all prestamos
-    @Query(value = "SELECT * FROM prestamos", nativeQuery = true)
-    List<PrestamoEntity> findAllPrestamos();
-
-    @Query(value = "SELECT * FROM prestamos WHERE projector_id = :projectorID", nativeQuery = true)
-    List<PrestamoEntity> findProjectorByProjectorID(Long projectorID);
 
 }

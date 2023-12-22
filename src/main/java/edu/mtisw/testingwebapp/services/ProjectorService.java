@@ -30,8 +30,8 @@ public class ProjectorService {
         return projectorRepository.save(projector);
     }
 
-    public PrestamoEntity guardarPrestamo(String fechaPrestamo, String fechaEntrega, String fechaDevolucion, String estado, Long projectorID, Long profesorID){
-        return prestamoService.guardarPrestamo(fechaPrestamo, fechaEntrega, fechaDevolucion, estado, projectorID, profesorID);
+    public PrestamoEntity guardarPrestamo(String fechaPrestamo,String horaPrestamo,String utilizacionHoras,String fechaDevolucion,String horaDevolucion,String estadoDanado,String idProjector,String idProfesor){
+        return prestamoService.guardarPrestamo(fechaPrestamo, horaPrestamo, utilizacionHoras, fechaDevolucion, horaDevolucion, estadoDanado, idProjector, idProfesor);
     }
 
     

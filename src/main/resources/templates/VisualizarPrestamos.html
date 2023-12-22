@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Información del Profesor</title>
-	<link rel="stylesheet" href="../static/style.css" type="text/css" th:href="@{/style.css}">
+
 </head>
 <style>
 	body {
@@ -43,12 +43,15 @@
 			<thead>
 			<tr>
 				<th>ID</th>
-				<th>ID Projector</th>
-				<th>ID Profesor</th>
-				<th>Fecha de Prestamo</th>
-				<th>Fecha de Devolucion</th>
-				<th>Fecha de Entrega</th>
-				<th>Estado</th>
+				<th>fechaPrestamo</th>
+				<th>horaPrestamo</th>
+				<th>utilizacionHoras</th>
+				<th>fechaDevolucion</th>
+				<th>horaDevolucion</th>
+				<th>estadoDanado</th>
+				<th>idProjector</th>
+				<th>idProfesor</th>
+				
 				<!-- Agrega más encabezados según los campos de DetallePagoEntity -->
 			</tr>
 			</thead>
@@ -56,17 +59,23 @@
 			<!-- Iterate over the list of Prestamo entities -->
 			<tr th:each="prestamo : ${prestamos}">
 				<td th:text="${prestamo.id}"></td>
-				<td th:text="${prestamo.projectorID}"></td>
-				<td th:text="${prestamo.profesorID}"></td>
 				<td th:text="${prestamo.fechaPrestamo}"></td>
+				<td th:text="${prestamo.horaPrestamo}"></td>
+				<td th:text="${prestamo.utilizacionHoras}"></td>
 				<td th:text="${prestamo.fechaDevolucion}"></td>
-				<td th:text="${prestamo.fechaEntrega}"></td>
-				<td th:text="${prestamo.estado}"></td>
+				<td th:text="${prestamo.horaDevolucion}"></td>
+				<td th:text="${prestamo.estadoDanado}"></td>
+				<td th:text="${prestamo.idProjector}"></td>
+				<td th:text="${prestamo.idProfesor}"></td>
 				<!-- Agrega más columnas según los campos de DetallePagoEntity -->
 			</tr>
+
+
 			<td>
 				<a th:href="@{'/profesores'}">Ver profesores</a>
 			</td>
+			<td>
+				<a th:href="@{'/projectores'}">Ver projectores</a>
 			</tbody>
 		</table>
 	</div>

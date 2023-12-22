@@ -23,27 +23,28 @@ public class PrestamoService {
     public ArrayList<PrestamoEntity> obtenerPrestamos(){
         return (ArrayList<PrestamoEntity>) prestamoRepository.findAll();
     }
-    public PrestamoEntity guardarPrestamo(String fechaPrestamo, String fechaEntrega, String fechaDevolucion, String estado, Long projectorID, Long profesorID){
+    public PrestamoEntity guardarPrestamo(String fechaPrestamo,String horaPrestamo,String utilizacionHoras,String fechaDevolucion,String horaDevolucion,String estadoDanado,String idProjector,String idProfesor){
         PrestamoEntity prestamo = new PrestamoEntity();
+        System.out.println("agregarPrestamo llamado con paráme:");
 
-        //string to localdate
-        LocalDate fechaPrestamo1 = LocalDate.parse(fechaPrestamo);
-        LocalDate fechaEntrega1 = LocalDate.parse(fechaEntrega);
-        LocalDate fechaDevolucion1 = LocalDate.parse(fechaDevolucion);
-        
-        prestamo.setProjectorID(projectorID);
-        prestamo.setProfesorID(profesorID);
-        prestamo.setFechaPrestamo(fechaPrestamo1);
-        prestamo.setFechaEntrega(fechaEntrega1);
-        prestamo.setFechaDevolucion(fechaDevolucion1);
-        prestamo.setEstado(estado);
+        prestamo.setFechaPrestamo(fechaPrestamo);
+        prestamo.setHoraPrestamo(horaPrestamo);
+        prestamo.setUtilizacionHoras(utilizacionHoras);
+        prestamo.setFechaDevolucion(fechaDevolucion);
+        prestamo.setHoraDevolucion(horaDevolucion);
+        prestamo.setEstadoDanado(estadoDanado);
+        prestamo.setIdProjector(idProjector);
+        prestamo.setIdProfesor(idProfesor); 
+
+        System.out.println("prestamo: " + prestamo);
+
 
         return prestamoRepository.save(prestamo);
     }
 
     public void updatePrestamo(PrestamoEntity prestamo, String estado){
 
-        Long projectorId = prestamo.getProjectorID();
+        Long projectorId = Long.parseLong(prestamo.getIdProjector());
         ProjectorEntity projector = projectorRepository.findById(projectorId).orElse(null);
 
         if (projector != null) {
@@ -76,13 +77,13 @@ public class PrestamoService {
     public void devolver(Long prestamoID) {
         Optional<PrestamoEntity> optionalPrestamo = prestamoRepository.findById(prestamoID);
 
-        if (optionalPrestamo.isPresent() && optionalPrestamo.get().getEstado().equals("No Devuelto")) {
+        if (optionalPrestamo.isPresent() && optionalPrestamo.get().getEstadoDanado().equals("No Devuelto")) {
             PrestamoEntity prestamo = optionalPrestamo.get();
-            prestamo.setEstado("Devuelto");// Establece el estado pagado en true
+            prestamo.setEstadoDanado("Devuelto");// Establece el estado pagado en true
             prestamoRepository.save(prestamo); // Guarda la entidad actualizada
 
             // Calcula el nuevo monto total para el historial de arancel
-            Long projectorId = prestamo.getProjectorID();
+            Long projectorId = Long.parseLong(prestamo.getIdProjector());
             ProjectorEntity projector = projectorRepository.findById(projectorId).orElse(null);
 
             if (projector != null) {
@@ -93,8 +94,8 @@ public class PrestamoService {
         }
     }
 
-    public List<PrestamoEntity> obtenerPrestamosPorProjectorID(Long projectorID) {
-        return prestamoRepository.findProjectorByProjectorID(projectorID); //obtener los prestamos por id de projector
+    public List<PrestamoEntity> obtenerPrestamosPorProjectorID(String projectorID) {
+        return (List<PrestamoEntity>) prestamoRepository.findByIdProjector(projectorID); //obtener los prestamos por id de projector
     }
 
 

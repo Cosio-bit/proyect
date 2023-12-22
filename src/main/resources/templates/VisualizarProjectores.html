@@ -5,7 +5,7 @@
 
 <head>
     <title>Visualizar projectores</title>
-    <link rel="stylesheet" href="../static/style.css" type="text/css" th:href="@{/style.css}">
+
 </head>
 <style>
     body {
@@ -24,7 +24,6 @@
 </style>
 
 <a class="cta-button" href="/nuevoProjector">Agregar Nuevo Projector</a>
-
 
 <div class="f">
     <div class="container my-2">
@@ -45,44 +44,74 @@
                 <td th:text="${projector.tipo}"></td>
                 <td th:text="${projector.estado}"></td>
                 <td>
+                    <!-- Botón para pedir projector -->
                     <button th:id="'startButton' + ${projector.id}" th:data-estado="${projector.estado}"
-                            th:disabled="${projector.estado != 'disponible'}"> Pedir Proyector</button>
-                    <button th:id="'returnButton' + ${projector.id}" disabled> Devolver Proyector</button>
+                            th:disabled="${projector.estado != 'disponible'}">Pedir Projector</button>
+                        
 
-                    <select th:id="'profesorSelector' + ${projector.id}">
-                        <option value="">Seleccionar Profesor</option>
-                        <option th:each="profesor : ${profesores}"
-                                th:value="${profesor.id}"
-                                th:text="${profesor.nombre} + ' ' + ${profesor.apellido}">
-                        </option>
-                    </select>
+                    <!-- Botón para devolver projector -->
+                    <button th:id="'returnButton' + ${projector.id}" th:disabled="${projector.estado != 'ocupado'}">Devolver Projector</button>
+
+                    <!-- Selector de profesor -->
+                    <label>
+                        <select th:id="'profesorSelector' + ${projector.id}">
+                            <option value="">Seleccionar Profesor</option>
+                            <option th:each="profesor : ${profesores}"
+                                    th:value="${profesor.id}"
+                                    th:text="${profesor.nombre} + ' ' + ${profesor.apellido}">
+                            </option>
+                        </select>
+                    </label>
+
+                    <!-- Selector de uso toggle: si projector.tipo es epson entonces opcion 1 o 2 disponible, si projector.tipo es viewSonic, opcion 3 disponible-->
+                    <label>
+                        <select th:id="'usoSelector' + ${projector.id}">
+                            <option value="">Seleccionar Uso</option>
+                            <option th:if="${projector.tipo == 'Epson'}" value="1">Dictado de clases</option>
+                            <option th:if="${projector.tipo == 'Epson'}" value="2">Examen de titulo</option>
+                            <option th:if="${projector.tipo == 'ViewSonic'}" value="3">Reuniones varias</option>
+                        </select>
+                    </label>
+
+
+                    <!-- Temporizador -->
                     <p th:id="'timer' + ${projector.id}">06:00:00</p>
-                    <div th:id="'damageReport' + ${projector.id}" style="display: none;">
-                        <label><input type="radio" th:name="'damage' + ${projector.id}" value="no" checked> No Dañado</label>
-                        <label><input type="radio" th:name="'damage' + ${projector.id}" value="yes"> Dañado</label>
+                    <!--guardar la hora de prestamo-->
+                    <p th:id="'horaPrestamo' + ${projector.id}"></p>
+
+                    <!-- Reporte de daños -->
+                    <div th:id="'damageReport' + ${projector.id}">
+                        <label><input type="radio" th:name="'damage' + ${projector.id}" value="no" checked> No Danado</label>
+                        <label><input type="radio" th:name="'damage' + ${projector.id}" value="yes"> Danado</label>
                     </div>
 
+                    <!-- Botón para marcar como reparado, oculto por defecto -->
                     <button th:id="'repairButton' + ${projector.id}" style="display: none;">Marcar como Reparado</button>
 
-                    <input type="text" th:id="'skipTime' + ${projector.id}" placeholder="HH:MM:SS">
+                    <!-- Campo para aplicar timeskip -->
+                    <label>
+                        <input type="text" th:id="'skipTime' + ${projector.id}" placeholder="HH:MM:SS">
+                    </label>
                     <button th:id="'skipButton' + ${projector.id}">Aplicar Timeskip</button>
 
+                    <!-- Resultado de la acción -->
                     <p th:id="'resultado' + ${projector.id}"></p>
                 </td>
+                <td>
+                    <a th:href="@{'/projectores/projector/' + ${projector.id}}">Ver Projector</a>
+
             </tr>
             </tbody>
             <tfoot>
             <!-- Contenido del tfoot si lo hay -->
             </tfoot>
         </table>
-        <a class="cta-button" href="/profesores"><button>Volver a profesores</button></a>
+        <a class="cta-button" href="/profesores"><button>Ver profesores</button></a>
+        <a class="cta-button" href="/prestamos"><button>Ver prestamos</button></a>
     </div>
 </div>
 <br>
 <hr>
-
-<script src="../static/script.js"></script>
-
 
 
 </html>
@@ -91,141 +120,166 @@
     let tiempoTotalSegundos = 6 * 3600; // 6 horas
     let interval;
     let tiempoInicial = tiempoTotalSegundos;
-    let proyectorDisponible = true;
-    let horaPrestamo;
+    let projectorDisponible = true;
+    let horaPrestamo = new Date().toLocaleTimeString();
+    let fechaPrestamo = new Date().toLocaleDateString();
 
     document.querySelector('.container').addEventListener('click', function(event) {
         if (event.target && event.target.matches("[id^='startButton']")) {
-            const idProyector = event.target.id.replace('startButton', '');
-            const proyectorEstado = event.target.getAttribute('data-estado');
+            const idProjector = event.target.id.replace('startButton', '');
+            const projectorEstado = event.target.getAttribute('data-estado');
 
-            if (proyectorEstado === 'disponible') {
+            if (projectorEstado === 'disponible') {
                 event.target.disabled = true;
-                document.getElementById('returnButton' + idProyector).disabled = false;
-                document.getElementById('damageReport' + idProyector).style.display = 'block';
-                iniciarContador(idProyector);
+                document.getElementById('returnButton' + idProjector).disabled = false;
+                document.getElementById('damageReport' + idProjector).style.display = 'block';
+                iniciarContador(idProjector);
                 event.target.setAttribute('data-estado', 'ocupado');
                 horaPrestamo = new Date().toLocaleTimeString();
+                fechaPrestamo = new Date().toLocaleDateString();
             }
         }
     });
 
+    document.addEventListener('DOMContentLoaded', (event) => {
+        document.querySelectorAll("[id^='returnButton']").forEach(button => {
+            button.addEventListener("click", function() {
+                const idProjector = this.id.replace('returnButton', '');
+                const fila = this.closest('tr');
+
+                this.disabled = true;
+
+                // Detener el contador específico del projector
+                if (projectoresTimers[idProjector] && projectoresTimers[idProjector].interval) {
+                    clearInterval(projectoresTimers[idProjector].interval);
+                }
+
+                registrarTiempoUsado(idProjector);
+
+                // Recolectar los datos de la fila para enviar
+                const idProfesor = fila.querySelector('#profesorSelector' + idProjector).value;
+                const estadoDanado = fila.querySelector('input[name="damage' + idProjector + '"]:checked').value === 'yes' ? 'Dañado' : 'No Dañado';
+                const uso = fila.querySelector('#usoSelector' + idProjector).value;
+
+                const utilizacionHoras = fila.querySelector('#timer' + idProjector).textContent;
+
+                //fecha formato dd/mm/aaaa
+                //obtener la cantidad de tiempo de cuando se pidio el projector sea fechaDevolución y fechaEntrega la cantidad de tiempo que ha pasado desde el pedido
 
 
+                const horaDevolucion = new Date().toLocaleTimeString();
+                const fechaDevolucion = new Date().toLocaleDateString();
 
-    document.querySelectorAll("[id^='returnButton']").forEach(button => {
-        button.addEventListener("click", function() {
-            const idProyector = this.id.replace('returnButton', '');
-            const fila = this.closest('tr');
+                if (estadoDanado === "No Dañado") {
+                    fila.querySelector('#startButton' + idProjector).disabled = false;
+                    fila.querySelector('#damageReport' + idProjector).style.display = "none";
+                } else {
+                    fila.querySelector('#repairButton' + idProjector).style.display = "block";
+                }
 
-            this.disabled = true;
+                // Restablecer el contador del projector
+                projectoresTimers[idProjector].tiempoTotalSegundos = tiempoInicial;
+                actualizarTiempo(idProjector);
 
-            // Detiene el intervalo específico del proyector
-            if (projectoresTimers[idProyector] && projectoresTimers[idProyector].interval) {
-                clearInterval(projectoresTimers[idProyector].interval);
-            }
-
-            registrarTiempoUsado(idProyector);
-
-        const idProfesor = fila.querySelector('#profesorSelector' + idProyector).value;
-        const danado = fila.querySelector('input[name="damage' + idProyector + '"]:checked').value;
-        const atrasado = fila.querySelector('#timer' + idProyector).textContent === "Atrasado";
-        const horaDevolucion = new Date().toLocaleTimeString();
-
-        enviarDatosPrestamo(horaPrestamo, horaDevolucion, atrasado, idProyector, idProfesor);
-
-        if (danado === "no") {
-            fila.querySelector('#startButton' + idProyector).disabled = false;
-        } else {
-            fila.querySelector('#repairButton' + idProyector).style.display = "block";
-        }
-        fila.querySelector('#damageReport' + idProyector).style.display = "none";
-        projectoresTimers[idProyector].tiempoTotalSegundos = projectoresTimers[idProyector].tiempoInicial;
-        actualizarTiempo(idProyector); // Actualiza la interfaz de usuario para mostrar el contador restablecido
+                // Enviar los datos recolectados para guardar en el historial de pedidos
+                enviarDatosPrestamo(
+                    fechaPrestamo.toString(),
+                    horaPrestamo.toString(),
+                    utilizacionHoras,
+                    fechaDevolucion,
+                    horaDevolucion,
+                    estadoDanado,
+                    idProjector,
+                    idProfesor
+                );
+            });
         });
     });
 
-    
+// Asumiendo que la función registrarTiempoUsado y actualizarTiempo manejan su propia lógica interna.
+
+
+
     document.querySelectorAll("[id^='repairButton']").forEach(button => {
     button.addEventListener("click", function() {
-        const idProyector = this.id.replace('repairButton', '');
+        const idProjector = this.id.replace('repairButton', '');
         this.style.display = "none"; // Oculta este botón de "Reparado"
         const fila = this.closest('tr');
-        fila.querySelector('#startButton' + idProyector).disabled = false; // Habilita el botón de "Pedir" correspondiente
+        fila.querySelector('#startButton' + idProjector).disabled = false; // Habilita el botón de "Pedir" correspondiente
 
-        // Aquí puedes agregar lógica adicional si necesitas actualizar el estado del proyector en el backend
+        // Aquí puedes agregar lógica adicional si necesitas actualizar el estado del projector en el backend
     });
 });
 
 
     document.querySelectorAll("[id^='skipButton']").forEach(button => {
     button.addEventListener("click", function() {
-        const idProyector = this.id.replace('skipButton', '');
+        const idProjector = this.id.replace('skipButton', '');
         const fila = this.closest('tr');
-        const skipTime = fila.querySelector('#skipTime' + idProyector).value;
+        const skipTime = fila.querySelector('#skipTime' + idProjector).value;
         const [horas, minutos, segundos] = skipTime.split(":").map(Number);
 
         if (!isNaN(horas) && !isNaN(minutos) && !isNaN(segundos)) {
             const skipTotalSegundos = horas * 3600 + minutos * 60 + segundos;
-            // Aquí necesitas ajustar para actualizar el tiempo específico de este proyector
-            actualizarTiempo(idProyector, skipTotalSegundos);
+            // Aquí necesitas ajustar para actualizar el tiempo específico de este projector
+            actualizarTiempo(idProjector, skipTotalSegundos);
 
             if (tiempoTotalSegundos < 0) {
-                clearInterval(interval); // Asegúrate de manejar intervalos específicos del proyector
-                fila.querySelector('#timer' + idProyector).innerText = "Atrasado";
-                registrarTiempoUsado(fila, idProyector);
-                fila.querySelector('#returnButton' + idProyector).disabled = true;
-                fila.querySelector('#startButton' + idProyector).disabled = false;
-                // Aquí puedes actualizar el estado del proyector si es necesario
+                clearInterval(interval); // Asegúrate de manejar intervalos específicos del projector
+                fila.querySelector('#timer' + idProjector).innerText = "Atrasado";
+                registrarTiempoUsado(fila, idProjector);
+                fila.querySelector('#returnButton' + idProjector).disabled = true;
+                fila.querySelector('#startButton' + idProjector).disabled = false;
+                // Aquí puedes actualizar el estado del projector si es necesario
             }
         }
     });
 });
 
-    // Objeto para manejar los tiempos e intervalos de cada proyector
+    // Objeto para manejar los tiempos e intervalos de cada projector
     let projectoresTimers = {};
-    function iniciarContador(idProyector) {
-        // Comprobación e inicialización para un nuevo proyector
-        if (!projectoresTimers[idProyector]) {
-            projectoresTimers[idProyector] = {
+    function iniciarContador(idProjector) {
+        // Comprobación e inicialización para un nuevo projector
+        if (!projectoresTimers[idProjector]) {
+            projectoresTimers[idProjector] = {
                 tiempoTotalSegundos: 6 * 3600, // 6 horas
                 tiempoInicial: 6 * 3600,       // Tiempo inicial
                 interval: null
             };
         } else {
-            // Reiniciar el tiempo para un proyector existente
-            clearInterval(projectoresTimers[idProyector].interval);
-            projectoresTimers[idProyector].tiempoTotalSegundos = 6 * 3600;
-            projectoresTimers[idProyector].tiempoInicial = 6 * 3600;
+            // Reiniciar el tiempo para un projector existente
+            clearInterval(projectoresTimers[idProjector].interval);
+            projectoresTimers[idProjector].tiempoTotalSegundos = 6 * 3600;
+            projectoresTimers[idProjector].tiempoInicial = 6 * 3600;
         }
 
-        actualizarTiempo(idProyector);
-        projectoresTimers[idProyector].interval = setInterval(function() {
-            projectoresTimers[idProyector].tiempoTotalSegundos--;
+        actualizarTiempo(idProjector);
+        projectoresTimers[idProjector].interval = setInterval(function() {
+            projectoresTimers[idProjector].tiempoTotalSegundos--;
 
-            actualizarTiempo(idProyector);
+            actualizarTiempo(idProjector);
 
-            if (projectoresTimers[idProyector].tiempoTotalSegundos <= 0) {
-                clearInterval(projectoresTimers[idProyector].interval);
-                document.getElementById('timer' + idProyector).innerText = "Atrasado";
-                registrarTiempoUsado(idProyector);
+            if (projectoresTimers[idProjector].tiempoTotalSegundos <= 0) {
+                clearInterval(projectoresTimers[idProjector].interval);
+                document.getElementById('timer' + idProjector).innerText = "Atrasado";
+                registrarTiempoUsado(idProjector);
             }
         }, 1000);
         // Guarda el tiempo restante en el almacenamiento local
-        localStorage.setItem('tiempoRestante' + idProyector, projectoresTimers[idProyector].tiempoTotalSegundos);
+        localStorage.setItem('tiempoRestante' + idProjector, projectoresTimers[idProjector].tiempoTotalSegundos);
     }
 
     window.addEventListener('load', function() {
-        // Recorre todos los proyectores y verifica si hay tiempo guardado en el almacenamiento local
-        Object.keys(projectoresTimers).forEach(function(idProyector) {
-            const tiempoGuardado = localStorage.getItem('tiempoRestante' + idProyector);
+        // Recorre todos los projectores y verifica si hay tiempo guardado en el almacenamiento local
+        Object.keys(projectoresTimers).forEach(function(idProjector) {
+            const tiempoGuardado = localStorage.getItem('tiempoRestante' + idProjector);
 
             if (tiempoGuardado !== null) {
-                projectoresTimers[idProyector].tiempoTotalSegundos = parseInt(tiempoGuardado, 10);
-                actualizarTiempo(idProyector);
+                projectoresTimers[idProjector].tiempoTotalSegundos = parseInt(tiempoGuardado, 10);
+                actualizarTiempo(idProjector);
 
                 // Si el contador estaba en cero, realiza las acciones necesarias aquí
-                if (projectoresTimers[idProyector].tiempoTotalSegundos <= 0) {
+                if (projectoresTimers[idProjector].tiempoTotalSegundos <= 0) {
                     // Realiza las acciones necesarias para un contador en cero al cargar la página
                 }
             }
@@ -233,29 +287,29 @@
     });
 
 
-    function registrarTiempoUsado(idProyector) {
-        // Asegúrate de que tiempoTotalSegundos y tiempoInicial estén correctamente definidos para cada proyector.
-        const tiempoUsado = projectoresTimers[idProyector].tiempoInicial - projectoresTimers[idProyector].tiempoTotalSegundos;
+    function registrarTiempoUsado(idProjector) {
+        // Asegúrate de que tiempoTotalSegundos y tiempoInicial estén correctamente definidos para cada projector.
+        const tiempoUsado = projectoresTimers[idProjector].tiempoInicial - projectoresTimers[idProjector].tiempoTotalSegundos;
         const horas = Math.floor(tiempoUsado / 3600);
         const minutos = Math.floor((tiempoUsado % 3600) / 60);
         const segundos = tiempoUsado % 60;
 
         let mensaje;
-        if (projectoresTimers[idProyector].tiempoTotalSegundos < 0) {
+        if (projectoresTimers[idProjector].tiempoTotalSegundos < 0) {
             mensaje = "Atrasado";
         } else {
             mensaje = `Tiempo utilizado: ${horas} horas, ${minutos} minutos y ${segundos} segundos.`;
         }
 
         // Actualiza el valor en el almacenamiento local antes de reiniciar el contador
-        localStorage.setItem('tiempoRestante' + idProyector, projectoresTimers[idProyector].tiempoTotalSegundos);
+        localStorage.setItem('tiempoRestante' + idProjector, projectoresTimers[idProjector].tiempoTotalSegundos);
 
-        document.getElementById('resultado' + idProyector).innerText = mensaje;
+        document.getElementById('resultado' + idProjector).innerText = mensaje;
     }
 
 
-    function actualizarTiempo(idProyector) {
-        let tiempo = projectoresTimers[idProyector].tiempoTotalSegundos;
+    function actualizarTiempo(idProjector) {
+        let tiempo = projectoresTimers[idProjector].tiempoTotalSegundos;
         let horas = Math.floor(tiempo / 3600);
         let minutos = Math.floor((tiempo % 3600) / 60);
         let segundos = tiempo % 60;
@@ -264,35 +318,68 @@
         minutos = minutos < 10 ? '0' + minutos : minutos;
         segundos = segundos < 10 ? '0' + segundos : segundos;
 
-        document.getElementById('timer' + idProyector).innerText = `${horas}:${minutos}:${segundos}`;
+        document.getElementById('timer' + idProjector).innerText = `${horas}:${minutos}:${segundos}`;
     }
 
+    function enviarDatosPrestamo(                    
+                    fechaPrestamo,
+                    horaPrestamo,
+                    utilizacionHoras,
+                    fechaDevolucion,
+                    horaDevolucion,
+                    estadoDanado,
+                    idProjector,
+                    idProfesor) {
+        
+        console.log('Datos a enviar:', {                     
+                    fechaPrestamo,
+                    horaPrestamo,
+                    utilizacionHoras,
+                    fechaDevolucion,
+                    horaDevolucion,
+                    estadoDanado,
+                    idProjector,
+                    idProfesor});
 
-
-
-
-function enviarDatosPrestamo(fechaPrestamo, fechaEntrega, fechaDevolucion, estado, projectorID, profesorID) {
+        // Validación de los parámetros
+    if (!fechaPrestamo || !horaPrestamo || !utilizacionHoras || !fechaDevolucion || !horaDevolucion || !estadoDanado || !idProjector || !idProfesor) {
+        console.error('Error: Todos los campos deben estar llenos.');
+        return; // Termina la ejecución si hay algún campo vacío
+    }
     const params = new URLSearchParams();
-    params.append('fechaPrestamo', fechaPrestamo);
-    params.append('fechaEntrega', fechaEntrega);
-    params.append('fechaDevolucion', fechaDevolucion);
-    params.append('estado', estado);
-    params.append('projectorID', projectorID);
-    params.append('profesorID', profesorID);
+        params.append('fechaPrestamo', fechaPrestamo || ''); // Proporciona un valor predeterminado si es undefined
+        params.append('horaPrestamo', horaPrestamo || '');
+        params.append('utilizacionHoras', utilizacionHoras || '');
+        params.append('fechaDevolucion', fechaDevolucion || '');
+        params.append('horaDevolucion', horaDevolucion || '');
+        params.append('estadoDanado', estadoDanado || '');
+        params.append('idProjector', idProjector || '');
+        params.append('idProfesor', idProfesor || '');
+        
 
-    fetch('/prestamos', {
-        method: 'POST',
-        body: params
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Préstamo registrado:', data);
-        // Aquí puedes actualizar la interfaz de usuario si es necesario
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-    });
+fetch('/prestamos', {
+    method: 'POST',
+    body: params,
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+    }
+})
+.then(response => {
+    if (!response.ok) {
+        throw new Error('La respuesta del servidor no fue OK');
+    }
+    return response.json();
+})
+.then(data => {
+    console.log('Préstamo registrado:', data);
+    // Aquí puedes actualizar la interfaz de usuario si es necesario
+})
+.catch((error) => {
+    console.error('Error al realizar la solicitud:', error);
+});
+
 }
+
 
 
 

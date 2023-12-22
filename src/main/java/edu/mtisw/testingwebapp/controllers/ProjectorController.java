@@ -22,7 +22,7 @@ public class ProjectorController {
     private ProfesorService profesorService;
 
 
-    @GetMapping("/projector/{id}")
+    @GetMapping("/projectores/projector/{id}")
     public String mostrarProjector(@PathVariable Long id, Model model) {
         Optional<ProjectorEntity> projector = projectorService.obtenerPorId(id);
 
