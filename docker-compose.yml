@@ -19,14 +19,14 @@ services:
     volumes:
       - ./data/db:/var/lib/postgresql
     environment:
-      POSTGRES_DB: topEd
+      POSTGRES_DB: projectores
       POSTGRES_PASSWORD: 1234
       POSTGRES_USER: postgres
     ports:
       - "5432:5432"
 
   proyect1:
-    container_name: proyect1
+    container_name: proyect
     image: cosiobit/proyect
     ports:
       - "8091:8090"
@@ -41,8 +41,9 @@ services:
     depends_on:
       - postgres-db
   proyect2:
-    container_name: proyect2
+    container_name: project-proyect2
     image: cosiobit/proyect
+    ports:
       - "8092:8090"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/projectores
@@ -56,7 +57,7 @@ services:
       - postgres-db
 
   proyect3:
-    container_name: proyect3
+    container_name: project-proyect3
     image: cosiobit/proyect
     ports:
       - "8093:8090"
