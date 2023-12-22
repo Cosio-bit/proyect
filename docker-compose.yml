@@ -56,7 +56,7 @@ services:
       - postgres-db
 
   proyect3:
-    container_name: project-proyect3
+    container_name: proyect3
     image: cosiobit/proyect
     ports:
       - "8093:8090"
