@@ -2,6 +2,7 @@ package edu.mtisw.testingwebapp.repositories;
 
 import edu.mtisw.testingwebapp.entities.ProfesorEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -30,6 +31,10 @@ public interface ProfesorRepository extends JpaRepository<ProfesorEntity, Long> 
 
     @Query(value = "SELECT * FROM profesores WHERE atrasos = :atrasos", nativeQuery = true)
     Optional<ProfesorEntity> findByAtrasos(@Param("atrasos") int atrasos);
+
+    @Modifying
+    @Query(value = "UPDATE profesores SET infracciones = :infracciones WHERE id = :id", nativeQuery = true)
+    void updateInfracciones(@Param("infracciones") int infracciones, @Param("id") Long id);
 
 
     //find all profesores

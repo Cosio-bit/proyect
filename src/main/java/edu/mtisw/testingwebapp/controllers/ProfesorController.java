@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.Optional;
 import edu.mtisw.testingwebapp.entities.ProfesorEntity;
+import edu.mtisw.testingwebapp.services.PrestamoService;
 import edu.mtisw.testingwebapp.services.ProfesorService;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -15,6 +16,8 @@ public class ProfesorController {
 
 	@Autowired
 	private ProfesorService profesorService;
+	@Autowired
+	private PrestamoService prestamoService;
 
 	@GetMapping("/profesores")
 	public String listar(Model model) {
@@ -22,7 +25,7 @@ public class ProfesorController {
 
 		// Check if the profesores list is null or empty before calling updateInfraccion
 		if (profesores != null && !profesores.isEmpty()) {
-			//profesorService.updateInfraccion(profesores);
+			profesorService.updateInfraccion(profesores);
 		}
 
 		model.addAttribute("profesores", profesores);
@@ -63,5 +66,7 @@ public class ProfesorController {
 		model.addAttribute("profesor", profesor.get());
 		return "VisualizarProfesor";
 	}
+
+
 
 }

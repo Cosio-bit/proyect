@@ -33,12 +33,13 @@ public ResponseEntity<?> agregarPrestamo(@RequestParam("fechaPrestamo") String f
                                          @RequestParam("fechaDevolucion") String fechaDevolucion,
                                          @RequestParam("horaDevolucion") String horaDevolucion,
                                          @RequestParam("estadoDanado") String estadoDanado,
+                                         @RequestParam("uso") String uso,
                                          @RequestParam("idProjector") String idProjector,
                                          @RequestParam("idProfesor") String idProfesor) {
     try {
 
         // Aquí asumo que tienes una lógica para manejar la creación del préstamo
-        PrestamoEntity nuevoPrestamo = prestamoService.guardarPrestamo(fechaPrestamo, horaPrestamo, utilizacionHoras, fechaDevolucion, horaDevolucion, estadoDanado, idProjector, idProfesor);
+        PrestamoEntity nuevoPrestamo = prestamoService.guardarPrestamo(fechaPrestamo, horaPrestamo, utilizacionHoras, fechaDevolucion, horaDevolucion, estadoDanado, uso, idProjector, idProfesor);
 
         if (nuevoPrestamo != null) {
             return ResponseEntity.ok(nuevoPrestamo);
@@ -60,6 +61,9 @@ public ResponseEntity<?> agregarPrestamo(@RequestParam("fechaPrestamo") String f
         model.addAttribute("prestamos", prestamos);
         return "VisualizarPrestamos";
     }
+
+    
+
 }
 
 

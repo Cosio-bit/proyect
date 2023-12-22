@@ -23,6 +23,7 @@ public class PrestamoEntity {
     String fechaDevolucion;
     String horaDevolucion;
     String estadoDanado;
+    String uso;
 
     String idProjector;
     String idProfesor;

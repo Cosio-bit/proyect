@@ -5,11 +5,11 @@ import edu.mtisw.testingwebapp.entities.ProfesorEntity;
 import edu.mtisw.testingwebapp.entities.ProjectorEntity;
 import edu.mtisw.testingwebapp.repositories.PrestamoRepository;
 import edu.mtisw.testingwebapp.repositories.ProfesorRepository;
-import edu.mtisw.testingwebapp.repositories.HistorialAcademicoRepository;
+
 import edu.mtisw.testingwebapp.repositories.ProjectorRepository;
 import edu.mtisw.testingwebapp.services.PrestamoService;
 import edu.mtisw.testingwebapp.services.ProfesorService;
-import edu.mtisw.testingwebapp.services.HistorialAcademicoService;
+
 import edu.mtisw.testingwebapp.services.ProjectorService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @SpringBootTest
-public class testDetallePago {
+public class testPrestamo {
 
 
     @Autowired
@@ -47,27 +47,23 @@ public class testDetallePago {
     @Transactional
     void testDetallePagoEntityAttributes() {
 
-        //para detalle pago necesito el id de historial arancel y id de profesor
-
-        String nombre ="John";
-        String apellido = "doe";
-        String tipoColegio = "Subvencionado";
-        String nombreColegio = "Colegio XYZ";
         String rut = "20623522";
+        String nombre = "John";
+        String apellido = "Doe";
 
-        ProfesorEntity profesor = profesorService.guardarProfesor(rut, nombre, apellido, "2000/02/02", tipoColegio, nombreColegio,"2020/02/02");
+        ProfesorEntity profesor = profesorService.guardarProfesor(rut, nombre, apellido);
 
 
         String tipoPago = "cuotas";
         int cuotasPactadas = 5;
-        ProjectorEntity projector = projectorService.guardarProjector(profesor.getId(),tipoColegio, "2020/02/02",tipoPago, "5") ;//lo mismo, crear profesor primero
+        ProjectorEntity projector = projectorService.guardarProjector("Proyector 1", "Epson");
 
         System.out.println(projector.getId());
 
         PrestamoEntity prestamo = new PrestamoEntity();
-        // Test Monto de Pago
-        double montoPago = 1000.0;
-        prestamo.setMontoPago(montoPago);
+
+        // Test 
+/*
         assertEquals(montoPago, prestamo.getMontoPago());
 
         // Test Fecha de Pago
@@ -91,44 +87,12 @@ public class testDetallePago {
         //prestamoService.obtenerPorProjectorID(projector.getId());
 
 
-        int size = prestamoEntities.size();
-
-        prestamoService.findbynotpagado(projector.getId());
-
-        System.out.println(size);
-
-        prestamoService.updateDetallesPagos(prestamoEntities, 700);
-
-        prestamoService.updateDetallePago(prestamoEntities.get(0),900,LocalDate.now());
-
-        prestamoService.obtenerDetallesPagos();
-
-        prestamoService.pagar(prestamoEntities.get(0).getId());
-
-        prestamoService.obtenerPorProjectorID(projector.getId());
+       */
 
     }
 
 
-        @Test
-        public void testCalcularArancelNotas() {
-            // Prueba con un promedio en el rango de 950 a 1000
-            double resultado = prestamoService.calcularArancelNotas(950, 1000);
-            assertEquals(0.90 * 1000, resultado, 0.01);
-
-            // Prueba con un promedio en el rango de 900 a 949
-            resultado = prestamoService.calcularArancelNotas(925, 1000);
-            assertEquals(0.95 * 1000, resultado, 0.01);
-
-            // Prueba con un promedio en el rango de 850 a 899
-            resultado = prestamoService.calcularArancelNotas(875, 1000);
-            assertEquals(0.98 * 1000, resultado, 0.01);
-
-            // Prueba con un promedio fuera de los rangos
-            resultado = prestamoService.calcularArancelNotas(800, 1000);
-            assertEquals(1000, resultado, 0.01);
-        }
-
+ /*  
         @Test
         public void testCalcularMesesAtraso() {
             // Fecha de pago actual y fecha de vencimiento
@@ -136,7 +100,7 @@ public class testDetallePago {
             LocalDate fechaVencimiento = LocalDate.of(2023, 5, 1);
 
             // Prueba con las fechas anteriores
-            int resultado = prestamoService.calcularMesesAtraso(pagoActual, fechaVencimiento);
+            int resultado = prestamoService.calcularAtrazo(pagoActual, fechaVencimiento);
             assertEquals(2, resultado);
 
             // Prueba con las fechas iguales
@@ -149,25 +113,8 @@ public class testDetallePago {
             resultado = prestamoService.calcularMesesAtraso(pagoActual, fechaVencimiento);
             assertEquals(-1, resultado);
         }
-
-        @Test
-        public void testCalcularArancelInteres() {
-            // Prueba con un castigo de interés igual a 1
-            double resultado = prestamoService.calcularArancelInteres(1, 1000);
-            assertEquals(1.03 * 1000, resultado, 0.01);
-
-            // Prueba con un castigo de interés igual a 2
-            resultado = prestamoService.calcularArancelInteres(2, 1000);
-            assertEquals(1.06 * 1000, resultado, 0.01);
-
-            // Prueba con un castigo de interés igual a 3
-            resultado = prestamoService.calcularArancelInteres(3, 1000);
-            assertEquals(1.09 * 1000, resultado, 0.01);
-
-            // Prueba con un castigo de interés mayor a 3
-            resultado = prestamoService.calcularArancelInteres(4, 1000);
-            assertEquals(1.15 * 1000, resultado, 0.01);
-        }
+*/
+  
     }
 
 

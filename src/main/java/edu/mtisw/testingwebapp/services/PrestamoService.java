@@ -23,7 +23,7 @@ public class PrestamoService {
     public ArrayList<PrestamoEntity> obtenerPrestamos(){
         return (ArrayList<PrestamoEntity>) prestamoRepository.findAll();
     }
-    public PrestamoEntity guardarPrestamo(String fechaPrestamo,String horaPrestamo,String utilizacionHoras,String fechaDevolucion,String horaDevolucion,String estadoDanado,String idProjector,String idProfesor){
+    public PrestamoEntity guardarPrestamo(String fechaPrestamo,String horaPrestamo,String utilizacionHoras,String fechaDevolucion,String horaDevolucion,String estadoDanado,String uso, String idProjector,String idProfesor){
         PrestamoEntity prestamo = new PrestamoEntity();
         System.out.println("agregarPrestamo llamado con paráme:");
 
@@ -33,6 +33,7 @@ public class PrestamoService {
         prestamo.setFechaDevolucion(fechaDevolucion);
         prestamo.setHoraDevolucion(horaDevolucion);
         prestamo.setEstadoDanado(estadoDanado);
+        prestamo.setUso(uso);
         prestamo.setIdProjector(idProjector);
         prestamo.setIdProfesor(idProfesor); 
 
@@ -94,9 +95,10 @@ public class PrestamoService {
         }
     }
 
-    public List<PrestamoEntity> obtenerPrestamosPorProjectorID(String projectorID) {
-        return (List<PrestamoEntity>) prestamoRepository.findByIdProjector(projectorID); //obtener los prestamos por id de projector
+    public List<PrestamoEntity> obtenerPrestamosPorProjectorID(String long1) {
+        return (List<PrestamoEntity>) prestamoRepository.findByIdProjector(long1);
     }
+
 
 
 

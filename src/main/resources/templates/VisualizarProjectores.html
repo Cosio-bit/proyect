@@ -67,9 +67,9 @@
                     <label>
                         <select th:id="'usoSelector' + ${projector.id}">
                             <option value="">Seleccionar Uso</option>
-                            <option th:if="${projector.tipo == 'Epson'}" value="1">Dictado de clases</option>
-                            <option th:if="${projector.tipo == 'Epson'}" value="2">Examen de titulo</option>
-                            <option th:if="${projector.tipo == 'ViewSonic'}" value="3">Reuniones varias</option>
+                            <option th:if="${projector.tipo == 'Epson'}" value="Dictado de clases">Dictado de clases</option>
+                            <option th:if="${projector.tipo == 'Epson'}" value="Examen de titulo">Examen de titulo</option>
+                            <option th:if="${projector.tipo == 'ViewSonic'}" value="Reuniones varias">Reuniones varias</option>
                         </select>
                     </label>
 
@@ -158,6 +158,8 @@
 
                 // Recolectar los datos de la fila para enviar
                 const idProfesor = fila.querySelector('#profesorSelector' + idProjector).value;
+                //si el projector esta dañado, se guarda en el historial del profesor un contaodr de daños
+                
                 const estadoDanado = fila.querySelector('input[name="damage' + idProjector + '"]:checked').value === 'yes' ? 'Dañado' : 'No Dañado';
                 const uso = fila.querySelector('#usoSelector' + idProjector).value;
 
@@ -189,15 +191,13 @@
                     fechaDevolucion,
                     horaDevolucion,
                     estadoDanado,
+                    uso,
                     idProjector,
                     idProfesor
                 );
             });
         });
     });
-
-// Asumiendo que la función registrarTiempoUsado y actualizarTiempo manejan su propia lógica interna.
-
 
 
     document.querySelectorAll("[id^='repairButton']").forEach(button => {
@@ -213,28 +213,28 @@
 
 
     document.querySelectorAll("[id^='skipButton']").forEach(button => {
-    button.addEventListener("click", function() {
-        const idProjector = this.id.replace('skipButton', '');
-        const fila = this.closest('tr');
-        const skipTime = fila.querySelector('#skipTime' + idProjector).value;
-        const [horas, minutos, segundos] = skipTime.split(":").map(Number);
+        button.addEventListener("click", function() {
+            const idProjector = this.id.replace('skipButton', '');
+            const fila = this.closest('tr');
+            const skipTime = fila.querySelector('#skipTime' + idProjector).value;
+            const [horas, minutos, segundos] = skipTime.split(":").map(Number);
 
-        if (!isNaN(horas) && !isNaN(minutos) && !isNaN(segundos)) {
-            const skipTotalSegundos = horas * 3600 + minutos * 60 + segundos;
-            // Aquí necesitas ajustar para actualizar el tiempo específico de este projector
-            actualizarTiempo(idProjector, skipTotalSegundos);
+            if (!isNaN(horas) && !isNaN(minutos) && !isNaN(segundos)) {
+                const skipTotalSegundos = horas * 3600 + minutos * 60 + segundos;
+                actualizarTiempo(idProjector, skipTotalSegundos);
 
-            if (tiempoTotalSegundos < 0) {
-                clearInterval(interval); // Asegúrate de manejar intervalos específicos del projector
-                fila.querySelector('#timer' + idProjector).innerText = "Atrasado";
-                registrarTiempoUsado(fila, idProjector);
-                fila.querySelector('#returnButton' + idProjector).disabled = true;
-                fila.querySelector('#startButton' + idProjector).disabled = false;
-                // Aquí puedes actualizar el estado del projector si es necesario
+                // Usa projectoresTimers[idProjector].tiempoTotalSegundos para acceder al tiempo
+                if (projectoresTimers[idProjector].tiempoTotalSegundos < 0) {
+                    clearInterval(projectoresTimers[idProjector].interval);
+                    fila.querySelector('#timer' + idProjector).innerText = "Atrasado";
+                    registrarTiempoUsado(fila, idProjector);
+                    fila.querySelector('#returnButton' + idProjector).disabled = true;
+                    fila.querySelector('#startButton' + idProjector).disabled = false;
+                }
             }
-        }
+        });
     });
-});
+
 
     // Objeto para manejar los tiempos e intervalos de cada projector
     let projectoresTimers = {};
@@ -328,6 +328,7 @@
                     fechaDevolucion,
                     horaDevolucion,
                     estadoDanado,
+                    uso,
                     idProjector,
                     idProfesor) {
         
@@ -338,11 +339,12 @@
                     fechaDevolucion,
                     horaDevolucion,
                     estadoDanado,
+                    uso,
                     idProjector,
                     idProfesor});
 
         // Validación de los parámetros
-    if (!fechaPrestamo || !horaPrestamo || !utilizacionHoras || !fechaDevolucion || !horaDevolucion || !estadoDanado || !idProjector || !idProfesor) {
+    if (!fechaPrestamo || !horaPrestamo || !utilizacionHoras || !fechaDevolucion || !horaDevolucion || !estadoDanado || !uso || !idProjector || !idProfesor) {
         console.error('Error: Todos los campos deben estar llenos.');
         return; // Termina la ejecución si hay algún campo vacío
     }
@@ -353,6 +355,7 @@
         params.append('fechaDevolucion', fechaDevolucion || '');
         params.append('horaDevolucion', horaDevolucion || '');
         params.append('estadoDanado', estadoDanado || '');
+        params.append('uso', uso || '');
         params.append('idProjector', idProjector || '');
         params.append('idProfesor', idProfesor || '');
         
@@ -380,7 +383,4 @@ fetch('/prestamos', {
 
 }
 
-
-
-
-    </script>
+</script>

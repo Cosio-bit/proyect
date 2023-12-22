@@ -1,12 +1,14 @@
 package edu.mtisw.testingwebapp.services;
 
 
+import edu.mtisw.testingwebapp.entities.PrestamoEntity;
 import edu.mtisw.testingwebapp.entities.ProfesorEntity;
 
 import edu.mtisw.testingwebapp.repositories.ProfesorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.*;
 
 //import static edu.mtisw.testingwebapp.services.OficinaRRHH.convertirFecha;
@@ -50,61 +52,29 @@ public class ProfesorService {
         System.out.println("rut:"+rut);
         return Optional.ofNullable(profesorRepository.findByRut(rut));}
 
+    public void updateInfraccion(List<ProfesorEntity> profesores) {
+        for (int i = 0; i != profesores.size(); i++) {
+            List<PrestamoEntity> prestamos = prestamoService.obtenerPrestamosPorProjectorID(profesores.get(i).getId().toString());
+            int infracciones = 0;
+            int atrasos = 0;
+            for (int j = 0; j != prestamos.size(); j++) {
+                if (prestamos.get(j).getEstadoDanado().equals("si")) {
+                    infracciones++;
+                }
+            }
+            profesores.get(i).setAtrasos(atrasos);
+            profesores.get(i).setInfracciones(infracciones);
+            //si las infracciones son mayores a 3 se borra el profesor
+            if (infracciones >= 3) {
+                profesorRepository.deleteById(profesores.get(i).getId());
+            } else {
+                profesorRepository.save(profesores.get(i));
+            }
+        }
+    }
+
 
 
 }
 
 
-
-
-  /*
-
-
-
-  public void cuotaUpdate(List<ProfesorEntity> profesorEntities){
-        List<PrestamoEntity> detallesPagos = prestamoService.findbynotpagado(projector.get().getId());
-        prestamoService.updateDetallesPagos(detallesPagos, promedio);}
-        else{
-            List<PrestamoEntity> detallesPagos = prestamoService.prestamoRepository.findAll();
-            prestamoService.updateDetallesPagos(detallesPagos, promedio);}
-        
-    public List<List<String>> ExcelImporterToList(String nombre) {
-        String fileName = nombre +".xlsx"; // Relative path to the file
-        List<List<String>> dataList = new ArrayList<>();
-        DataFormatter formateador = new DataFormatter();
-
-        try (FileInputStream fis = new FileInputStream(new File(fileName));
-             Workbook workbook = new XSSFWorkbook(fis)) {
-
-            // Get the first sheet in the Excel file
-            Sheet sheet = workbook.getSheetAt(0);
-
-            // Iterate through rows and columns to read data and store in a list
-            for (Row row : sheet) {
-                List<String> rowData = new ArrayList<>();
-                for (Iterator<Cell> cellIterator = row.cellIterator(); cellIterator.hasNext();) {
-                    Cell cell = cellIterator.next();
-                    switch (cell.getCellType()) {
-                        case STRING:
-                            rowData.add(cell.getStringCellValue());
-                            break;
-                        case NUMERIC:
-                            rowData.add(formateador.formatCellValue(cell));
-                            break;
-                        case BOOLEAN:
-                            rowData.add(String.valueOf(cell.getBooleanCellValue()));
-                            break;
-                        default:
-                            rowData.add(""); // Add an empty string for empty cells
-                    }
-                }
-                dataList.add(rowData); // Add the row data to the list
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return dataList;
-    }
-*/
