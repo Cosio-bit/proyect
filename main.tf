@@ -1,38 +1,20 @@
 terraform {
-	required_providers {
-		aws = {
-			source  = "hashicorp/aws" # Indica el servicio del proveedor a utilizar
-			version = "~> 4.16"
+  required_providers {
+    digitalocean = {
+      source = "digitalocean/digitalocean"
+      version = "~> 2.0"
     }
-}
-
-  required_version = ">= 1.2.0"
-}
-
-provider "aws" {
-  region = "us-west-2"
-}
-
-resource "aws_instance" "app-simple-aws" {
-  ami           = "ami-0c2ab3b8efb09f272" # Imagen de la maquina virtual / depende de la región
-  instance_type = "t2.micro" # Capacidad de la maquina virtual
-  key_name      = aws_key_pair.kp.key_name # Indicar key pair de la instancia de EC2 a crear
-
-  tags = {
-    Name = "AppSimpleAwsEC2Instance"
   }
 }
 
-resource "tls_private_key" "pk" {
-  algorithm = "RSA"
-  rsa_bits  = 4096
+provider "digitalocean" {
+  token = "dop_v1_6afc113fd382c84c80e813f90d640286467bbd1d2a195dac098d0e6611a8c193"
 }
 
-resource "aws_key_pair" "kp" {
-  key_name   = "key"       # Crear key pair de acceso a EC2
-  public_key = tls_private_key.pk.public_key_openssh
-
-  provisioner "local-exec" { # Crear "key.pem"
-    command = "echo '${tls_private_key.pk.private_key_pem}' > ./key.pem"
-  }
+resource "digitalocean_droplet" "web" {
+  image  = "ubuntu-20-04-x64"
+  name   = "web-1"
+  region = "nyc3"
+  size   = "s-1vcpu-2gb"
+  ssh_keys = ["89:7a:1b:1e:45:6c:25:75:8a:8e:b4:c3:fc:d5:50:82"]
 }
