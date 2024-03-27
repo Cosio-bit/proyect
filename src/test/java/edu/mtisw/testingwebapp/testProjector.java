@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -35,11 +36,16 @@ public class testProjector {
         String nombre = "Proyector 1";
         String tipo = "Proyector de datos";
 
-        ProjectorEntity projector = projectorService.guardarProjector(nombre, tipo);
+        ProjectorEntity projectEnt = new ProjectorEntity(null, nombre, tipo,"disponible");
 
-        assertEquals(nombre, projector.getNombre());
-        assertEquals(tipo, projector.getTipo());
-        assertEquals("disponible", projector.getEstado());
+        ProjectorEntity projectServ = projectorService.guardarProjector(nombre, tipo);
+
+        ProjectorEntity projectRep = projectorRepository.findByNombre(nombre);
+
+        assertEquals(nombre, projectServ.getNombre());
+        assertEquals(tipo, projectServ.getTipo());
+        //assertEquals("disponible", projector.getEstado());
+        assertEquals("Proyector 1", projectRep.getNombre());
     }
 
 

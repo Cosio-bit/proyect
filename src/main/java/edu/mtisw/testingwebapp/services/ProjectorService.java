@@ -46,7 +46,7 @@ public class ProjectorService {
     }
 
     public Optional<ProjectorEntity> obtenerPorNombre(String nombre){
-        return projectorRepository.findByNombre(nombre);
+        return Optional.ofNullable(projectorRepository.findByNombre(nombre));
     }
 
     public Optional<ProjectorEntity> obtenerPorID(Long id){

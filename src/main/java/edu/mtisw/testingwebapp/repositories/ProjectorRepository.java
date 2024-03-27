@@ -15,7 +15,7 @@ public interface ProjectorRepository extends JpaRepository<ProjectorEntity, Long
     Optional<ProjectorEntity> findById(@Param("id") Long id);
 
     @Query(value = "SELECT * FROM projectores WHERE nombre = :nombre", nativeQuery = true)
-    Optional<ProjectorEntity> findByNombre(@Param("nombre") String nombre);
+    ProjectorEntity findByNombre(@Param("nombre") String nombre);
 
     @Query(value = "SELECT * FROM projectores WHERE tipo = :tipo", nativeQuery = true)
     Optional<ProjectorEntity> findByTipo(@Param("tipo") String tipo);
