@@ -4,6 +4,7 @@ import edu.mtisw.testingwebapp.entities.ReparacionEntity;
 import edu.mtisw.testingwebapp.entities.VehiculoEntity;
 import edu.mtisw.testingwebapp.repositories.ReparacionRepository;
 import edu.mtisw.testingwebapp.repositories.VehiculoRepository;
+import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,8 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Service
 public class ReparacionService {
@@ -23,26 +26,37 @@ public class ReparacionService {
     public ArrayList<ReparacionEntity> obtenerReparacions(){
         return (ArrayList<ReparacionEntity>) reparacionRepository.findAll();
     }
-    public ReparacionEntity guardarReparacion(LocalDate fechaIngreso, String horaIngreso, String tipoReparacion, String montoTotal, String fechaSalida, String horaSalida, String fechaSalidaCliente, String horaSalidaCliente){
-        ReparacionEntity reparacion = new ReparacionEntity();
-        System.out.println("agregarReparacion llamado con paráme:");
+    public ReparacionEntity guardarReparacion(LocalDate fechaIngreso,
+                                              LocalDate horaIngreso,
+                                              String tipoReparacion,
+                                              Integer montoTotal,
+                                              LocalDate fechaSalidaReparacion,
+                                              LocalDate horaSalidaReparacion,
+                                              LocalDate fechaSalidaCliente,
+                                              LocalDate horaSalidaCliente,
+                                              String idVehiculo){
 
-        reparacion.setFechaReparacion(fechaIngreso);
-        reparacion.setHoraReparacion(horaIngreso);
+        ReparacionEntity reparacion = new ReparacionEntity();
+
+        reparacion.setFechaIngreso(fechaIngreso.toString());
+        reparacion.setHoraIngeso(horaIngreso.toString());
         reparacion.setTipoReparacion(tipoReparacion);
         reparacion.setMontoTotal(montoTotal);
-        reparacion.setFechaDevolucion(fechaSalida);
-        reparacion.setHoraDevolucion(horaSalida);
-        reparacion.setFechaDevolucionCliente(fechaSalidaCliente);
-        reparacion.setHoraDevolucionCliente(horaSalidaCliente);
-        
+        reparacion.setFechaSalidaReparacion(fechaSalidaReparacion.toString());
+        reparacion.setHoraSalidaReparacion(horaSalidaReparacion.toString());
+        reparacion.setFechaSalidaCliente(fechaSalidaCliente.toString());
+        reparacion.setHoraSalidaCliente(horaSalidaCliente.toString());
+        reparacion.setIdVehiculo(idVehiculo);
+
+        System.out.println("agregarReparacion llamado con paráme:");
+
 
         System.out.println("reparacion: " + reparacion);
 
 
         return reparacionRepository.save(reparacion);
     }
-
+/*
     public void updatePrestamo(ReparacionEntity reparacion, String estado){
 
         Long vehiculoId = Long.parseLong(reparacion.getIdVehiculo());
@@ -99,7 +113,7 @@ public class ReparacionService {
         return (List<ReparacionEntity>) reparacionRepository.findByIdVehiculo(long1);
     }
 
-
+*/
 
 
 }

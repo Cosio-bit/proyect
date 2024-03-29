@@ -21,7 +21,7 @@ public class ReparacionEntity {
     String fechaIngreso;
     String horaIngeso;
     String tipoReparacion;
-    String montoTotal;
+    Integer montoTotal;
     String fechaSalidaReparacion;
     String horaSalidaReparacion;
     String fechaSalidaCliente;

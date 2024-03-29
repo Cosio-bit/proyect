@@ -26,19 +26,21 @@ public class ReparacionController {
     }
 
  @PostMapping("/reparaciones")
-public ResponseEntity<?> agregarReparacion(@RequestParam("fechaReparacion") String fechaReparacion,
-                                         @RequestParam("horaReparacion") String horaReparacion,
-                                        @RequestParam("utilizacionHoras") String utilizacionHoras,
-                                         @RequestParam("fechaDevolucion") String fechaDevolucion,
-                                         @RequestParam("horaDevolucion") String horaDevolucion,
-                                         @RequestParam("estadoDanado") String estadoDanado,
-                                         @RequestParam("uso") String uso,
-                                         @RequestParam("idVehiculo") String idVehiculo,
-                                         @RequestParam("idProfesor") String idProfesor) {
+public ResponseEntity<?> agregarReparacion(
+        @RequestParam("fechaIngreso") String fechaIngreso,
+        @RequestParam("horaIngreso") String horaIngreso,
+        @RequestParam("tipoReparacion") String tipoReparacion,
+        @RequestParam("montoTotal") String montoTotal,
+        @RequestParam("fechaSalidaReparacion") String fechaSalidaReparacion,
+        @RequestParam("horaSalidaReparacion") String horaSalidaReparacion,
+        @RequestParam("fechaSalidaCliente") String fechaSalidaCliente,
+        @RequestParam("horaSalidaCliente") String horaSalidaCliente,
+        @RequestParam("idVehiculo") String idVehiculo
+    ){
     try {
 
         // Aquí asumo que tienes una lógica para manejar la creación del préstamo
-        ReparacionEntity nuevoReparacion = reparacionoService.guardarReparacion(fechaReparacion, horaReparacion, utilizacionHoras, fechaDevolucion, horaDevolucion, estadoDanado, uso, idVehiculo, idProfesor);
+        ReparacionEntity nuevoReparacion = reparacionoService.guardarReparacion(fechaIngreso, horaIngreso, tipoReparacion, montoTotal,fechaSalidaReparacion, horaSalidaReparacion, fechaSalidaCliente, horaSalidaCliente, idVehiculo );
 
         if (nuevoReparacion != null) {
             return ResponseEntity.ok(nuevoReparacion);
