@@ -24,11 +24,6 @@ public class testProjector {
     @Autowired
     private ProjectorService projectorService;
 
-    @Autowired
-    private ProfesorRepository profesorRepository;
-    @Autowired
-    private ProfesorService profesorService;
-
     @Test
     @Transactional
     void testProjectorEntityAttributes() {

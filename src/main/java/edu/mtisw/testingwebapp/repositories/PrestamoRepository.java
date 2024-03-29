@@ -13,7 +13,7 @@ import java.util.Optional;
 @Repository
 public interface PrestamoRepository extends JpaRepository<PrestamoEntity, Long> {
     //all queries
-    @Query(value = "SELECT * FROM prestamos WHERE id = :id", nativeQuery = true)
+    @Query(value = "SELECT * FROM prestam   os WHERE id = :id", nativeQuery = true)
     Optional<PrestamoEntity> findById(@Param("id") Long id);
 
     @Query(value = "SELECT * FROM prestamos WHERE id_projector = :idProjector", nativeQuery = true)
