@@ -1,6 +1,6 @@
 package edu.mtisw.testingwebapp.services;
 
-import edu.mtisw.testingwebapp.entities.PrestamoEntity;
+import edu.mtisw.testingwebapp.entities.ReparacionEntity;
 import edu.mtisw.testingwebapp.entities.ProjectorEntity;
 import edu.mtisw.testingwebapp.repositories.ProjectorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ public class ProjectorService {
     @Autowired
     ProjectorRepository projectorRepository;
     @Autowired
-    PrestamoService prestamoService;
+    ReparacionService reparacionService;
 
     public ArrayList<ProjectorEntity> obtenerProjectores(){
         return (ArrayList<ProjectorEntity>) projectorRepository.findAll();
@@ -30,12 +30,12 @@ public class ProjectorService {
         return projectorRepository.save(projector);
     }
 
-    public PrestamoEntity guardarPrestamo(String fechaPrestamo,String horaPrestamo,String utilizacionHoras,String fechaDevolucion,String horaDevolucion,String estadoDanado,String uso, String idProjector,String idProfesor){
-        return prestamoService.guardarPrestamo(fechaPrestamo, horaPrestamo, utilizacionHoras, fechaDevolucion, horaDevolucion, estadoDanado, uso, idProjector, idProfesor);
+    public ReparacionEntity guardarReparacion(String fechaReparacion,String horaReparacion,String utilizacionHoras,String fechaDevolucion,String horaDevolucion,String estadoDanado,String uso, String idProjector,String idProfesor){
+        return reparacionService.guardarReparacion(fechaReparacion, horaReparacion, utilizacionHoras, fechaDevolucion, horaDevolucion, estadoDanado, uso, idProjector, idProfesor);
     }
 
     
-    public Optional<ProjectorEntity> anadirPrestamo(Long id, double efectivo) {
+    public Optional<ProjectorEntity> anadirReparacion(Long id, double efectivo) {
         // First, check if the entity with the given id exists
         Optional<ProjectorEntity> projector= projectorRepository.findById(id);
         

@@ -24,42 +24,42 @@ public class PrestamoService {
         return (ArrayList<PrestamoEntity>) prestamoRepository.findAll();
     }
     public PrestamoEntity guardarPrestamo(String fechaPrestamo,String horaPrestamo,String utilizacionHoras,String fechaDevolucion,String horaDevolucion,String estadoDanado,String uso, String idProjector,String idProfesor){
-        PrestamoEntity prestamo = new PrestamoEntity();
+        PrestamoEntity reparacion = new PrestamoEntity();
         System.out.println("agregarPrestamo llamado con paráme:");
 
-        prestamo.setFechaPrestamo(fechaPrestamo);
-        prestamo.setHoraPrestamo(horaPrestamo);
-        prestamo.setUtilizacionHoras(utilizacionHoras);
-        prestamo.setFechaDevolucion(fechaDevolucion);
-        prestamo.setHoraDevolucion(horaDevolucion);
-        prestamo.setEstadoDanado(estadoDanado);
-        prestamo.setUso(uso);
-        prestamo.setIdProjector(idProjector);
-        prestamo.setIdProfesor(idProfesor); 
+        reparacion.setFechaPrestamo(fechaPrestamo);
+        reparacion.setHoraPrestamo(horaPrestamo);
+        reparacion.setUtilizacionHoras(utilizacionHoras);
+        reparacion.setFechaDevolucion(fechaDevolucion);
+        reparacion.setHoraDevolucion(horaDevolucion);
+        reparacion.setEstadoDanado(estadoDanado);
+        reparacion.setUso(uso);
+        reparacion.setIdProjector(idProjector);
+        reparacion.setIdProfesor(idProfesor); 
 
-        System.out.println("prestamo: " + prestamo);
+        System.out.println("reparacion: " + reparacion);
 
 
-        return prestamoRepository.save(prestamo);
+        return prestamoRepository.save(reparacion);
     }
 
-    public void updatePrestamo(PrestamoEntity prestamo, String estado){
+    public void updatePrestamo(PrestamoEntity reparacion, String estado){
 
-        Long projectorId = Long.parseLong(prestamo.getIdProjector());
+        Long projectorId = Long.parseLong(reparacion.getIdProjector());
         ProjectorEntity projector = projectorRepository.findById(projectorId).orElse(null);
 
         if (projector != null) {
             projector.setEstado(estado);
             projectorRepository.save(projector);
-        } //arreglar para que se actualice el estado del prestamo
-        prestamoRepository.save(prestamo);
+        } //arreglar para que se actualice el estado del reparacion
+        prestamoRepository.save(reparacion);
     }
 
     public void updatePrestamos(List<PrestamoEntity> prestamoEntities){ //obtener el promedio dada que es el mismo id de profesor ver como hacerlo porque solo profesor tiene todos los repos juntos
         //LocalDate fechaActual = LocalDate.now();
 
         for(int i=0; i!=prestamoEntities.size();i++){
-            updatePrestamo(prestamoEntities.get(i), "Devuelto"); //actualiza el estado de los prestamos a lo que realmente utilizaremos
+            updatePrestamo(prestamoEntities.get(i), "Devuelto"); //actualiza el estado de los reparaciones a lo que realmente utilizaremos
         }
     }
 
@@ -79,12 +79,12 @@ public class PrestamoService {
         Optional<PrestamoEntity> optionalPrestamo = prestamoRepository.findById(prestamoID);
 
         if (optionalPrestamo.isPresent() && optionalPrestamo.get().getEstadoDanado().equals("No Devuelto")) {
-            PrestamoEntity prestamo = optionalPrestamo.get();
-            prestamo.setEstadoDanado("Devuelto");// Establece el estado pagado en true
-            prestamoRepository.save(prestamo); // Guarda la entidad actualizada
+            PrestamoEntity reparacion = optionalPrestamo.get();
+            reparacion.setEstadoDanado("Devuelto");// Establece el estado pagado en true
+            prestamoRepository.save(reparacion); // Guarda la entidad actualizada
 
             // Calcula el nuevo monto total para el historial de arancel
-            Long projectorId = Long.parseLong(prestamo.getIdProjector());
+            Long projectorId = Long.parseLong(reparacion.getIdProjector());
             ProjectorEntity projector = projectorRepository.findById(projectorId).orElse(null);
 
             if (projector != null) {

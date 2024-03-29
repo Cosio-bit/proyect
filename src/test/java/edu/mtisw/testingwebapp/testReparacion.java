@@ -60,26 +60,26 @@ public class testPrestamo {
 
         System.out.println(projector.getId());
 
-        PrestamoEntity prestamo = new PrestamoEntity();
+        PrestamoEntity reparacion = new PrestamoEntity();
 
         // Test 
 /*
-        assertEquals(montoPago, prestamo.getMontoPago());
+        assertEquals(montoPago, reparacion.getMontoPago());
 
         // Test Fecha de Pago
         LocalDate fechaPago = LocalDate.of(2023, 10, 13);
-        prestamo.setFechaPago(fechaPago);
-        assertEquals(fechaPago, prestamo.getFechaPago());
+        reparacion.setFechaPago(fechaPago);
+        assertEquals(fechaPago, reparacion.getFechaPago());
 
         // Test Estado de Pago
         boolean notpagado = false;
-        prestamo.setPagado(notpagado);
-        assertEquals(notpagado, prestamo.isPagado());
+        reparacion.setPagado(notpagado);
+        assertEquals(notpagado, reparacion.isPagado());
 
         // Test Fecha de Vencimiento
         LocalDate fechaVencimiento = LocalDate.of(2023, 11, 1);
-        prestamo.setFechaVencimiento(fechaVencimiento);
-        assertEquals(fechaVencimiento, prestamo.getFechaVencimiento());
+        reparacion.setFechaVencimiento(fechaVencimiento);
+        assertEquals(fechaVencimiento, reparacion.getFechaVencimiento());
 
 
         List<PrestamoEntity> prestamoEntities =  prestamoService.guardarDetallesPagos(projector.getId(), cuotasPactadas,projector.getMontoTotal()); //hay que guardarlo en el repo para ir a buscarlo y para eso necesitamos historial arancel

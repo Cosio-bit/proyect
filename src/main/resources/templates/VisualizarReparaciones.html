@@ -32,7 +32,7 @@
 
 <body>
 <header class="header">
-	<h1>Visualizar Prestamos</h1>
+	<h1>Visualizar Reparaciones</h1>
 	<nav>
 		<!-- Puedes agregar enlaces de navegación si es necesario -->
 	</nav>
@@ -43,8 +43,8 @@
 			<thead>
 			<tr>
 				<th>ID</th>
-				<th>fechaPrestamo</th>
-				<th>horaPrestamo</th>
+				<th>fechaReparacion</th>
+				<th>horaReparacion</th>
 				<th>utilizacionHoras</th>
 				<th>fechaDevolucion</th>
 				<th>horaDevolucion</th>
@@ -57,18 +57,18 @@
 			</tr>
 			</thead>
 			<tbody>
-			<!-- Iterate over the list of Prestamo entities -->
-			<tr th:each="prestamo : ${prestamos}">
-				<td th:text="${prestamo.id}"></td>
-				<td th:text="${prestamo.fechaPrestamo}"></td>
-				<td th:text="${prestamo.horaPrestamo}"></td>
-				<td th:text="${prestamo.utilizacionHoras}"></td>
-				<td th:text="${prestamo.fechaDevolucion}"></td>
-				<td th:text="${prestamo.horaDevolucion}"></td>
-				<td th:text="${prestamo.estadoDanado}"></td>
-				<td th:text="${prestamo.uso}"></td>
-				<td th:text="${prestamo.idProjector}"></td>
-				<td th:text="${prestamo.idProfesor}"></td>
+			<!-- Iterate over the list of Reparacion entities -->
+			<tr th:each="reparacion : ${reparaciones}">
+				<td th:text="${reparacion.id}"></td>
+				<td th:text="${reparacion.fechaReparacion}"></td>
+				<td th:text="${reparacion.horaReparacion}"></td>
+				<td th:text="${reparacion.utilizacionHoras}"></td>
+				<td th:text="${reparacion.fechaDevolucion}"></td>
+				<td th:text="${reparacion.horaDevolucion}"></td>
+				<td th:text="${reparacion.estadoDanado}"></td>
+				<td th:text="${reparacion.uso}"></td>
+				<td th:text="${reparacion.idProjector}"></td>
+				<td th:text="${reparacion.idProfesor}"></td>
 				<!-- Agrega más columnas según los campos de DetallePagoEntity -->
 			</tr>
 
