@@ -7,11 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
-import java.util.Optional;
 
 import edu.mtisw.testingwebapp.entities.ReparacionEntity;
 import edu.mtisw.testingwebapp.services.ReparacionService;
-import edu.mtisw.testingwebapp.services.ProfesorService;
+
 @Controller
 @RequestMapping
 public class ReparacionController {
@@ -23,7 +22,7 @@ public class ReparacionController {
     public String listar(Model model) {
         List<ReparacionEntity> reparaciones = reparacionoService.obtenerReparacions();
         model.addAttribute("reparaciones", reparaciones);
-        return "VisualizarReparacions";
+        return "VisualizarReparaciones";
     }
 
  @PostMapping("/reparaciones")
@@ -34,12 +33,12 @@ public ResponseEntity<?> agregarReparacion(@RequestParam("fechaReparacion") Stri
                                          @RequestParam("horaDevolucion") String horaDevolucion,
                                          @RequestParam("estadoDanado") String estadoDanado,
                                          @RequestParam("uso") String uso,
-                                         @RequestParam("idProjector") String idProjector,
+                                         @RequestParam("idVehiculo") String idVehiculo,
                                          @RequestParam("idProfesor") String idProfesor) {
     try {
 
         // Aquí asumo que tienes una lógica para manejar la creación del préstamo
-        ReparacionEntity nuevoReparacion = reparacionoService.guardarReparacion(fechaReparacion, horaReparacion, utilizacionHoras, fechaDevolucion, horaDevolucion, estadoDanado, uso, idProjector, idProfesor);
+        ReparacionEntity nuevoReparacion = reparacionoService.guardarReparacion(fechaReparacion, horaReparacion, utilizacionHoras, fechaDevolucion, horaDevolucion, estadoDanado, uso, idVehiculo, idProfesor);
 
         if (nuevoReparacion != null) {
             return ResponseEntity.ok(nuevoReparacion);
@@ -53,10 +52,10 @@ public ResponseEntity<?> agregarReparacion(@RequestParam("fechaReparacion") Stri
     }
 }
 
-    // 3. Obtener los reparaciones de un projector en particular
-    @GetMapping("/projectores/projector/reparaciones/{id}")
-    public String mostrarReparaciones(@PathVariable("id") String projectorId, Model model) {
-        List<ReparacionEntity> reparaciones = reparacionoService.obtenerReparacionesPorProjectorID(projectorId);
+    // 3. Obtener los reparaciones de un vehiculo en particular
+    @GetMapping("/vehiculos/vehiculo/reparaciones/{id}")
+    public String mostrarReparaciones(@PathVariable("id") String vehiculoId, Model model) {
+        List<ReparacionEntity> reparaciones = reparacionoService.obtenerReparacionesPorVehiculoID(vehiculoId);
 
         model.addAttribute("reparaciones", reparaciones);
         return "VisualizarReparaciones";

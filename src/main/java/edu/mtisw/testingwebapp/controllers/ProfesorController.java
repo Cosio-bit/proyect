@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.Optional;
 import edu.mtisw.testingwebapp.entities.ProfesorEntity;
-import edu.mtisw.testingwebapp.services.PrestamoService;
+import edu.mtisw.testingwebapp.services.ReparacionService;
 import edu.mtisw.testingwebapp.services.ProfesorService;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -17,7 +17,7 @@ public class ProfesorController {
 	@Autowired
 	private ProfesorService profesorService;
 	@Autowired
-	private PrestamoService prestamoService;
+	private ReparacionService reparacionService;
 
 	@GetMapping("/profesores")
 	public String listar(Model model) {

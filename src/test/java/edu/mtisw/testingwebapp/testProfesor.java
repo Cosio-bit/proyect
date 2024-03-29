@@ -1,12 +1,12 @@
 package edu.mtisw.testingwebapp;
 
-import edu.mtisw.testingwebapp.entities.PrestamoEntity;
+import edu.mtisw.testingwebapp.entities.ReparacionEntity;
 import edu.mtisw.testingwebapp.entities.ProfesorEntity;
-import edu.mtisw.testingwebapp.entities.ProjectorEntity;
+import edu.mtisw.testingwebapp.entities.VehiculoEntity;
 import edu.mtisw.testingwebapp.repositories.ProfesorRepository;
-import edu.mtisw.testingwebapp.services.PrestamoService;
+import edu.mtisw.testingwebapp.services.ReparacionService;
 import edu.mtisw.testingwebapp.services.ProfesorService;
-import edu.mtisw.testingwebapp.services.ProjectorService;
+import edu.mtisw.testingwebapp.services.VehiculoService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,10 +25,10 @@ public class testProfesor {
     private ProfesorService profesorService;
 
     @Autowired
-    private ProjectorService projectorService;
+    private VehiculoService vehiculoService;
 
     @Autowired
-    private PrestamoService prestamoService;
+    private ReparacionService reparacionService;
 
 
     @Test
@@ -67,7 +67,7 @@ public class testProfesor {
             ProfesorEntity profesor1 = profesorService.guardarProfesor("20623522", "andrea", "cosio"); //lo mismo, crear profesor primero
             
 
-            List<PrestamoEntity> prestamoEntities =  prestamoService.obtenerPrestamos();
+            List<ReparacionEntity> reparacionEntities =  reparacionService.obtenerReparacions();
         }
 
 

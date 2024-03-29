@@ -3,7 +3,7 @@
     let interval;
     let tiempoInicial = tiempoTotalSegundos;
     let proyectorDisponible = true;
-    let horaPrestamo;
+    let horaReparacion;
 
     document.getElementById("startButton").addEventListener("click", function() {
     if (proyectorDisponible) {
@@ -13,7 +13,7 @@
     iniciarContador();
     proyectorDisponible = false;
     //obtener la hora en que se pidio el proyector
-    horaPrestamo = new Date().toLocaleTimeString();
+    horaReparacion = new Date().toLocaleTimeString();
 }
 });
 
@@ -35,7 +35,7 @@
 
 
     // Enviar datos al servidor
-    enviarDatosPrestamo(horaPrestamo, horaDevolucion, atrasado, horaDevolucion, idProyector, idProfesor);
+    enviarDatosReparacion(horaReparacion, horaDevolucion, atrasado, horaDevolucion, idProyector, idProfesor);
 
     // Actualizar UI según si el proyector está dañado
     if (danado === "no") {
@@ -117,9 +117,9 @@
     document.getElementById("resultado").innerText = mensaje;
 }
 
-    function enviarDatosPrestamo(horaPrestamo, horaDevolucion, atrasado, idProyector, idProfesor) {
+    function enviarDatosReparacion(horaReparacion, horaDevolucion, atrasado, idProyector, idProfesor) {
     const xhr = new XMLHttpRequest();
-    xhr.open("POST", "/prestamos", true);
+    xhr.open("POST", "/reparaciones", true);
     xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.send(JSON.stringify({ horaPrestamo, horaDevolucion, atrasado, idProyector, idProfesor }));
+    xhr.send(JSON.stringify({ horaReparacion, horaDevolucion, atrasado, idProyector, idProfesor }));
 }

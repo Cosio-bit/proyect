@@ -1,7 +1,7 @@
 package edu.mtisw.testingwebapp.services;
 
 
-import edu.mtisw.testingwebapp.entities.PrestamoEntity;
+import edu.mtisw.testingwebapp.entities.ReparacionEntity;
 import edu.mtisw.testingwebapp.entities.ProfesorEntity;
 
 import edu.mtisw.testingwebapp.repositories.ProfesorRepository;
@@ -18,9 +18,9 @@ public class ProfesorService {
     @Autowired
     ProfesorRepository profesorRepository;
     @Autowired
-    ProjectorService projectorService;
+    VehiculoService vehiculoService;
     @Autowired
-    PrestamoService prestamoService;
+    ReparacionService reparacionService;
 
         @Autowired
         public ProfesorService(ProfesorRepository profesorRepository) {
@@ -54,11 +54,11 @@ public class ProfesorService {
 
     public void updateInfraccion(List<ProfesorEntity> profesores) {
         for (int i = 0; i != profesores.size(); i++) {
-            List<PrestamoEntity> prestamos = prestamoService.obtenerPrestamosPorProjectorID(profesores.get(i).getId().toString());
+            List<ReparacionEntity> reparaciones = reparacionService.obtenerReparacionesPorVehiculoID(profesores.get(i).getId().toString());
             int infracciones = 0;
             int atrasos = 0;
-            for (int j = 0; j != prestamos.size(); j++) {
-                if (prestamos.get(j).getEstadoDanado().equals("si")) {
+            for (int j = 0; j != reparaciones.size(); j++) {
+                if (reparaciones.get(j).getEstadoDanado().equals("si")) {
                     infracciones++;
                 }
             }

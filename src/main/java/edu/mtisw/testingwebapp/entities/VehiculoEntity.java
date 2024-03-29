@@ -5,19 +5,16 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "projectores")
+@Table(name = "vehiculos")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProjectorEntity {
+public class VehiculoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
     private Long id;
-    private String nombre;
-    private String tipo;
-    private String estado;
 
     private String patente;
     private String marca;
@@ -25,6 +22,7 @@ public class ProjectorEntity {
     private String annoFabricacion;
     private String tipoMotor;
     private Integer nroAsientos;
+    private float kilometraje;
 
 }
 

@@ -34,19 +34,19 @@
     </div>
     <nav>
     </nav>
-    <a class="cta-button" href="/projectores"><button>Volver al menú principal</button></a>
+    <a class="cta-button" href="/vehiculos"><button>Volver al menú principal</button></a>
 </header>
 <div class="mainclass">
-    <form th:action="@{/nuevoProjector}" method="POST">
+    <form th:action="@{/nuevoVehiculo}" method="POST">
         <div class="logo">
-            <h1><b>Registrar nuevo Projector</b></h1>
+            <h1><b>Registrar nuevo Vehiculos</b></h1>
         </div>
         <ul class="formcontainer">
 
             <ul class="container">
                 <li>
                     <label><strong>nombre</strong></label>
-                    <input type="text" id="nombre" placeholder="Ingrese nombre del projector" name="nombre">
+                    <input type="text" id="nombre" placeholder="Ingrese nombre del vehiculo" name="nombre">
                 </li>
                 <li>
                     <label><strong>Tipo</strong></label>
@@ -56,10 +56,10 @@
                     </select>
                 </li>
 
-                <!-- Agrega más campos según los atributos de tu entidad ProjectorEntity -->
+                <!-- Agrega más campos según los atributos de tu entidad VehiculoEntity -->
             </ul>
             <div class="cta-button">
-                <button type="submit">Registrar Projector</button>
+                <button type="submit">Registrar Vehiculos</button>
             </div>
         </ul>
     </form>

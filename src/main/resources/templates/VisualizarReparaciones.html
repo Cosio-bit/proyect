@@ -50,7 +50,7 @@
 				<th>horaDevolucion</th>
 				<th>estadoDanado</th>
 				<th>uso</th>
-				<th>idProjector</th>
+				<th>idVehiculo</th>
 				<th>idProfesor</th>
 				
 				<!-- Agrega más encabezados según los campos de DetallePagoEntity -->
@@ -67,7 +67,7 @@
 				<td th:text="${reparacion.horaDevolucion}"></td>
 				<td th:text="${reparacion.estadoDanado}"></td>
 				<td th:text="${reparacion.uso}"></td>
-				<td th:text="${reparacion.idProjector}"></td>
+				<td th:text="${reparacion.idVehiculo}"></td>
 				<td th:text="${reparacion.idProfesor}"></td>
 				<!-- Agrega más columnas según los campos de DetallePagoEntity -->
 			</tr>
@@ -77,7 +77,7 @@
 				<a th:href="@{'/profesores'}">Ver profesores</a>
 			</td>
 			<td>
-				<a th:href="@{'/projectores'}">Ver projectores</a>
+				<a th:href="@{'/vehiculos'}">Ver vehiculos</a>
 			</tbody>
 		</table>
 	</div>

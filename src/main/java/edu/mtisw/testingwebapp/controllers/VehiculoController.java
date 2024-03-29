@@ -1,8 +1,8 @@
 package edu.mtisw.testingwebapp.controllers;
 import edu.mtisw.testingwebapp.entities.ProfesorEntity;
-import edu.mtisw.testingwebapp.entities.ProjectorEntity;
+import edu.mtisw.testingwebapp.entities.VehiculoEntity;
 import edu.mtisw.testingwebapp.services.ProfesorService;
-import edu.mtisw.testingwebapp.services.ProjectorService;
+import edu.mtisw.testingwebapp.services.VehiculoService;
 //import edu.mtisw.testingwebapp.services.OficinaRRHH;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,55 +15,55 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/")
-public class ProjectorController {
+public class VehiculoController {
     @Autowired
-    private ProjectorService projectorService;
+    private VehiculoService vehiculoService;
     @Autowired
     private ProfesorService profesorService;
 
 
-    @GetMapping("/projectores/projector/{id}")
-    public String mostrarProjector(@PathVariable Long id, Model model) {
-        Optional<ProjectorEntity> projector = projectorService.obtenerPorId(id);
+    @GetMapping("/vehiculos/vehiculo/{id}")
+    public String mostrarVehiculo(@PathVariable Long id, Model model) {
+        Optional<VehiculoEntity> vehiculo = vehiculoService.obtenerPorId(id);
 
-        if (projector.isPresent()) {
-            ProjectorEntity projectorEntity = projector.get();
+        if (vehiculo.isPresent()) {
+            VehiculoEntity vehiculoEntity = vehiculo.get();
 
 			//se podria agregar atributos para el countdown y mostrarlo live
             // Agregar el monto del reembolso al modelo
             //model.addAttribute("refundAmount", refundAmount);
 
-            // Agregar el projector al modelo
-            model.addAttribute("projector", projectorEntity);
+            // Agregar el vehiculo al modelo
+            model.addAttribute("vehiculo", vehiculoEntity);
         }
 
-        return "VisualizarProjector"; // Reemplaza "VisualizarProjector" con el nombre de tu vista
+        return "VisualizarVehiculo"; // Reemplaza "VisualizarVehiculo" con el nombre de tu vista
     }
 
 
-    @GetMapping("/nuevoProjector")
-    public String ProjectorForm(Model model) {
+    @GetMapping("/nuevoVehiculo")
+    public String VehiculoForm(Model model) {
         // Puedes agregar lógica para prellenar el formulario si es necesario.
-        model.addAttribute("projector", new ProjectorEntity());
-        return "IngresarProjector";
+        model.addAttribute("vehiculo", new VehiculoEntity());
+        return "IngresarVehiculo";
     }
 
 
     
-	@GetMapping("/projectores")
+	@GetMapping("/vehiculos")
 	public String listar(Model model) {
-		List<ProjectorEntity> projectores = projectorService.obtenerProjectores();
+		List<VehiculoEntity> vehiculos = vehiculoService.obtenerVehiculoes();
         List<ProfesorEntity> profesores = profesorService.obtenerProfesores();
 
 		// Check if the profesores list is null or empty before calling cuotaUpdate
-		if (projectores != null && !projectores.isEmpty()) {
-			//podria servir para con f5 actualizar la lista de projectores
-			//projectorService.actualizar(projectores);
+		if (vehiculos != null && !vehiculos.isEmpty()) {
+			//podria servir para con f5 actualizar la lista de vehiculos
+			//vehiculoService.actualizar(vehiculos);
 		}
 
-		model.addAttribute("projectores", projectores);
+		model.addAttribute("vehiculos", vehiculos);
         model.addAttribute("profesores", profesores);
-		return "VisualizarProjectores";
+		return "VisualizarVehiculoes";
 	}
 
 
@@ -75,13 +75,13 @@ public class ProjectorController {
 			@RequestParam("tipo") String tipo){
 
 		// Guardar la información del profesor
-		ProjectorEntity projector = projectorService.guardarProjector(nombre,tipo);
+		VehiculoEntity vehiculo = vehiculoService.guardarVehiculo(nombre,tipo);
 
 		// Create a ModelAndView object and add the data you want to pass to the view
 		ModelAndView modelAndView = new ModelAndView("IngresarProjector");
 
 		// Add the ID of the ProfesorEntity to the model
-		modelAndView.addObject("projectorID", projector.getId());
+		modelAndView.addObject("vehiculoID", vehiculo.getId());
 
 		return modelAndView;
 	}

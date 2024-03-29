@@ -1,45 +1,39 @@
 package edu.mtisw.testingwebapp;
 
-import edu.mtisw.testingwebapp.entities.ProfesorEntity;
-import edu.mtisw.testingwebapp.entities.ProjectorEntity;
-import edu.mtisw.testingwebapp.repositories.ProfesorRepository;
-import edu.mtisw.testingwebapp.repositories.ProjectorRepository;
-import edu.mtisw.testingwebapp.services.ProfesorService;
-import edu.mtisw.testingwebapp.services.ProjectorService;
+import edu.mtisw.testingwebapp.entities.VehiculoEntity;
+import edu.mtisw.testingwebapp.repositories.VehiculoRepository;
+import edu.mtisw.testingwebapp.services.VehiculoService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-public class testProjector {
+public class testVehiculo {
 
     @Autowired
-    private ProjectorRepository projectorRepository;
+    private VehiculoRepository vehiculoRepository;
     @Autowired
-    private ProjectorService projectorService;
+    private VehiculoService vehiculoService;
 
     @Test
     @Transactional
-    void testProjectorEntityAttributes() {
+    void testVehiculoEntityAttributes() {
 
         String nombre = "Proyector 1";
         String tipo = "Proyector de datos";
 
-        ProjectorEntity projectEnt = new ProjectorEntity(null, nombre, tipo,"disponible");
+        //VehiculoEntity projectEnt = new VehiculoEntity(null, nombre, tipo,"disponible");
 
-        ProjectorEntity projectServ = projectorService.guardarProjector(nombre, tipo);
+        VehiculoEntity projectServ = vehiculoService.guardarVehiculo(nombre, tipo);
 
-        ProjectorEntity projectRep = projectorRepository.findByNombre(nombre);
+        VehiculoEntity projectRep = vehiculoRepository.findByNombre(nombre);
 
         assertEquals(nombre, projectServ.getNombre());
         assertEquals(tipo, projectServ.getTipo());
-        //assertEquals("disponible", projector.getEstado());
+        //assertEquals("disponible", vehiculo.getEstado());
         assertEquals("Proyector 1", projectRep.getNombre());
     }
 

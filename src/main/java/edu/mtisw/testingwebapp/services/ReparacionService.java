@@ -1,9 +1,9 @@
 package edu.mtisw.testingwebapp.services;
 
-import edu.mtisw.testingwebapp.entities.PrestamoEntity;
-import edu.mtisw.testingwebapp.entities.ProjectorEntity;
-import edu.mtisw.testingwebapp.repositories.PrestamoRepository;
-import edu.mtisw.testingwebapp.repositories.ProjectorRepository;
+import edu.mtisw.testingwebapp.entities.ReparacionEntity;
+import edu.mtisw.testingwebapp.entities.VehiculoEntity;
+import edu.mtisw.testingwebapp.repositories.ReparacionRepository;
+import edu.mtisw.testingwebapp.repositories.VehiculoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,52 +14,52 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class PrestamoService {
+public class ReparacionService {
     @Autowired
-    PrestamoRepository prestamoRepository;
+    ReparacionRepository reparacionRepository;
     @Autowired
-    ProjectorRepository projectorRepository;
+    VehiculoRepository vehiculoRepository;
 
-    public ArrayList<PrestamoEntity> obtenerPrestamos(){
-        return (ArrayList<PrestamoEntity>) prestamoRepository.findAll();
+    public ArrayList<ReparacionEntity> obtenerReparacions(){
+        return (ArrayList<ReparacionEntity>) reparacionRepository.findAll();
     }
-    public PrestamoEntity guardarPrestamo(String fechaPrestamo,String horaPrestamo,String utilizacionHoras,String fechaDevolucion,String horaDevolucion,String estadoDanado,String uso, String idProjector,String idProfesor){
-        PrestamoEntity reparacion = new PrestamoEntity();
-        System.out.println("agregarPrestamo llamado con paráme:");
+    public ReparacionEntity guardarReparacion(LocalDate fechaIngreso, String horaIngreso, String tipoReparacion, String montoTotal, String fechaSalida, String horaSalida, String fechaSalidaCliente, String horaSalidaCliente){
+        ReparacionEntity reparacion = new ReparacionEntity();
+        System.out.println("agregarReparacion llamado con paráme:");
 
-        reparacion.setFechaPrestamo(fechaPrestamo);
-        reparacion.setHoraPrestamo(horaPrestamo);
-        reparacion.setUtilizacionHoras(utilizacionHoras);
-        reparacion.setFechaDevolucion(fechaDevolucion);
-        reparacion.setHoraDevolucion(horaDevolucion);
-        reparacion.setEstadoDanado(estadoDanado);
-        reparacion.setUso(uso);
-        reparacion.setIdProjector(idProjector);
-        reparacion.setIdProfesor(idProfesor); 
+        reparacion.setFechaReparacion(fechaIngreso);
+        reparacion.setHoraReparacion(horaIngreso);
+        reparacion.setTipoReparacion(tipoReparacion);
+        reparacion.setMontoTotal(montoTotal);
+        reparacion.setFechaDevolucion(fechaSalida);
+        reparacion.setHoraDevolucion(horaSalida);
+        reparacion.setFechaDevolucionCliente(fechaSalidaCliente);
+        reparacion.setHoraDevolucionCliente(horaSalidaCliente);
+        
 
         System.out.println("reparacion: " + reparacion);
 
 
-        return prestamoRepository.save(reparacion);
+        return reparacionRepository.save(reparacion);
     }
 
-    public void updatePrestamo(PrestamoEntity reparacion, String estado){
+    public void updatePrestamo(ReparacionEntity reparacion, String estado){
 
-        Long projectorId = Long.parseLong(reparacion.getIdProjector());
-        ProjectorEntity projector = projectorRepository.findById(projectorId).orElse(null);
+        Long vehiculoId = Long.parseLong(reparacion.getIdVehiculo());
+        VehiculoEntity vehiculo = vehiculoRepository.findById(vehiculoId).orElse(null);
 
-        if (projector != null) {
-            projector.setEstado(estado);
-            projectorRepository.save(projector);
+        if (vehiculo != null) {
+            vehiculo.setEstado(estado);
+            vehiculoRepository.save(vehiculo);
         } //arreglar para que se actualice el estado del reparacion
-        prestamoRepository.save(reparacion);
+        reparacionRepository.save(reparacion);
     }
 
-    public void updatePrestamos(List<PrestamoEntity> prestamoEntities){ //obtener el promedio dada que es el mismo id de profesor ver como hacerlo porque solo profesor tiene todos los repos juntos
+    public void updateReparaciones(List<ReparacionEntity> reparacionEntities){ //obtener el promedio dada que es el mismo id de profesor ver como hacerlo porque solo profesor tiene todos los repos juntos
         //LocalDate fechaActual = LocalDate.now();
 
-        for(int i=0; i!=prestamoEntities.size();i++){
-            updatePrestamo(prestamoEntities.get(i), "Devuelto"); //actualiza el estado de los reparaciones a lo que realmente utilizaremos
+        for(int i=0; i!=reparacionEntities.size();i++){
+            updatePrestamo(reparacionEntities.get(i), "Devuelto"); //actualiza el estado de los reparaciones a lo que realmente utilizaremos
         }
     }
 
@@ -75,28 +75,28 @@ public class PrestamoService {
         return aniosDiferencia * 12 + mesesDiferencia;
     }
 
-    public void devolver(Long prestamoID) {
-        Optional<PrestamoEntity> optionalPrestamo = prestamoRepository.findById(prestamoID);
+    public void devolver(Long reparacionID) {
+        Optional<ReparacionEntity> optionalPrestamo = reparacionRepository.findById(reparacionID);
 
         if (optionalPrestamo.isPresent() && optionalPrestamo.get().getEstadoDanado().equals("No Devuelto")) {
-            PrestamoEntity reparacion = optionalPrestamo.get();
+            ReparacionEntity reparacion = optionalPrestamo.get();
             reparacion.setEstadoDanado("Devuelto");// Establece el estado pagado en true
-            prestamoRepository.save(reparacion); // Guarda la entidad actualizada
+            reparacionRepository.save(reparacion); // Guarda la entidad actualizada
 
             // Calcula el nuevo monto total para el historial de arancel
-            Long projectorId = Long.parseLong(reparacion.getIdProjector());
-            ProjectorEntity projector = projectorRepository.findById(projectorId).orElse(null);
+            Long vehiculoId = Long.parseLong(reparacion.getIdVehiculo());
+            VehiculoEntity vehiculo = vehiculoRepository.findById(vehiculoId).orElse(null);
 
-            if (projector != null) {
-                projector.setEstado("Disponible");
+            if (vehiculo != null) {
+                vehiculo.setEstado("Disponible");
                 //setear lo necesario, ver despues
-                projectorRepository.save(projector);
+                vehiculoRepository.save(vehiculo);
             }
         }
     }
 
-    public List<PrestamoEntity> obtenerPrestamosPorProjectorID(String long1) {
-        return (List<PrestamoEntity>) prestamoRepository.findByIdProjector(long1);
+    public List<ReparacionEntity> obtenerReparacionesPorVehiculoID(String long1) {
+        return (List<ReparacionEntity>) reparacionRepository.findByIdVehiculo(long1);
     }
 
 
