@@ -51,7 +51,6 @@ public class ReparacionService {
         System.out.println("agregarReparacion llamado con paráme:");
 
 
-        System.out.println("reparacion: " + reparacion);
 
 
         return reparacionRepository.save(reparacion);
