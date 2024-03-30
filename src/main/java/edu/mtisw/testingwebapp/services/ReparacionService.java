@@ -52,7 +52,7 @@ public class ReparacionService {
         System.out.println("fechaIngreso: " + fechaIngreso);
         System.out.println("agregarReparacion llamado con paráme:");
         System.out.println("agregarReparacion llamado con paráme:");
-        System.out.println("agregarReparacion llamado con paráme:");
+        System.out.println("autofix2");
 
 
 
