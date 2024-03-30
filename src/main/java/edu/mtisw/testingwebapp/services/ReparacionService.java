@@ -49,6 +49,7 @@ public class ReparacionService {
         reparacion.setIdVehiculo(idVehiculo);
 
         System.out.println("agregarReparacion llamado con paráme:");
+        System.out.println("fechaIngreso: " + fechaIngreso);
 
 
 
