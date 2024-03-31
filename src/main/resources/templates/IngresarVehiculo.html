@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <title>Ingresar Historial Académico</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+</head>
+
+<style>
+    body {
+        background-color: #BAF4FA;
+        color: #6889BC;
+        font-family: Calibri, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .header {
+        background-color: #BAF4FA;
+        padding: 10px;
+        text-align: center;
+    }
+</style>
+
+<body>
+<header class="header">
+    <div class="logo">
+    </div>
+    <nav>
+    </nav>
+    <a class="cta-button" href="/vehiculos"><button>Volver al menú principal</button></a>
+</header>
+<div class="mainclass">
+    <form th:action="@{/nuevoVehiculo}" method="POST">
+        <div class="logo">
+            <h1><b>Registrar nuevo Vehiculos</b></h1>
+        </div>
+        <ul class="formcontainer">
+
+            <ul class="container">
+                <li>
+                    <label><strong>patente</strong></label>
+                    <input type="text" id="patente" placeholder="Ingrese la patente del vehiculo" name="patente">
+                </li>
+
+                <li>
+                    <label><strong>marca</strong></label>
+                    <label for="marca"></label><select id="marca" name="marca" required>
+                    <option value="">Seleccione la marca del vehiculo</option>
+                        <option value="Chevrolet">Chevrolet</option>
+                        <option value="Ford">Ford</option>
+                        <option value="Toyota">Toyota</option>
+                        <option value="Nissan">Nissan</option>
+                        <option value="Hyundai">Hyundai</option>
+                        <option value="Kia">Kia</option>
+                        <option value="Suzuki">Suzuki</option>
+                        <option value="Mazda">Mazda</option>
+                    </select>
+                </li>
+
+                <li>
+                    <label><strong>modelo</strong></label>
+                    <input type="text" id="modelo" placeholder="Ingrese el modelo del vehiculo" name="modelo">
+                </li>
+
+                <li>
+                    <label><strong>tipo de auto</strong></label>
+                    <label for="tipo"></label><select id="tipo" name="tipo" required>
+                    <option value="">Seleccione el tipo de vehiculo</option>
+                        <option value="Sedan">Sedan</option>
+                        <option value="Hatchback">Hatchback</option>
+                        <option value="SUV">SUV</option>
+                        <option value="Pickup">Pickup</option>
+                        <option value="Van">Van</option>
+                        <option value="Coupe">Coupe</option>
+                        <option value="Convertible">Convertible</option>
+                        <option value="Deportivo">Deportivo</option>
+
+                </li>
+
+                <li>
+                    <label><strong>annoFabricacion</strong></label>
+                    <input type="text" id="annoFabricacion" placeholder="Ingrese el año del vehiculo" name="annoFabricacion">
+                </li>
+
+                <li>
+                    <label><strong>ripo de motor</strong></label>
+                    <label for="motor"></label><select id="motor" name="motor" required>
+                    <option value="">Seleccione el tipo de motor</option>
+                        <option value="Bencina">Bencina</option>
+                        <option value="Diesel">Diesel</option>
+                        <option value="Hibrido">Hibrido</option>
+                        <option value="Electrico">Electrico</option>
+                </li>
+
+                <li>
+                    <label><strong>nro asientos</strong></label>
+                    <input type="text" id="nroAsientos" placeholder="Ingrese la capacidad de pasajeros" name="nroAsientos">
+                </li>
+
+                <li>
+                    <label><strong>kilometraje</strong></label>
+                    <input type="int" id="kilometraje" name="kilometraje">
+                </li>
+
+                <!-- Agrega más campos según los atributos de tu entidad VehiculoEntity -->
+            </ul>
+            <div class="cta-button">
+                <button type="submit">Registrar Vehiculos</button>
+            </div>
+        </ul>
+    </form>
+</div>
+</body>
+
+</html>

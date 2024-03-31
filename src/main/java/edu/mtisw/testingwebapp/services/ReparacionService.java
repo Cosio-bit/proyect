@@ -53,9 +53,6 @@ public class ReparacionService {
         System.out.println("agregarReparacion llamado con paráme:");
         System.out.println("main:");
 
-
-
-
         return reparacionRepository.save(reparacion);
     }
 /*
@@ -111,11 +108,13 @@ public class ReparacionService {
         }
     }
 
-    public List<ReparacionEntity> obtenerReparacionesPorVehiculoID(String long1) {
-        return (List<ReparacionEntity>) reparacionRepository.findByIdVehiculo(long1);
-    }
 
 */
+
+        public List<ReparacionEntity> obtenerReparacionesPorVehiculoID(String long1) {
+            return (List<ReparacionEntity>) reparacionRepository.findByIdVehiculo(long1);
+        }
+
 
 
 }

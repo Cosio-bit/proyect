@@ -6,6 +6,7 @@ import edu.mtisw.testingwebapp.repositories.VehiculoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import java.util.Optional;
@@ -17,20 +18,39 @@ public class VehiculoService {
     @Autowired
     ReparacionService reparacionService;
 
-    public ArrayList<VehiculoEntity> obtenerVehiculoes(){
+    public ArrayList<VehiculoEntity> obtenerVehiculos(){
         return (ArrayList<VehiculoEntity>) vehiculoRepository.findAll();
     }
-    public VehiculoEntity guardarVehiculo(String nombre, String tipo){
+
+    public VehiculoEntity guardarVehiculo(String patente,String marca,String modelo,String annoFabricacion,String tipoMotor,Integer nroAsientos,float kilometraje){
+        
         VehiculoEntity vehiculo = new VehiculoEntity();
-        //OficinaRRHH oficinaRRHH = new OficinaRRHH();
-        vehiculo.setNombre(nombre);
-        vehiculo.setTipo(tipo);
-        vehiculo.setEstado("disponible");
+        vehiculo.setPatente(patente);
+        vehiculo.setMarca(marca);
+        vehiculo.setModelo(modelo);
+        vehiculo.setAnnoFabricacion(annoFabricacion);
+        vehiculo.setTipoMotor(tipoMotor);
+        vehiculo.setNroAsientos(nroAsientos);
+        vehiculo.setKilometraje(kilometraje);
+        
         return vehiculoRepository.save(vehiculo);
+
     }
 
-    public ReparacionEntity guardarReparacion(String fechaReparacion,String horaReparacion,String utilizacionHoras,String fechaDevolucion,String horaDevolucion,String estadoDanado,String uso, String idVehiculo,String idProfesor){
-        return reparacionService.guardarReparacion(fechaReparacion, horaReparacion, utilizacionHoras, fechaDevolucion, horaDevolucion, estadoDanado, uso, idVehiculo, idProfesor);
+
+
+    public ReparacionEntity nuevaReparacion(LocalDate fechaIngreso,
+                                              LocalDate horaIngreso,
+                                              String tipoReparacion,
+                                              Integer montoTotal,
+                                              LocalDate fechaSalidaReparacion,
+                                              LocalDate horaSalidaReparacion,
+                                              LocalDate fechaSalidaCliente,
+                                              LocalDate horaSalidaCliente,
+                                              String idVehiculo){
+
+        return reparacionService.guardarReparacion(fechaIngreso,horaIngreso,tipoReparacion,montoTotal,fechaSalidaReparacion,horaSalidaReparacion,fechaSalidaCliente,horaSalidaCliente,idVehiculo);
+    
     }
 
     
@@ -40,17 +60,16 @@ public class VehiculoService {
         
         return vehiculo;
     }
+
+
     public Optional<VehiculoEntity> obtenerPorId(Long id){
         return vehiculoRepository.findById(id);
     }
 
-    public Optional<VehiculoEntity> obtenerPorNombre(String nombre){
-        return Optional.ofNullable(vehiculoRepository.findByNombre(nombre));
+    public Optional<VehiculoEntity> obtenerPorPatente(String patente){
+        return vehiculoRepository.findByPatente(patente);
     }
 
-    public Optional<VehiculoEntity> obtenerPorID(Long id){
-        return vehiculoRepository.findById(id);
-    }
 
 
 }

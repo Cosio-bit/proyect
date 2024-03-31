@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import edu.mtisw.testingwebapp.entities.ReparacionEntity;
@@ -27,15 +28,15 @@ public class ReparacionController {
 
  @PostMapping("/reparaciones")
 public ResponseEntity<?> agregarReparacion(
-        @RequestParam("fechaIngreso") String fechaIngreso,
-        @RequestParam("horaIngreso") String horaIngreso,
-        @RequestParam("tipoReparacion") String tipoReparacion,
-        @RequestParam("montoTotal") String montoTotal,
-        @RequestParam("fechaSalidaReparacion") String fechaSalidaReparacion,
-        @RequestParam("horaSalidaReparacion") String horaSalidaReparacion,
-        @RequestParam("fechaSalidaCliente") String fechaSalidaCliente,
-        @RequestParam("horaSalidaCliente") String horaSalidaCliente,
-        @RequestParam("idVehiculo") String idVehiculo
+            @RequestParam("fechaIngreso") LocalDate fechaIngreso,
+			@RequestParam("horaIngreso") LocalDate horaIngreso,
+			@RequestParam("tipoReparacion") String tipoReparacion,
+			@RequestParam("montoTotal") Integer montoTotal,
+			@RequestParam("fechaSalidaReparacion") LocalDate fechaSalidaReparacion,
+			@RequestParam("horaSalidaReparacion") LocalDate horaSalidaReparacion,
+			@RequestParam("fechaSalidaCliente") LocalDate fechaSalidaCliente,
+			@RequestParam("horaSalidaCliente") LocalDate horaSalidaCliente,
+			@RequestParam("idVehiculo") String idVehiculo
     ){
     try {
 
@@ -45,7 +46,7 @@ public ResponseEntity<?> agregarReparacion(
         if (nuevoReparacion != null) {
             return ResponseEntity.ok(nuevoReparacion);
         } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No se pudo crear el préstamo");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No se pudo crear la reparacion");
         }
     } catch (NumberFormatException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error en el formato de los números: " + e.getMessage());
