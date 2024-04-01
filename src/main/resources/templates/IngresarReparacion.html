@@ -34,33 +34,50 @@
     </div>
     <nav>
     </nav>
-    <a class="cta-button" href="/proyectores"><button>Volver al menú principal</button></a>
+    <a class="cta-button" href="/vehiculos"><button>Volver al menú principal</button></a>
 </header>
 <div class="mainclass">
-    <form th:action="@{/profesores/crearReparacion/}" method="POST">
+    <form th:action="@{/crearReparacion/}" method="POST">
         <div class="logo">
-            <h1><b>Registrar nuevo Reparacion</b></h1>
+            <h1><b>Registrar nueva Reparacion</b></h1>
         </div>
         <ul class="formcontainer">
             <hr/>
 
             <ul class="container">
                 <li>
-                    <label><strong>Fecha de Pago</strong></label>
-                    <input type="date" id="fechaPago" name="fechaPago" required>
+                    <label><strong>Fecha de Ingreso</strong></label>
+                    <input type="date" id="fechaIngreso" name="fechaIngreso" required>
+                <li>
+                    <label><strong>Hora de Ingreso</strong></label>
+                    <input type="time" id="horaIngreso" name="horaIngreso" required>
                 </li>
                 <li>
-                    <label><strong>Fecha de Vencimiento</strong></label>
-                    <input type="date" id="fechaVencimiento" name="fechaVencimiento" required>
-                </li>
-                <li>
-                    <label><strong>Pagado</strong></label>
-                    <select id="pagado" name="pagado" required>
-                        <option value="true">Pagado</option>
-                        <option value="false">No Pagado</option>
+                    <label><strong>Tipo de Reparacion</strong></label>
+                    <select id="tipoReparacion" name="tipoReparacion" required>
+                        <option value="">Seleccione el tipo de reparacion</option>
+                        <option value="Mecanica">Mecanica</option>
+                        <option value="Electrica">Electrica</option>
+                        <option value="Chapa y Pintura">Chapa y Pintura</option>
+                        <option value="Neumaticos">Neumaticos</option>
                     </select>
                 </li>
-
+                <li>
+                    <label><strong>Monto Total</strong></label>
+                    <input type="number" id="montoTotal" name="montoTotal" required>
+                </li>
+                <li>
+                    <label><strong>Fecha de salida de Reparacion</strong></label>
+                    <input type="date" id="fechaSalida" name="fechaSalida" required>
+                </li>
+                <li>
+                    <label><strong>Hora de salida de Reparacion</strong></label>
+                    <input type="time" id="horaSalida" name="horaSalida" required>  
+                </li>
+                <li>
+                    <label><strong>Fecha cliente retira vehiculo</strong></label>
+                    <input type="date" id="fechaRetiro" name="fechaRetiro" required>
+                </li>
             </ul>
             <div class="cta-button">
                 <button type="submit">Registrar Reparacion</button>

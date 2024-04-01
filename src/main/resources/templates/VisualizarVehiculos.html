@@ -39,10 +39,16 @@
             </thead>
             <tbody>
             <tr th:each="vehiculo : ${vehiculos}">
+
                 <td th:text="${vehiculo.id}"></td>
-                <td th:text="${vehiculo.nombre}"></td>
+                <td th:text="${vehiculo.patente}"></td>
+                <td th:text="${vehiculo.marca}"></td>
+                <td th:text="${vehiculo.modelo}"></td>
                 <td th:text="${vehiculo.tipo}"></td>
-                <td th:text="${vehiculo.estado}"></td>
+                <td th:text="${vehiculo.annoFabricacion}"></td>
+                <td th:text="${vehiculo.tipoMotor}"></td>
+                <td th:text="${vehiculo.nroAsientos}"></td>
+                
                 <td>
                     <!-- Botón para pedir vehiculo -->
                     <button th:id="'startButton' + ${vehiculo.id}" th:data-estado="${vehiculo.estado}"
@@ -63,15 +69,15 @@
                         </select>
                     </label>
 
-                    <!-- Selector de uso toggle: si vehiculo.tipo es epson entonces opcion 1 o 2 disponible, si vehiculo.tipo es viewSonic, opcion 3 disponible-->
+                    <!-- Selector de uso toggle: si vehiculo.tipo es epson entonces opcion 1 o 2 disponible, si vehiculo.tipo es viewSonic, opcion 3 disponible
                     <label>
                         <select th:id="'usoSelector' + ${vehiculo.id}">
-                            <option value="">Seleccionar Uso</option>
+                            <option value="">Seleccionar marca</option>
                             <option th:if="${vehiculo.tipo == 'Epson'}" value="Dictado de clases">Dictado de clases</option>
                             <option th:if="${vehiculo.tipo == 'Epson'}" value="Examen de titulo">Examen de titulo</option>
                             <option th:if="${vehiculo.tipo == 'ViewSonic'}" value="Reuniones varias">Reuniones varias</option>
                         </select>
-                    </label>
+                    </label>-->
 
 
                     <!-- Temporizador -->

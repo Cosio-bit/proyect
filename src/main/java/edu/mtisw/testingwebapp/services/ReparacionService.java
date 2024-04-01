@@ -1,20 +1,14 @@
 package edu.mtisw.testingwebapp.services;
 
 import edu.mtisw.testingwebapp.entities.ReparacionEntity;
-import edu.mtisw.testingwebapp.entities.VehiculoEntity;
 import edu.mtisw.testingwebapp.repositories.ReparacionRepository;
 import edu.mtisw.testingwebapp.repositories.VehiculoRepository;
-import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Service
 public class ReparacionService {
@@ -48,10 +42,6 @@ public class ReparacionService {
         reparacion.setHoraSalidaCliente(horaSalidaCliente.toString());
         reparacion.setIdVehiculo(idVehiculo);
 
-        System.out.println("agregarReparacion llamado con paráme:");
-        System.out.println("fechaIngreso: " + fechaIngreso);
-        System.out.println("agregarReparacion llamado con paráme:");
-        System.out.println("main:");
 
         return reparacionRepository.save(reparacion);
     }

@@ -1,10 +1,8 @@
 package edu.mtisw.testingwebapp.controllers;
-import edu.mtisw.testingwebapp.entities.ProfesorEntity;
+
 import edu.mtisw.testingwebapp.entities.ReparacionEntity;
 import edu.mtisw.testingwebapp.entities.VehiculoEntity;
-import edu.mtisw.testingwebapp.services.ProfesorService;
 import edu.mtisw.testingwebapp.services.VehiculoService;
-//import edu.mtisw.testingwebapp.services.OficinaRRHH;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +21,6 @@ public class VehiculoController {
     //@Autowired
     //private ProfesorService profesorService;
 
-
     @GetMapping("/vehiculos/vehiculo/{id}")
     public String mostrarVehiculo(@PathVariable Long id, Model model) {
         Optional<VehiculoEntity> vehiculo = vehiculoService.obtenerPorId(id);
@@ -36,7 +33,7 @@ public class VehiculoController {
             //model.addAttribute("refundAmount", refundAmount);
 
             // Agregar el vehiculo al modelo
-            model.addAttribute("vehiculo", vehiculoEntity);
+            model.addAttribute("vehiculo");
         }
 
         return "VisualizarVehiculo"; // Reemplaza "VisualizarVehiculo" con el nombre de tu vista

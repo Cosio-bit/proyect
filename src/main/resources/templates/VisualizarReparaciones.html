@@ -43,15 +43,8 @@
 			<thead>
 			<tr>
 				<th>ID</th>
-				<th>fechaReparacion</th>
-				<th>horaReparacion</th>
-				<th>utilizacionHoras</th>
-				<th>fechaDevolucion</th>
-				<th>horaDevolucion</th>
-				<th>estadoDanado</th>
-				<th>uso</th>
-				<th>idVehiculo</th>
-				<th>idProfesor</th>
+				<th>Fecha de reparación</th>
+				<th>Hora de reparación</th>
 				
 				<!-- Agrega más encabezados según los campos de DetallePagoEntity -->
 			</tr>
@@ -60,15 +53,15 @@
 			<!-- Iterate over the list of Reparacion entities -->
 			<tr th:each="reparacion : ${reparaciones}">
 				<td th:text="${reparacion.id}"></td>
-				<td th:text="${reparacion.fechaReparacion}"></td>
-				<td th:text="${reparacion.horaReparacion}"></td>
-				<td th:text="${reparacion.utilizacionHoras}"></td>
-				<td th:text="${reparacion.fechaDevolucion}"></td>
-				<td th:text="${reparacion.horaDevolucion}"></td>
-				<td th:text="${reparacion.estadoDanado}"></td>
-				<td th:text="${reparacion.uso}"></td>
+				<td th:text="${reparacion.fechaIngreso}"></td>
+				<td th:text="${reparacion.horaIngreso}"></td>
+				<td th:text="${reparacion.tipoReparacion}"></td>
+				<td th:text="${reparacion.montoTotal}"></td>
+				<td th:text="${reparacion.fechaSalidaReparacion}"></td>
+				<td th:text="${reparacion.horaSalidaReparacion}"></td>
+				<td th:text="${reparacion.fechaSalidaCliente}"></td>
+				<td th:text="${reparacion.horaSalidaCliente}"></td>
 				<td th:text="${reparacion.idVehiculo}"></td>
-				<td th:text="${reparacion.idProfesor}"></td>
 				<!-- Agrega más columnas según los campos de DetallePagoEntity -->
 			</tr>
 

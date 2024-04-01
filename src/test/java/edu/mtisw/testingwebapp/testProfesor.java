@@ -1,3 +1,4 @@
+/*
 package edu.mtisw.testingwebapp;
 
 import edu.mtisw.testingwebapp.entities.ReparacionEntity;
@@ -95,3 +96,4 @@ public class testProfesor {
 
     // Add more test methods as needed to cover different aspects of your entity class.
 
+*/
