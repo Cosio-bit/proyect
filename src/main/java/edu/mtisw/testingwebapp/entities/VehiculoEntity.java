@@ -23,6 +23,7 @@ public class VehiculoEntity {
     String tipoMotor;
     Integer nroAsientos;
     float kilometraje;
+    String estado;
 
 }
 

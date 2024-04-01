@@ -10,23 +10,22 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #BAF4FA;
+            color: #6889BC;
+            font-family: Calibri, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #BAF4FA;
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
 </head>
-
-<style>
-    body {
-        background-color: #BAF4FA;
-        color: #6889BC;
-        font-family: Calibri, sans-serif;
-        margin: 0;
-        padding: 0;
-    }
-
-    .header {
-        background-color: #BAF4FA;
-        padding: 10px;
-        text-align: center;
-    }
-</style>
 
 <body>
 <header class="header">
@@ -42,17 +41,16 @@
             <h1><b>Registrar nuevo Vehiculos</b></h1>
         </div>
         <ul class="formcontainer">
-
             <ul class="container">
                 <li>
                     <label><strong>patente</strong></label>
-                    <input type="text" id="patente" placeholder="Ingrese la patente del vehiculo" name="patente">
+                    <label for="patente"></label><input type="text" id="patente" placeholder="Ingrese la patente del vehiculo" name="patente">
                 </li>
 
                 <li>
                     <label><strong>marca</strong></label>
                     <label for="marca"></label><select id="marca" name="marca" required>
-                    <option value="">Seleccione la marca del vehiculo</option>
+                        <option value="">Seleccione la marca del vehiculo</option>
                         <option value="Chevrolet">Chevrolet</option>
                         <option value="Ford">Ford</option>
                         <option value="Toyota">Toyota</option>
@@ -66,13 +64,13 @@
 
                 <li>
                     <label><strong>modelo</strong></label>
-                    <input type="text" id="modelo" placeholder="Ingrese el modelo del vehiculo" name="modelo">
+                    <label for="modelo"></label><input type="text" id="modelo" placeholder="Ingrese el modelo del vehiculo" name="modelo">
                 </li>
 
                 <li>
                     <label><strong>tipo de auto</strong></label>
                     <label for="tipo"></label><select id="tipo" name="tipo" required>
-                    <option value="">Seleccione el tipo de vehiculo</option>
+                        <option value="">Seleccione el tipo de vehiculo</option>
                         <option value="Sedan">Sedan</option>
                         <option value="Hatchback">Hatchback</option>
                         <option value="SUV">SUV</option>
@@ -81,28 +79,29 @@
                         <option value="Coupe">Coupe</option>
                         <option value="Convertible">Convertible</option>
                         <option value="Deportivo">Deportivo</option>
-
+                    </select>
                 </li>
 
                 <li>
-                    <label><strong>annoFabricacion</strong></label>
-                    <input type="text" id="annoFabricacion" placeholder="Ingrese el año del vehiculo" name="annoFabricacion">
+                    <label><strong>año de fabricación</strong></label>
+                    <label for="annoFabricacion"></label><input type="text" id="annoFabricacion" placeholder="Ingrese el año del vehiculo" name="annoFabricacion">
                 </li>
 
                 <li>
                     <label><strong>tipo de motor</strong></label>
                     <label for="motor"></label><select id="motor" name="motor" required>
-                    <option value="">Seleccione el tipo de motor</option>
+                        <option value="">Seleccione el tipo de motor</option>
                         <option value="Bencina">Bencina</option>
                         <option value="Diesel">Diesel</option>
-                        <option value="Hibrido">Hibrido</option>
-                        <option value="Electrico">Electrico</option>
+                        <option value="Híbrido">Híbrido</option>
+                        <option value="Eléctrico">Eléctrico</option>
+                    </select>
                 </li>
 
                 <li>
-                    <label><strong>nro asientos</strong></label>
-                    <select id="nroAsientos" name="nroAsientos" required>
-                        <option value="">Seleccione el numero de asientos</option>
+                    <label><strong>número de asientos</strong></label>
+                    <label for="nroAsientos"></label><select id="nroAsientos" name="nroAsientos" required>
+                        <option value="">Seleccione el número de asientos</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -113,19 +112,19 @@
                         <option value="8">8</option>
                         <option value="9">9</option>
                         <option value="10">10</option>
+                    </select>
                 </li>
 
                 <li>
                     <label><strong>kilometraje</strong></label>
-                    <input type="int" id="kilometraje" name="kilometraje">
+                    <label for="kilometraje"></label><input type="number" id="kilometraje" name="kilometraje">
                 </li>
-
-                <!-- Agrega más campos según los atributos de tu entidad VehiculoEntity -->
+                <!-- Add more fields as needed -->
             </ul>
-            <div class="cta-button">
-                <button type="submit">Registrar Vehiculos</button>
-            </div>
         </ul>
+        <div class="cta-button">
+            <button type="submit">Registrar Vehiculos</button>
+        </div>
     </form>
 </div>
 </body>

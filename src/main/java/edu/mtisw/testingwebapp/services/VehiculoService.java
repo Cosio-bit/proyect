@@ -22,7 +22,7 @@ public class VehiculoService {
         return (ArrayList<VehiculoEntity>) vehiculoRepository.findAll();
     }
 
-    public VehiculoEntity guardarVehiculo(String patente,String marca,String modelo,String annoFabricacion,String tipoMotor,Integer nroAsientos,float kilometraje){
+    public VehiculoEntity guardarVehiculo(String patente,String marca,String modelo,String annoFabricacion,String tipoMotor,Integer nroAsientos,float kilometraje, String estado){
         
         VehiculoEntity vehiculo = new VehiculoEntity();
         vehiculo.setPatente(patente);
@@ -32,6 +32,7 @@ public class VehiculoService {
         vehiculo.setTipoMotor(tipoMotor);
         vehiculo.setNroAsientos(nroAsientos);
         vehiculo.setKilometraje(kilometraje);
+        vehiculo.setEstado(estado);
         
         return vehiculoRepository.save(vehiculo);
 

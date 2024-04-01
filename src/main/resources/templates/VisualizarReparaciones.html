@@ -2,33 +2,47 @@
 <html lang="es-ES" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
-	<title>Información del Profesor</title>
+	<title>Visualizar Reparaciones</title>
+	<style>
+		body {
+			background-color: #BAF4FA;
+			color: #6889BC;
+			font-family: Calibri, sans-serif;
+			margin: 0;
+			padding: 0;
+		}
 
+		.header {
+			background-color: #7AF4FA;
+			padding: 10px;
+			text-align: center;
+		}
+
+		.container {
+			margin: 20px;
+			padding: 20px;
+			background-color: #fff;
+			border-radius: 5px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+		}
+
+		.content-table {
+			border-collapse: collapse;
+			width: 100%;
+		}
+
+		.content-table th,
+		.content-table td {
+			border: 1px solid #dddddd;
+			text-align: left;
+			padding: 8px;
+		}
+
+		.content-table th {
+			background-color: #f2f2f2;
+		}
+	</style>
 </head>
-<style>
-	body {
-		background-color: #BAF4FA;
-		color: #6889BC;
-		font-family: Calibri, sans-serif;
-		margin: 0;
-		padding: 0;
-	}
-
-	.header {
-		background-color: #7AF4FA;
-		padding: 10px;
-		text-align: center;
-	}
-
-	.container {
-		margin: 20px;
-		padding: 20px;
-		background-color: #fff;
-		border-radius: 5px;
-		box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-	}
-</style>
-
 
 <body>
 <header class="header">
@@ -37,54 +51,40 @@
 		<!-- Puedes agregar enlaces de navegación si es necesario -->
 	</nav>
 </header>
-<div class="f">
-	<div class="container my-2">
-		<table border="1" class="content-table">
-			<thead>
-			<tr>
-				<th>ID</th>
-				<th>Fecha de Ingreso</th>
-				<th>Hora de Ingreso</th>
-				<th>Tipo de Reparacion</th>
-				<th>Monto Total</th>
-				<th>Fecha de Salida de Reparacion</th>
-				<th>Hora de Salida de Reparacion</th>
-				<th>Fecha de Salida de Cliente</th>
-				<th>Hora de Salida de Cliente</th>
-				<th>ID Vehiculo</th>
-
-				
-				<!-- Agrega más encabezados según los campos de DetallePagoEntity -->
-			</tr>
-			</thead>
-			<tbody>
-			<!-- Iterate over the list of Reparacion entities -->
-			<tr th:each="reparacion : ${reparaciones}">
-				<td th:text="${reparacion.id}"></td>
-				<td th:text="${reparacion.fechaIngreso}"></td>
-				<td th:text="${reparacion.horaIngreso}"></td>
-				<td th:text="${reparacion.tipoReparacion}"></td>
-				<td th:text="${reparacion.montoTotal}"></td>
-				<td th:text="${reparacion.fechaSalidaReparacion}"></td>
-				<td th:text="${reparacion.horaSalidaReparacion}"></td>
-				<td th:text="${reparacion.fechaSalidaCliente}"></td>
-				<td th:text="${reparacion.horaSalidaCliente}"></td>
-				<td th:text="${reparacion.idVehiculo}"></td>
-				<!-- Agrega más columnas según los campos de DetallePagoEntity -->
-			</tr>
-
-
-			<td>
-				<a th:href="@{'/profesores'}">Ver profesores</a>
-			</td>
-			<td>
-				<a th:href="@{'/vehiculos'}">Ver vehiculos</a>
-			</tbody>
-		</table>
-	</div>
+<div class="container">
+	<table class="content-table">
+		<thead>
+		<tr>
+			<th>ID</th>
+			<th>Fecha de Ingreso</th>
+			<th>Hora de Ingreso</th>
+			<th>Tipo de Reparación</th>
+			<th>Monto Total</th>
+			<th>Fecha de Salida de Reparación</th>
+			<th>Hora de Salida de Reparación</th>
+			<th>Fecha de Salida de Cliente</th>
+			<th>Hora de Salida de Cliente</th>
+			<th>ID Vehículo</th>
+		</tr>
+		</thead>
+		<tbody>
+		<!-- Iterate over the list of Reparacion entities -->
+		<tr th:each="reparacion : ${reparaciones}">
+			<td th:text="${reparacion.id}"></td>
+			<td th:text="${reparacion.fechaIngreso}"></td>
+			<td th:text="${reparacion.horaIngeso}"></td>
+			<td th:text="${reparacion.tipoReparacion}"></td>
+			<td th:text="${reparacion.montoTotal}"></td>
+			<td th:text="${reparacion.fechaSalidaReparacion}"></td>
+			<td th:text="${reparacion.horaSalidaReparacion}"></td>
+			<td th:text="${reparacion.fechaSalidaCliente}"></td>
+			<td th:text="${reparacion.horaSalidaCliente}"></td>
+			<td th:text="${reparacion.idVehiculo}"></td>
+		</tr>
+		</tbody>
+	</table>
 </div>
 <br>
 <hr>
 </body>
-
 </html>

@@ -5,56 +5,91 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>Detalle de vehiculo</title>
+	<title>Detalle de vehículo</title>
+	<style>
+		body {
+			background-color: #BAF4FA;
+			color: #6889BC;
+			font-family: Calibri, sans-serif;
+			margin: 0;
+			padding: 0;
+		}
 
+		.header {
+			background-color: #7AF4FA;
+			padding: 10px;
+			text-align: center;
+		}
+
+		.container {
+			margin: 20px;
+			padding: 20px;
+			background-color: #fff;
+			border-radius: 5px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+		}
+
+		.content-table {
+			border-collapse: collapse;
+			width: 100%;
+		}
+
+		.content-table th,
+		.content-table td {
+			border: 1px solid #dddddd;
+			text-align: left;
+			padding: 8px;
+		}
+
+		.content-table th {
+			background-color: #f2f2f2;
+		}
+
+		.cta-button {
+			display: inline-block;
+			padding: 10px 20px;
+			margin: 10px;
+			background-color: #6889BC;
+			color: #fff;
+			text-decoration: none;
+			border-radius: 5px;
+			border: none;
+			cursor: pointer;
+		}
+
+		.cta-button:hover {
+			background-color: #576E9E;
+		}
+	</style>
 </head>
-<style>
-	body {
-		background-color: #BAF4FA;
-		color: #6889BC;
-		font-family: Calibri, sans-serif;
-		margin: 0;
-		padding: 0;
-	}
 
-	.header {
-		background-color: #7AF4FA;
-		padding: 10px;
-		text-align: center;
-	}
-
-	.container {
-		margin: 20px;
-		padding: 20px;
-		background-color: #fff;
-		border-radius: 5px;
-		box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-	}
-</style><body>
+<body>
 <header class="header">
-	<h1>Detalle del vehiculo</h1>
+	<h1>Detalle del vehículo</h1>
 	<nav>
 	</nav>
 </header>
 <div class="container my-2">
-	<h2>Detalles del vehiculo</h2>
+	<h2>Detalles del vehículo</h2>
 	<p>Patente: <span th:text="${vehiculo.patente}"></span></p>
 	<p>Marca: <span th:text="${vehiculo.marca}"></span></p>
 	<p>Modelo: <span th:text="${vehiculo.modelo}"></span></p>
-	<p>tipo: <span th:text="${vehiculo.tipo}"></span></p>
-	<p>Año fabricacion: <span th:text="${vehiculo.annoFabricacion}"></span></p>
+	<p>Tipo: <span th:text="${vehiculo.tipo}"></span></p>
+	<p>Año de fabricación: <span th:text="${vehiculo.annoFabricacion}"></span></p>
 	<p>Tipo de Motor: <span th:text="${vehiculo.tipoMotor}"></span></p>
-	<p>Numero de asientos: <span th:text="${vehiculo.nroAsientos}"></span></p>
+	<p>Número de asientos: <span th:text="${vehiculo.nroAsientos}"></span></p>
+	<p>Estado: <span th:text="${vehiculo.estado}"></span></p>
+
 
 	<td>
 		<a th:href="@{'/vehiculos/vehiculo/reparaciones/' + ${vehiculo.id}}">Ver reparaciones</a>
 	</td>
 
-	<!-- Add more details about the vehiculo as needed -->
+	<!-- Add more details about the vehículo as needed -->
 
 	<!-- Add a button or link to go back to the list of historiales if needed -->
-	<a class="cta-button" href="/vehiculos">Volver a la Lista de vehiculos</a>
-	<a class="cta-button" href="/profesores"><button>Volver a lista de profesores</button></a>
+	<a class="cta-button" href="/vehiculos">Volver a la Lista de vehículos</a>
+	<a class="cta-button" href="/profesores">Volver a lista de profesores</a>
 </div>
 
 </body>

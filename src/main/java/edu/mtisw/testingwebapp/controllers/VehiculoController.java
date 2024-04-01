@@ -62,7 +62,7 @@ public class VehiculoController {
 
 		model.addAttribute("vehiculos", vehiculos);
         //model.addAttribute("profesores", profesores);
-		return "VisualizarVehiculoes";
+		return "VisualizarVehiculos";
 	}
 
 
