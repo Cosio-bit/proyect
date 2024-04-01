@@ -31,10 +31,13 @@
             <thead>
             <tr>
                 <th>ID</th>
-                <th>Nombre</th>
+                <th>Patente</th>
+                <th>Marca</th>
+                <th>Modelo</th>
                 <th>Tipo</th>
-                <th>Estado</th>
-                <th>Acciones Permitidas</th>
+                <th>Año de Fabricacion</th>
+                <th>Tipo de Motor</th>
+                <th>Nro de Asientos</th>
             </tr>
             </thead>
             <tbody>
@@ -48,65 +51,10 @@
                 <td th:text="${vehiculo.annoFabricacion}"></td>
                 <td th:text="${vehiculo.tipoMotor}"></td>
                 <td th:text="${vehiculo.nroAsientos}"></td>
-                
-                <td>
-                    <!-- Botón para pedir vehiculo -->
-                    <button th:id="'startButton' + ${vehiculo.id}" th:data-estado="${vehiculo.estado}"
-                            th:disabled="${vehiculo.estado != 'disponible'}">Pedir Vehiculos</button>
-                        
-
-                    <!-- Botón para devolver vehiculo -->
-                    <button th:id="'returnButton' + ${vehiculo.id}" th:disabled="${vehiculo.estado != 'ocupado'}">Devolver Vehiculos</button>
-
-                    <!-- Selector de profesor -->
-                    <label>
-                        <select th:id="'profesorSelector' + ${vehiculo.id}">
-                            <option value="">Seleccionar Profesor</option>
-                            <option th:each="profesor : ${profesores}"
-                                    th:value="${profesor.id}"
-                                    th:text="${profesor.nombre} + ' ' + ${profesor.apellido}">
-                            </option>
-                        </select>
-                    </label>
-
-                    <!-- Selector de uso toggle: si vehiculo.tipo es epson entonces opcion 1 o 2 disponible, si vehiculo.tipo es viewSonic, opcion 3 disponible
-                    <label>
-                        <select th:id="'usoSelector' + ${vehiculo.id}">
-                            <option value="">Seleccionar marca</option>
-                            <option th:if="${vehiculo.tipo == 'Epson'}" value="Dictado de clases">Dictado de clases</option>
-                            <option th:if="${vehiculo.tipo == 'Epson'}" value="Examen de titulo">Examen de titulo</option>
-                            <option th:if="${vehiculo.tipo == 'ViewSonic'}" value="Reuniones varias">Reuniones varias</option>
-                        </select>
-                    </label>-->
-
-
-                    <!-- Temporizador -->
-                    <p th:id="'timer' + ${vehiculo.id}">06:00:00</p>
-                    <!--guardar la hora de reparacion-->
-                    <p th:id="'horaReparacion' + ${vehiculo.id}"></p>
-
-                    <!-- Reporte de daños -->
-                    <div th:id="'damageReport' + ${vehiculo.id}">
-                        <label><input type="radio" th:name="'damage' + ${vehiculo.id}" value="no" checked> No Danado</label>
-                        <label><input type="radio" th:name="'damage' + ${vehiculo.id}" value="yes"> Danado</label>
-                    </div>
-
-                    <!-- Botón para marcar como reparado, oculto por defecto -->
-                    <button th:id="'repairButton' + ${vehiculo.id}" style="display: none;">Marcar como Reparado</button>
-
-                    <!-- Campo para aplicar timeskip -->
-                    <label>
-                        <input type="text" th:id="'skipTime' + ${vehiculo.id}" placeholder="HH:MM:SS">
-                    </label>
-                    <button th:id="'skipButton' + ${vehiculo.id}">Aplicar Timeskip</button>
-
-                    <!-- Resultado de la acción -->
-                    <p th:id="'resultado' + ${vehiculo.id}"></p>
-                </td>
-                <td>
-                    <a th:href="@{'/vehiculos/vehiculo/' + ${vehiculo.id}}">Ver Vehiculos</a>
 
             </tr>
+
+
             </tbody>
             <tfoot>
             <!-- Contenido del tfoot si lo hay -->

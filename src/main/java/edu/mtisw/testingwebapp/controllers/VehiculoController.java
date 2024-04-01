@@ -66,7 +66,7 @@ public class VehiculoController {
 	}
 
 
-	@PostMapping("/nuevoReparacion")
+	@PostMapping("/nuevaReparacion")
 	public ModelAndView nuevoReparacion(
 			@RequestParam("fechaIngreso") LocalDate fechaIngreso,
 			@RequestParam("horaIngreso") LocalDate horaIngreso,

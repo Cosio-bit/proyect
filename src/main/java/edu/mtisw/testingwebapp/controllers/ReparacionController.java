@@ -1,32 +1,32 @@
 package edu.mtisw.testingwebapp.controllers;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-
-import java.time.LocalDate;
-import java.util.List;
 
 import edu.mtisw.testingwebapp.entities.ReparacionEntity;
 import edu.mtisw.testingwebapp.services.ReparacionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @Controller
 @RequestMapping
 public class ReparacionController {
 
     @Autowired
-    private ReparacionService reparacionoService;
+    private ReparacionService reparacionService;
 
     @GetMapping("/reparaciones")
     public String listar(Model model) {
-        List<ReparacionEntity> reparaciones = reparacionoService.obtenerReparacions();
+        List<ReparacionEntity> reparaciones = reparacionService.obtenerReparacions();
         model.addAttribute("reparaciones", reparaciones);
         return "VisualizarReparaciones";
     }
 
- @PostMapping("/reparaciones")
+@PostMapping("/reparaciones")
 public ResponseEntity<?> agregarReparacion(
             @RequestParam("fechaIngreso") LocalDate fechaIngreso,
 			@RequestParam("horaIngreso") LocalDate horaIngreso,
@@ -41,7 +41,7 @@ public ResponseEntity<?> agregarReparacion(
     try {
 
         // Aquí asumo que tienes una lógica para manejar la creación del préstamo
-        ReparacionEntity nuevoReparacion = reparacionoService.guardarReparacion(fechaIngreso, horaIngreso, tipoReparacion, montoTotal,fechaSalidaReparacion, horaSalidaReparacion, fechaSalidaCliente, horaSalidaCliente, idVehiculo );
+        ReparacionEntity nuevoReparacion = reparacionService.guardarReparacion(fechaIngreso, horaIngreso, tipoReparacion, montoTotal,fechaSalidaReparacion, horaSalidaReparacion, fechaSalidaCliente, horaSalidaCliente, idVehiculo );
 
         if (nuevoReparacion != null) {
             return ResponseEntity.ok(nuevoReparacion);
@@ -58,7 +58,7 @@ public ResponseEntity<?> agregarReparacion(
     // 3. Obtener los reparaciones de un vehiculo en particular
     @GetMapping("/vehiculos/vehiculo/reparaciones/{id}")
     public String mostrarReparaciones(@PathVariable("id") String vehiculoId, Model model) {
-        List<ReparacionEntity> reparaciones = reparacionoService.obtenerReparacionesPorVehiculoID(vehiculoId);
+        List<ReparacionEntity> reparaciones = reparacionService.obtenerReparacionesPorVehiculoID(vehiculoId);
 
         model.addAttribute("reparaciones", reparaciones);
         return "VisualizarReparaciones";
