@@ -56,7 +56,7 @@ public class VehiculoService {
 
     
     public Optional<VehiculoEntity> anadirReparacion(Long id, double efectivo) {
-        // First, check if the entity with the given id exists
+        // First, check if the entity with the given id exist
         Optional<VehiculoEntity> vehiculo= vehiculoRepository.findById(id);
         
         return vehiculo;
