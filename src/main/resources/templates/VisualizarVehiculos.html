@@ -38,6 +38,7 @@
                 <th>Año de Fabricacion</th>
                 <th>Tipo de Motor</th>
                 <th>Nro de Asientos</th>
+                <th>Estado</th>
             </tr>
             </thead>
             <tbody>
@@ -52,66 +53,9 @@
                 <td th:text="${vehiculo.tipoMotor}"></td>
                 <td th:text="${vehiculo.nroAsientos}"></td>
                 <td th:text="${vehiculo.estado}"></td>
-
-
+                <td><a th:href="@{'/vehiculos/vehiculo/' + ${vehiculo.id}}">Ver Detalles del vehiculo</a></td>
             </tr>
 
-            <td>
-                <!-- Botón para pedir vehiculo -->
-                <button th:id="'startButton' + ${vehiculo.id}" th:data-estado="${vehiculo.estado}"
-                        th:disabled="${vehiculo.estado != 'no reparado'}">Pedir </button>
-
-
-                <!-- Botón para devolver vehiculo -->
-                <button th:id="'returnButton' + ${vehiculo.id}" th:disabled="${vehiculo.estado != 'ocupado'}">Devolver Vehiculos</button>
-
-                <!-- Selector de profesor -->
-                <label>
-                    <select th:id="'profesorSelector' + ${vehiculo.id}">
-                        <option value="">Seleccionar Profesor</option>
-                        <option th:each="profesor : ${profesores}"
-                                th:value="${profesor.id}"
-                                th:text="${profesor.nombre} + ' ' + ${profesor.apellido}">
-                        </option>
-                    </select>
-                </label>
-
-                Selector de uso toggle: si vehiculo.tipo es epson entonces opcion 1 o 2 disponible, si vehiculo.tipo es viewSonic, opcion 3 disponible
-                <label>
-                    <select th:id="'usoSelector' + ${vehiculo.id}">
-                        <option value="">Seleccionar marca</option>
-                        <option th:if="${vehiculo.tipo == 'Epson'}" value="Dictado de clases">Dictado de clases</option>
-                        <option th:if="${vehiculo.tipo == 'Epson'}" value="Examen de titulo">Examen de titulo</option>
-                        <option th:if="${vehiculo.tipo == 'ViewSonic'}" value="Reuniones varias">Reuniones varias</option>
-                    </select>
-                </label>
-
-
-                <!-- Temporizador -->
-                <p th:id="'timer' + ${vehiculo.id}">06:00:00</p>
-                <!--guardar la hora de reparacion-->
-                <p th:id="'horaReparacion' + ${vehiculo.id}"></p>
-
-                <!-- Reporte de daños -->
-                <div th:id="'damageReport' + ${vehiculo.id}">
-                    <label><input type="radio" th:name="'damage' + ${vehiculo.id}" value="no" checked> No Danado</label>
-                    <label><input type="radio" th:name="'damage' + ${vehiculo.id}" value="yes"> Danado</label>
-                </div>
-
-                <!-- Botón para marcar como reparado, oculto por defecto -->
-                <button th:id="'repairButton' + ${vehiculo.id}" style="display: none;">Marcar como Reparado</button>
-
-                <!-- Campo para aplicar timeskip -->
-                <label>
-                    <input type="text" th:id="'skipTime' + ${vehiculo.id}" placeholder="HH:MM:SS">
-                </label>
-                <button th:id="'skipButton' + ${vehiculo.id}">Aplicar Timeskip</button>
-
-                <!-- Resultado de la acción -->
-                <p th:id="'resultado' + ${vehiculo.id}"></p>
-            </td>
-            <td>
-                <a th:href="@{'/vehiculos/vehiculo/' + ${vehiculo.id}}">Ver Vehiculos</a>
 
 
             </tbody>
@@ -119,13 +63,11 @@
             <!-- Contenido del tfoot si lo hay -->
             </tfoot>
         </table>
-        <a class="cta-button" href="/profesores"><button>Ver profesores</button></a>
         <a class="cta-button" href="/reparaciones"><button>Ver reparaciones</button></a>
     </div>
 </div>
 <br>
 <hr>
-
 
 </html>
 
@@ -142,11 +84,11 @@
             const idVehiculo = event.target.id.replace('startButton', '');
             const vehiculoEstado = event.target.getAttribute('data-estado');
 
-            if (vehiculoEstado === 'disponible') {
+            if (vehiculoEstado === 'no reparando') {
                 event.target.disabled = true;
-                document.getElementById('returnButton' + idProjector).disabled = false;
-                document.getElementById('damageReport' + idProjector).style.display = 'block';
-                iniciarContador(idProjector);
+                document.getElementById('returnButton' + idVehiculo).disabled = false;
+                //document.getElementById('damageReport' + idVehiculo).style.display = 'block';
+                iniciarContador(idVehiculo);
                 event.target.setAttribute('data-estado', 'ocupado');
                 horaReparacion = new Date().toLocaleTimeString();
                 fechaReparacion = new Date().toLocaleDateString();
@@ -157,56 +99,55 @@
     document.addEventListener('DOMContentLoaded', (event) => {
         document.querySelectorAll("[id^='returnButton']").forEach(button => {
             button.addEventListener("click", function() {
-                const idProjector = this.id.replace('returnButton', '');
+                const idVehiculo = this.id.replace('returnButton', '');
                 const fila = this.closest('tr');
 
                 this.disabled = true;
 
                 // Detener el contador específico del vehiculo
-                if (vehiculosTimers[idProjector] && vehiculosTimers[idProjector].interval) {
-                    clearInterval(vehiculosTimers[idProjector].interval);
+                if (vehiculosTimers[idVehiculo] && vehiculosTimers[idVehiculo].interval) {
+                    clearInterval(vehiculosTimers[idVehiculo].interval);
                 }
-
-                registrarTiempoUsado(idProjector);
+                registrarTiempoUsado(idVehiculo);
 
                 // Recolectar los datos de la fila para enviar
-                const idProfesor = fila.querySelector('#profesorSelector' + idProjector).value;
+                //const idProfesor = fila.querySelector('#profesorSelector' + idProjector).value;
                 //si el vehiculo esta dañado, se guarda en el historial del profesor un contaodr de daños
-                
-                const estadoDanado = fila.querySelector('input[name="damage' + idProjector + '"]:checked').value === 'yes' ? 'Dañado' : 'No Dañado';
-                const uso = fila.querySelector('#usoSelector' + idProjector).value;
 
-                const utilizacionHoras = fila.querySelector('#timer' + idProjector).textContent;
+                //const estadoDanado = fila.querySelector('input[name="damage' + idProjector + '"]:checked').value === 'yes' ? 'Dañado' : 'No Dañado';
+                const uso = fila.querySelector('#usoSelector' + idVehiculo).value;
+
+                const utilizacionHoras = fila.querySelector('#timer' + idVehiculo).textContent;
 
                 //fecha formato dd/mm/aaaa
                 //obtener la cantidad de tiempo de cuando se pidio el vehiculo sea fechaDevolución y fechaEntrega la cantidad de tiempo que ha pasado desde el pedido
 
 
-                const horaDevolucion = new Date().toLocaleTimeString();
-                const fechaDevolucion = new Date().toLocaleDateString();
+                const horaReparado = new Date().toLocaleTimeString();
+                const fechaReparado = new Date().toLocaleDateString();
 
-                if (estadoDanado === "No Dañado") {
-                    fila.querySelector('#startButton' + idProjector).disabled = false;
-                    fila.querySelector('#damageReport' + idProjector).style.display = "none";
-                } else {
-                    fila.querySelector('#repairButton' + idProjector).style.display = "block";
-                }
+                //if (estadoDanado === "No Dañado") {
+                //    fila.querySelector('#startButton' + idProjector).disabled = false;
+                //    fila.querySelector('#damageReport' + idProjector).style.display = "none";
+                //} else {
+                //    fila.querySelector('#repairButton' + idProjector).style.display = "block";
+                //}
 
                 // Restablecer el contador del vehiculo
-                vehiculosTimers[idProjector].tiempoTotalSegundos = tiempoInicial;
-                actualizarTiempo(idProjector);
+                vehiculosTimers[idVehiculo].tiempoTotalSegundos = tiempoInicial;
+                actualizarTiempo(idVehiculo);
 
                 // Enviar los datos recolectados para guardar en el historial de pedidos
                 enviarDatosReparacion(
                     fechaReparacion.toString(),
                     horaReparacion.toString(),
                     utilizacionHoras,
-                    fechaDevolucion,
-                    horaDevolucion,
-                    estadoDanado,
+                    fechaReparado,
+                    horaReparado,
+                    //estadoDanado,
                     uso,
-                    idProjector,
-                    idProfesor
+                    idVehiculo,
+                    //idProfesor
                 );
             });
         });
@@ -215,10 +156,10 @@
 
     document.querySelectorAll("[id^='repairButton']").forEach(button => {
     button.addEventListener("click", function() {
-        const idProjector = this.id.replace('repairButton', '');
+        const idVehiculo = this.id.replace('repairButton', '');
         this.style.display = "none"; // Oculta este botón de "Reparado"
         const fila = this.closest('tr');
-        fila.querySelector('#startButton' + idProjector).disabled = false; // Habilita el botón de "Pedir" correspondiente
+        fila.querySelector('#startButton' + idVehiculo).disabled = false; // Habilita el botón de "Pedir" correspondiente
 
         // Aquí puedes agregar lógica adicional si necesitas actualizar el estado del vehiculo en el backend
     });
@@ -227,22 +168,22 @@
 
     document.querySelectorAll("[id^='skipButton']").forEach(button => {
         button.addEventListener("click", function() {
-            const idProjector = this.id.replace('skipButton', '');
+            const idVehiculo = this.id.replace('skipButton', '');
             const fila = this.closest('tr');
             const skipTime = fila.querySelector('#skipTime' + idProjector).value;
             const [horas, minutos, segundos] = skipTime.split(":").map(Number);
 
             if (!isNaN(horas) && !isNaN(minutos) && !isNaN(segundos)) {
                 const skipTotalSegundos = horas * 3600 + minutos * 60 + segundos;
-                actualizarTiempo(idProjector, skipTotalSegundos);
+                actualizarTiempo(idVehiculo, skipTotalSegundos);
 
                 // Usa vehiculosTimers[idProjector].tiempoTotalSegundos para acceder al tiempo
-                if (vehiculosTimers[idProjector].tiempoTotalSegundos < 0) {
-                    clearInterval(vehiculosTimers[idProjector].interval);
-                    fila.querySelector('#timer' + idProjector).innerText = "Atrasado";
-                    registrarTiempoUsado(fila, idProjector);
-                    fila.querySelector('#returnButton' + idProjector).disabled = true;
-                    fila.querySelector('#startButton' + idProjector).disabled = false;
+                if (vehiculosTimers[idVehiculo].tiempoTotalSegundos < 0) {
+                    clearInterval(vehiculosTimers[idVehiculo].interval);
+                    fila.querySelector('#timer' + idVehiculo).innerText = "Atrasado";
+                    registrarTiempoUsado(fila, idVehiculo);
+                    fila.querySelector('#returnButton' + idVehiculo).disabled = true;
+                    fila.querySelector('#startButton' + idVehiculo).disabled = false;
                 }
             }
         });
@@ -251,48 +192,48 @@
 
     // Objeto para manejar los tiempos e intervalos de cada vehiculo
     let vehiculosTimers = {};
-    function iniciarContador(idProjector) {
+    function iniciarContador(idVehiculo) {
         // Comprobación e inicialización para un nuevo vehiculo
-        if (!vehiculosTimers[idProjector]) {
-            vehiculosTimers[idProjector] = {
+        if (!vehiculosTimers[idVehiculo]) {
+            vehiculosTimers[idVehiculo] = {
                 tiempoTotalSegundos: 6 * 3600, // 6 horas
                 tiempoInicial: 6 * 3600,       // Tiempo inicial
                 interval: null
             };
         } else {
             // Reiniciar el tiempo para un vehiculo existente
-            clearInterval(vehiculosTimers[idProjector].interval);
-            vehiculosTimers[idProjector].tiempoTotalSegundos = 6 * 3600;
-            vehiculosTimers[idProjector].tiempoInicial = 6 * 3600;
+            clearInterval(vehiculosTimers[idVehiculo].interval);
+            vehiculosTimers[idVehiculo].tiempoTotalSegundos = 6 * 3600;
+            vehiculosTimers[idVehiculo].tiempoInicial = 6 * 3600;
         }
 
-        actualizarTiempo(idProjector);
-        vehiculosTimers[idProjector].interval = setInterval(function() {
-            vehiculosTimers[idProjector].tiempoTotalSegundos--;
+        actualizarTiempo(idVehiculo);
+        vehiculosTimers[idVehiculo].interval = setInterval(function() {
+            vehiculosTimers[idVehiculo].tiempoTotalSegundos--;
 
-            actualizarTiempo(idProjector);
+            actualizarTiempo(idVehiculo);
 
-            if (vehiculosTimers[idProjector].tiempoTotalSegundos <= 0) {
-                clearInterval(vehiculosTimers[idProjector].interval);
-                document.getElementById('timer' + idProjector).innerText = "Atrasado";
-                registrarTiempoUsado(idProjector);
+            if (vehiculosTimers[idVehiculo].tiempoTotalSegundos <= 0) {
+                clearInterval(vehiculosTimers[idVehiculo].interval);
+                document.getElementById('timer' + idVehiculo).innerText = "Atrasado";
+                registrarTiempoUsado(idVehiculo);
             }
         }, 1000);
         // Guarda el tiempo restante en el almacenamiento local
-        localStorage.setItem('tiempoRestante' + idProjector, vehiculosTimers[idProjector].tiempoTotalSegundos);
+        localStorage.setItem('tiempoRestante' + idVehiculo, vehiculosTimers[idVehiculo].tiempoTotalSegundos);
     }
 
     window.addEventListener('load', function() {
         // Recorre todos los vehiculos y verifica si hay tiempo guardado en el almacenamiento local
-        Object.keys(vehiculosTimers).forEach(function(idProjector) {
-            const tiempoGuardado = localStorage.getItem('tiempoRestante' + idProjector);
+        Object.keys(vehiculosTimers).forEach(function(idVehiculo) {
+            const tiempoGuardado = localStorage.getItem('tiempoRestante' + idVehiculo);
 
             if (tiempoGuardado !== null) {
-                vehiculosTimers[idProjector].tiempoTotalSegundos = parseInt(tiempoGuardado, 10);
-                actualizarTiempo(idProjector);
+                vehiculosTimers[idVehiculo].tiempoTotalSegundos = parseInt(tiempoGuardado, 10);
+                actualizarTiempo(idVehiculo);
 
                 // Si el contador estaba en cero, realiza las acciones necesarias aquí
-                if (vehiculosTimers[idProjector].tiempoTotalSegundos <= 0) {
+                if (vehiculosTimers[idVehiculo].tiempoTotalSegundos <= 0) {
                     // Realiza las acciones necesarias para un contador en cero al cargar la página
                 }
             }
@@ -300,7 +241,7 @@
     });
 
 
-    function registrarTiempoUsado(idProjector) {
+    function registrarTiempoUsado(idVehiculo) {
         // Asegúrate de que tiempoTotalSegundos y tiempoInicial estén correctamente definidos para cada vehiculo.
         const tiempoUsado = vehiculosTimers[idProjector].tiempoInicial - vehiculosTimers[idProjector].tiempoTotalSegundos;
         const horas = Math.floor(tiempoUsado / 3600);
@@ -340,21 +281,23 @@
                     utilizacionHoras,
                     fechaDevolucion,
                     horaDevolucion,
-                    estadoDanado,
+                    //estadoDanado,
                     uso,
-                    idProjector,
-                    idProfesor) {
-        
-        console.log('Datos a enviar:', {                     
+                    idVehiculo,
+                    //idProfesor
+                ){
+
+        console.log('Datos a enviar:', {
                     fechaPrestamo,
                     horaPrestamo,
                     utilizacionHoras,
                     fechaDevolucion,
                     horaDevolucion,
-                    estadoDanado,
+                    //estadoDanado,
                     uso,
-                    idProjector,
-                    idProfesor});
+                    idVehiculo,
+                    //idProfesor
+                    });
 
         // Validación de los parámetros
     if (!fechaPrestamo || !horaPrestamo || !utilizacionHoras || !fechaDevolucion || !horaDevolucion || !estadoDanado || !uso || !idProjector || !idProfesor) {
@@ -367,11 +310,11 @@
         params.append('utilizacionHoras', utilizacionHoras || '');
         params.append('fechaDevolucion', fechaDevolucion || '');
         params.append('horaDevolucion', horaDevolucion || '');
-        params.append('estadoDanado', estadoDanado || '');
+        //params.append('estadoDanado', estadoDanado || '');
         params.append('uso', uso || '');
-        params.append('idProjector', idProjector || '');
-        params.append('idProfesor', idProfesor || '');
-        
+        params.append('idVehiculo', idVehiculo || '');
+        //params.append('idProfesor', idProfesor || '');
+
 
 fetch('/reparaciones', {
     method: 'POST',

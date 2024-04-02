@@ -47,6 +47,8 @@
 <body>
 <header class="header">
 	<h1>Visualizar Reparaciones</h1>
+
+	<a class="cta-button" href="/vehiculos">Volver a la Lista de vehículos</a>
 	<nav>
 		<!-- Puedes agregar enlaces de navegación si es necesario -->
 	</nav>
@@ -80,6 +82,7 @@
 			<td th:text="${reparacion.fechaSalidaCliente}"></td>
 			<td th:text="${reparacion.horaSalidaCliente}"></td>
 			<td th:text="${reparacion.idVehiculo}"></td>
+
 		</tr>
 		</tbody>
 	</table>
