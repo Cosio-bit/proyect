@@ -59,7 +59,7 @@
             <td>
                 <!-- Botón para pedir vehiculo -->
                 <button th:id="'startButton' + ${vehiculo.id}" th:data-estado="${vehiculo.estado}"
-                        th:disabled="${vehiculo.estado != 'arreglar'}">Pedir </button>
+                        th:disabled="${vehiculo.estado != 'no reparado'}">Pedir </button>
 
 
                 <!-- Botón para devolver vehiculo -->

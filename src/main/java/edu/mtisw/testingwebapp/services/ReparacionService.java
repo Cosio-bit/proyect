@@ -82,11 +82,11 @@ public class ReparacionService {
     }
 
     public void devolver(Long reparacionID) {
-        Optional<ReparacionEntity> optionalPrestamo = reparacionRepository.findById(reparacionID);
-/*
-        if (optionalPrestamo.isPresent() && optionalPrestamo.get().getEstadoDanado().equals("No Devuelto")) {
-            ReparacionEntity reparacion = optionalPrestamo.get();
-            reparacion.setEstadoDanado("Devuelto");// Establece el estado pagado en true
+        Optional<ReparacionEntity> optionalReparacion = reparacionRepository.findById(reparacionID);
+
+        if (optionalReparacion.isPresent()){ //&& optionalReparacion.get().getEstado().equals("No Devuelto")) {
+            ReparacionEntity reparacion = optionalReparacion.get();
+            //reparacion.setEstadoDanado("Devuelto");// Establece el estado pagado en true
             reparacionRepository.save(reparacion); // Guarda la entidad actualizada
 
             // Calcula el nuevo monto total para el historial de arancel
@@ -98,7 +98,7 @@ public class ReparacionService {
                 //setear lo necesario, ver despues
                 vehiculoRepository.save(vehiculo);
             }
-        }*/
+        }
     }
 
 
