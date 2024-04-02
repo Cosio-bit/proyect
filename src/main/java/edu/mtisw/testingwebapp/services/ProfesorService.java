@@ -53,6 +53,7 @@ public class ProfesorService {
         return Optional.ofNullable(profesorRepository.findByRut(rut));}
 
     public void updateInfraccion(List<ProfesorEntity> profesores) {
+        /* 
         for (int i = 0; i != profesores.size(); i++) {
             List<ReparacionEntity> reparaciones = reparacionService.obtenerReparacionesPorVehiculoID(profesores.get(i).getId().toString());
             int infracciones = 0;
@@ -71,6 +72,7 @@ public class ProfesorService {
                 profesorRepository.save(profesores.get(i));
             }
         }
+        */
     }
 
 

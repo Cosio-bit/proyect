@@ -4,7 +4,6 @@ import edu.mtisw.testingwebapp.entities.ReparacionEntity;
 import edu.mtisw.testingwebapp.entities.VehiculoEntity;
 import edu.mtisw.testingwebapp.repositories.ReparacionRepository;
 import edu.mtisw.testingwebapp.repositories.VehiculoRepository;
-import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +12,6 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Service
 public class ReparacionService {
@@ -48,18 +45,11 @@ public class ReparacionService {
         reparacion.setHoraSalidaCliente(horaSalidaCliente.toString());
         reparacion.setIdVehiculo(idVehiculo);
 
-        System.out.println("agregarReparacion llamado con paráme:");
-        System.out.println("fechaIngreso: " + fechaIngreso);
-        System.out.println("agregarReparacion llamado con paráme:");
-        System.out.println("main:");
-
-
-
 
         return reparacionRepository.save(reparacion);
     }
-/*
-    public void updatePrestamo(ReparacionEntity reparacion, String estado){
+
+    public void updateReparacion(ReparacionEntity reparacion, String estado){
 
         Long vehiculoId = Long.parseLong(reparacion.getIdVehiculo());
         VehiculoEntity vehiculo = vehiculoRepository.findById(vehiculoId).orElse(null);
@@ -75,14 +65,14 @@ public class ReparacionService {
         //LocalDate fechaActual = LocalDate.now();
 
         for(int i=0; i!=reparacionEntities.size();i++){
-            updatePrestamo(reparacionEntities.get(i), "Devuelto"); //actualiza el estado de los reparaciones a lo que realmente utilizaremos
+            updateReparacion(reparacionEntities.get(i), "Devuelto"); //actualiza el estado de los reparaciones a lo que realmente utilizaremos
         }
     }
 
 
-    public int calcularAtrazo(LocalDate pagoActual, LocalDate fechaVencimiento) {
+    public int calcularAtrazo(LocalDate fechaActual, LocalDate fechaVencimiento) {
         // Calcula el período entre la fecha del último pago y la fecha actual
-        Period periodo = Period.between(fechaVencimiento, pagoActual);
+        Period periodo = Period.between(fechaVencimiento, fechaActual);
 
         // Calcula el total de meses de atraso
         int aniosDiferencia = periodo.getYears();
@@ -93,7 +83,7 @@ public class ReparacionService {
 
     public void devolver(Long reparacionID) {
         Optional<ReparacionEntity> optionalPrestamo = reparacionRepository.findById(reparacionID);
-
+/*
         if (optionalPrestamo.isPresent() && optionalPrestamo.get().getEstadoDanado().equals("No Devuelto")) {
             ReparacionEntity reparacion = optionalPrestamo.get();
             reparacion.setEstadoDanado("Devuelto");// Establece el estado pagado en true
@@ -108,14 +98,16 @@ public class ReparacionService {
                 //setear lo necesario, ver despues
                 vehiculoRepository.save(vehiculo);
             }
+        }*/
+    }
+
+
+
+
+        public List<ReparacionEntity> obtenerReparacionesPorVehiculoID(String long1) {
+            return (List<ReparacionEntity>) reparacionRepository.findByIdVehiculo(long1);
         }
-    }
 
-    public List<ReparacionEntity> obtenerReparacionesPorVehiculoID(String long1) {
-        return (List<ReparacionEntity>) reparacionRepository.findByIdVehiculo(long1);
-    }
-
-*/
 
 
 }

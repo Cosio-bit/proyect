@@ -16,13 +16,14 @@ public class VehiculoEntity {
     @Column(unique = true, nullable = false)
     private Long id;
 
-    private String patente;
-    private String marca;
-    private String modelo;
-    private String annoFabricacion;
-    private String tipoMotor;
-    private Integer nroAsientos;
-    private float kilometraje;
+    String patente;
+    String marca;
+    String modelo;
+    String annoFabricacion;
+    String tipoMotor;
+    Integer nroAsientos;
+    float kilometraje;
+    String estado;
 
 }
 

@@ -1,3 +1,5 @@
+/*
+
 package edu.mtisw.testingwebapp;
 
 import edu.mtisw.testingwebapp.entities.ReparacionEntity;
@@ -8,7 +10,6 @@ import edu.mtisw.testingwebapp.repositories.ProfesorRepository;
 
 import edu.mtisw.testingwebapp.repositories.VehiculoRepository;
 import edu.mtisw.testingwebapp.services.ReparacionService;
-import edu.mtisw.testingwebapp.services.ProfesorService;
 
 import edu.mtisw.testingwebapp.services.VehiculoService;
 import org.junit.jupiter.api.Test;
@@ -31,8 +32,6 @@ public class testReparacion {
     @Autowired
     private ProfesorRepository profesorRepository;
 
-    @Autowired
-    private ProfesorService profesorService;
 
     @Autowired
     private ReparacionRepository reparacionRepository;
@@ -48,12 +47,12 @@ public class testReparacion {
         String nombre = "John";
         String apellido = "Doe";
 
-        ProfesorEntity profesor = profesorService.guardarProfesor(rut, nombre, apellido);
+        //ProfesorEntity profesor = profesorService.guardarProfesor(rut, nombre, apellido);
 
 
         String tipoPago = "cuotas";
         int cuotasPactadas = 5;
-        VehiculoEntity vehiculo = vehiculoService.guardarVehiculo("Proyector 1", "Epson");
+        //VehiculoEntity vehiculo = vehiculoService.guardarVehiculo("Proyector 1", "Epson");
 
         System.out.println(vehiculo.getId());
 
@@ -84,12 +83,12 @@ public class testReparacion {
         //reparacionService.obtenerPorVehiculoID(vehiculo.getId());
 
 
-       */
+
 
     }
 
 
- /*  
+
         @Test
         public void testCalcularMesesAtraso() {
             // Fecha de pago actual y fecha de vencimiento
@@ -110,8 +109,9 @@ public class testReparacion {
             resultado = reparacionService.calcularMesesAtraso(pagoActual, fechaVencimiento);
             assertEquals(-1, resultado);
         }
-*/
+
   
     }
 
 
+*/

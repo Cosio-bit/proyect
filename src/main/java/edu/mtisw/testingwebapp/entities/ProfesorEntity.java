@@ -15,10 +15,10 @@ public class ProfesorEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
     private Long id;
-    private String rut;
-    private String nombre;
-    private String apellido;
-    private int infracciones; //inborrable, 3 veces y se bloquea
-    private int atrasos; //reset cada 1 semana
+    String rut;
+    String nombre;
+    String apellido;
+    int infracciones; //inborrable, 3 veces y se bloquea
+    int atrasos; //reset cada 1 semana
 
 }
