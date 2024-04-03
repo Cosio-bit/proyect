@@ -72,13 +72,21 @@
 </html>
 
 <script>
-    let tiempoTotalSegundos = 6 * 3600; // 6 horas
     let interval;
-    let tiempoInicial = tiempoTotalSegundos;
     let vehiculoDisponible = true;
+    let tiempoReparacion = 0;
+    let tiempoDespacho = 0;
+
+    let horaEntrada = new Date().toLocaleTimeString();
+    let fechaEntrada = new Date().toLocaleDateString();
+
     let horaReparacion = new Date().toLocaleTimeString();
     let fechaReparacion = new Date().toLocaleDateString();
 
+    let horaDespacho = new Date().toLocaleTimeString();
+    let fechaDespacho = new Date().toLocaleDateString();
+
+    // Evento para iniciar el contador de tiempo de un vehiculo
     document.querySelector('.container').addEventListener('click', function(event) {
         if (event.target && event.target.matches("[id^='startButton']")) {
             const idVehiculo = event.target.id.replace('startButton', '');
@@ -96,6 +104,10 @@
         }
     });
 
+
+
+
+    // Evento para detener el contador de tiempo de un vehiculo y registrar el tiempo en reparacion
     document.addEventListener('DOMContentLoaded', (event) => {
         document.querySelectorAll("[id^='returnButton']").forEach(button => {
             button.addEventListener("click", function() {
@@ -110,28 +122,45 @@
                 }
                 registrarTiempoUsado(idVehiculo);
 
-                // Recolectar los datos de la fila para enviar
-                //const idProfesor = fila.querySelector('#profesorSelector' + idProjector).value;
-                //si el vehiculo esta dañado, se guarda en el historial del profesor un contaodr de daños
-
-                //const estadoDanado = fila.querySelector('input[name="damage' + idProjector + '"]:checked').value === 'yes' ? 'Dañado' : 'No Dañado';
                 const uso = fila.querySelector('#usoSelector' + idVehiculo).value;
 
                 const utilizacionHoras = fila.querySelector('#timer' + idVehiculo).textContent;
 
-                //fecha formato dd/mm/aaaa
                 //obtener la cantidad de tiempo de cuando se pidio el vehiculo sea fechaDevolución y fechaEntrega la cantidad de tiempo que ha pasado desde el pedido
-
-
                 const horaReparado = new Date().toLocaleTimeString();
                 const fechaReparado = new Date().toLocaleDateString();
 
-                //if (estadoDanado === "No Dañado") {
-                //    fila.querySelector('#startButton' + idProjector).disabled = false;
-                //    fila.querySelector('#damageReport' + idProjector).style.display = "none";
-                //} else {
-                //    fila.querySelector('#repairButton' + idProjector).style.display = "block";
-                //}
+                // Restablecer el contador del vehiculo
+                vehiculosTimers[idVehiculo].tiempoTotalSegundos = tiempoInicial;
+                actualizarTiempo(idVehiculo);
+
+                
+            });
+        });
+    });
+
+    // Evento para el contador de tiempo de un vehiculo y registrar el tiempo en despacho
+    document.addEventListener('DOMContentLoaded', (event) => {
+        document.querySelectorAll("[id^='dispatchButton']").forEach(button => {
+            button.addEventListener("click", function() {
+                const idVehiculo = this.id.replace('dispatchButton', '');
+                const fila = this.closest('tr');
+
+                this.disabled = true;
+
+                // Detener el contador específico del vehiculo
+                if (vehiculosTimers[idVehiculo] && vehiculosTimers[idVehiculo].interval) {
+                    clearInterval(vehiculosTimers[idVehiculo].interval);
+                }
+                registrarTiempoUsado(idVehiculo);
+
+                const uso = fila.querySelector('#usoSelector' + idVehiculo).value;
+
+                const utilizacionHoras = fila.querySelector('#timer' + idVehiculo).textContent;
+
+                //obtener la cantidad de tiempo de cuando se pidio el vehiculo sea fechaDevolución y fechaEntrega la cantidad de tiempo que ha pasado desde el pedido
+                const horaDespacho = new Date().toLocaleTimeString();
+                const fechaDespacho = new Date().toLocaleDateString();
 
                 // Restablecer el contador del vehiculo
                 vehiculosTimers[idVehiculo].tiempoTotalSegundos = tiempoInicial;
@@ -144,28 +173,31 @@
                     utilizacionHoras,
                     fechaReparado,
                     horaReparado,
-                    //estadoDanado,
                     uso,
                     idVehiculo,
-                    //idProfesor
                 );
+
+                
             });
         });
     });
 
 
+
+
+    //
     document.querySelectorAll("[id^='repairButton']").forEach(button => {
     button.addEventListener("click", function() {
         const idVehiculo = this.id.replace('repairButton', '');
         this.style.display = "none"; // Oculta este botón de "Reparado"
         const fila = this.closest('tr');
-        fila.querySelector('#startButton' + idVehiculo).disabled = false; // Habilita el botón de "Pedir" correspondiente
+        fila.querySelector('#startButton' + idVehiculo).disabled = false; // Habilita el botón de "Despachar" correspondiente
 
-        // Aquí puedes agregar lógica adicional si necesitas actualizar el estado del vehiculo en el backend
     });
 });
 
 
+    // Evento para saltar el tiempo de un vehiculo
     document.querySelectorAll("[id^='skipButton']").forEach(button => {
         button.addEventListener("click", function() {
             const idVehiculo = this.id.replace('skipButton', '');
@@ -243,27 +275,27 @@
 
     function registrarTiempoUsado(idVehiculo) {
         // Asegúrate de que tiempoTotalSegundos y tiempoInicial estén correctamente definidos para cada vehiculo.
-        const tiempoUsado = vehiculosTimers[idProjector].tiempoInicial - vehiculosTimers[idProjector].tiempoTotalSegundos;
+        const tiempoUsado = vehiculosTimers[idVehiculo].tiempoInicial - vehiculosTimers[idProjector].tiempoTotalSegundos;
         const horas = Math.floor(tiempoUsado / 3600);
         const minutos = Math.floor((tiempoUsado % 3600) / 60);
         const segundos = tiempoUsado % 60;
 
         let mensaje;
-        if (vehiculosTimers[idProjector].tiempoTotalSegundos < 0) {
+        if (vehiculosTimers[idVehiculo].tiempoTotalSegundos < 0) {
             mensaje = "Atrasado";
         } else {
             mensaje = `Tiempo utilizado: ${horas} horas, ${minutos} minutos y ${segundos} segundos.`;
         }
 
         // Actualiza el valor en el almacenamiento local antes de reiniciar el contador
-        localStorage.setItem('tiempoRestante' + idProjector, vehiculosTimers[idProjector].tiempoTotalSegundos);
+        localStorage.setItem('tiempoRestante' + idVehiculo, vehiculosTimers[idVehiculo].tiempoTotalSegundos);
 
-        document.getElementById('resultado' + idProjector).innerText = mensaje;
+        document.getElementById('resultado' + idVehiculo).innerText = mensaje;
     }
 
 
-    function actualizarTiempo(idProjector) {
-        let tiempo = vehiculosTimers[idProjector].tiempoTotalSegundos;
+    function actualizarTiempo(idVehiculo) {
+        let tiempo = vehiculosTimers[idVehiculo].tiempoTotalSegundos;
         let horas = Math.floor(tiempo / 3600);
         let minutos = Math.floor((tiempo % 3600) / 60);
         let segundos = tiempo % 60;
@@ -272,7 +304,7 @@
         minutos = minutos < 10 ? '0' + minutos : minutos;
         segundos = segundos < 10 ? '0' + segundos : segundos;
 
-        document.getElementById('timer' + idProjector).innerText = `${horas}:${minutos}:${segundos}`;
+        document.getElementById('timer' + idVehiculo).innerText = `${horas}:${minutos}:${segundos}`;
     }
 
     function enviarDatosReparacion(

@@ -9,7 +9,7 @@
     if (proyectorDisponible) {
     this.disabled = true; // Deshabilita el botón de "Pedir"
     document.getElementById("returnButton").disabled = false; // Habilita el botón de "Devolver"
-    document.getElementById("damageReport").style.display = "block"; // Muestra opciones de daño
+    //document.getElementById("damageReport").style.display = "block"; // Muestra opciones de daño
     iniciarContador();
     proyectorDisponible = false;
     //obtener la hora en que se pidio el proyector
@@ -27,24 +27,24 @@
     registrarTiempoUsado(fila);
 
     // Recolectar información del proyector
-    const idProyector = fila.querySelector('.idProyector').textContent;
-    const idProfesor = fila.querySelector('.profesorSelector').value;
-    const danado = fila.querySelector('input[name="damage"]:checked').value;
+    const idProyector = fila.querySelector('.idVehiculo').textContent;
+    //const idProfesor = fila.querySelector('.profesorSelector').value;
+    //const danado = fila.querySelector('input[name="damage"]:checked').value;
     const atrasado = fila.querySelector('.timer').textContent === "Atrasado";
     const horaDevolucion = new Date().toLocaleTimeString();
 
 
     // Enviar datos al servidor
-    enviarDatosReparacion(horaReparacion, horaDevolucion, atrasado, horaDevolucion, idProyector, idProfesor);
+    enviarDatosReparacion(horaReparacion, horaDevolucion, atrasado, horaDevolucion, idVehiculo); //idProfesor);
 
     // Actualizar UI según si el proyector está dañado
-    if (danado === "no") {
-    proyectorDisponible = true;
-    document.getElementById("startButton").disabled = false;
-} else {
-    document.getElementById("repairButton").style.display = "block";
-}
-    document.getElementById("damageReport").style.display = "none";
+   // if (danado === "no") {
+    //proyectorDisponible = true;
+    //document.getElementById("startButton").disabled = false;
+//} else {
+//    document.getElementById("repairButton").style.display = "block";
+//}
+//    document.getElementById("damageReport").style.display = "none";
 });
 
     document.getElementById("repairButton").addEventListener("click", function() {
