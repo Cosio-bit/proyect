@@ -22,10 +22,10 @@ public class ReparacionEntity {
     String horaIngeso;
     String tipoReparacion;
     Integer montoTotal;
-    String fechaSalidaReparacion;
-    String horaSalidaReparacion;
-    String fechaSalidaCliente;
-    String horaSalidaCliente;
+    String fechaSalida;
+    String horaSalida;
+    String fechaRetiro;
+    String horaRetiro;
 
 
 

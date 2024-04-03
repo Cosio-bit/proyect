@@ -72,14 +72,14 @@ public class VehiculoController {
 			@RequestParam("horaIngreso") LocalDate horaIngreso,
 			@RequestParam("tipoReparacion") String tipoReparacion,
 			@RequestParam("montoTotal") Integer montoTotal,
-			@RequestParam("fechaSalidaReparacion") LocalDate fechaSalidaReparacion,
-			@RequestParam("horaSalidaReparacion") LocalDate horaSalidaReparacion,
-			@RequestParam("fechaSalidaCliente") LocalDate fechaSalidaCliente,
-			@RequestParam("horaSalidaCliente") LocalDate horaSalidaCliente,
+			@RequestParam("fechaSalida") LocalDate fechaSalida,
+			@RequestParam("horaSalida") LocalDate horaSalida,
+			@RequestParam("fechaRetiro") LocalDate fechaRetiro,
+			@RequestParam("horaRetiro") LocalDate horaRetiro,
 			@RequestParam("idVehiculo") String idVehiculo
 	) {
 		// Guardar la información del profesor
-		ReparacionEntity reparacion = vehiculoService.nuevaReparacion(fechaIngreso, horaIngreso, tipoReparacion, montoTotal, fechaSalidaReparacion, horaSalidaReparacion, fechaSalidaCliente, horaSalidaCliente, idVehiculo);
+		ReparacionEntity reparacion = vehiculoService.nuevaReparacion(fechaIngreso, horaIngreso, tipoReparacion, montoTotal, fechaSalida, horaSalida, fechaRetiro, horaRetiro, idVehiculo);
 
 		// Create a ModelAndView object and add the data you want to pass to the view
 		ModelAndView modelAndView = new ModelAndView("IngresarReparacion");

@@ -1,4 +1,4 @@
-
+/*
     let tiempoTotalSegundos = 6 * 3600; // 6 horas
     let interval;
     let tiempoInicial = tiempoTotalSegundos;
@@ -123,3 +123,4 @@
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(JSON.stringify({ horaReparacion, horaDevolucion, atrasado, idProyector, idProfesor }));
 }
+*/

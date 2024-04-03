@@ -44,13 +44,13 @@ public class VehiculoService {
                                               LocalDate horaIngreso,
                                               String tipoReparacion,
                                               Integer montoTotal,
-                                              LocalDate fechaSalidaReparacion,
-                                              LocalDate horaSalidaReparacion,
-                                              LocalDate fechaSalidaCliente,
-                                              LocalDate horaSalidaCliente,
+                                              LocalDate fechaSalida,
+                                              LocalDate horaSalida,
+                                              LocalDate fechaRetiro,
+                                              LocalDate horaRetiro,
                                               String idVehiculo){
 
-        return reparacionService.guardarReparacion(fechaIngreso,horaIngreso,tipoReparacion,montoTotal,fechaSalidaReparacion,horaSalidaReparacion,fechaSalidaCliente,horaSalidaCliente,idVehiculo);
+        return reparacionService.guardarReparacion(fechaIngreso,horaIngreso,tipoReparacion,montoTotal,fechaSalida,horaSalida,fechaRetiro,horaRetiro,idVehiculo);
     
     }
 

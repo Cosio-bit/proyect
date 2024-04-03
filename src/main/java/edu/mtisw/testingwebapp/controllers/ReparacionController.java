@@ -32,16 +32,16 @@ public ResponseEntity<?> agregarReparacion(
 			@RequestParam("horaIngreso") LocalDate horaIngreso,
 			@RequestParam("tipoReparacion") String tipoReparacion,
 			@RequestParam("montoTotal") Integer montoTotal,
-			@RequestParam("fechaSalidaReparacion") LocalDate fechaSalidaReparacion,
-			@RequestParam("horaSalidaReparacion") LocalDate horaSalidaReparacion,
-			@RequestParam("fechaSalidaCliente") LocalDate fechaSalidaCliente,
-			@RequestParam("horaSalidaCliente") LocalDate horaSalidaCliente,
+			@RequestParam("fechaSalida") LocalDate fechaSalida,
+			@RequestParam("horaSalida") LocalDate horaSalida,
+			@RequestParam("fechaRetiro") LocalDate fechaRetiro,
+			@RequestParam("horaRetiro") LocalDate horaRetiro,
 			@RequestParam("idVehiculo") String idVehiculo
     ){
     try {
 
         // Aquí asumo que tienes una lógica para manejar la creación del préstamo
-        ReparacionEntity nuevoReparacion = reparacionService.guardarReparacion(fechaIngreso, horaIngreso, tipoReparacion, montoTotal,fechaSalidaReparacion, horaSalidaReparacion, fechaSalidaCliente, horaSalidaCliente, idVehiculo );
+        ReparacionEntity nuevoReparacion = reparacionService.guardarReparacion(fechaIngreso, horaIngreso, tipoReparacion, montoTotal,fechaSalida, horaSalida, fechaRetiro, horaRetiro, idVehiculo );
 
         if (nuevoReparacion != null) {
             return ResponseEntity.ok(nuevoReparacion);

@@ -12,35 +12,43 @@ import java.util.Optional;
 @Repository
 public interface ReparacionRepository extends JpaRepository<ReparacionEntity, Long> {
     //all queries
-    @Query(value = "SELECT * FROM reparacion   os WHERE id = :id", nativeQuery = true)
+    @Query(value = "SELECT * FROM reparaciones WHERE id = :id", nativeQuery = true)
     Optional<ReparacionEntity> findById(@Param("id") Long id);
 
-    @Query(value = "SELECT * FROM reparaciones WHERE id_vehiculo = :idVehiculo", nativeQuery = true)
-    List<ReparacionEntity> findByIdVehiculo(@Param("idVehiculo") String long1);
+    @Query(value = "SELECT * FROM reparaciones WHERE idVehiculo = :idVehiculo", nativeQuery = true)
+    Optional<ReparacionEntity> findByIdVehiculo(@Param("idVehiculo") String idVehiculo);
 
-    @Query(value = "SELECT * FROM reparaciones WHERE fecha_reparacion = :fechaReparacion", nativeQuery = true)
-    Optional<ReparacionEntity> findByFechaReparacion(@Param("fechaReparacion") String fechaReparacion);
+    @Query(value = "SELECT * FROM reparaciones WHERE fechaIngreso = :fechaIngreso", nativeQuery = true)
+    Optional<ReparacionEntity> findByFechaIngreso(@Param("fechaIngreso") String fechaIngreso);
 
-    @Query(value = "SELECT * FROM reparaciones WHERE hora_reparacion = :horaReparacion", nativeQuery = true)
-    Optional<ReparacionEntity> findByHoraReparacion(@Param("horaReparacion") String horaReparacion);
+    @Query(value = "SELECT * FROM reparaciones WHERE horaIngreso = :horaIngreso", nativeQuery = true)
+    Optional<ReparacionEntity> findByHoraIngreso(@Param("horaIngreso") String horaIngreso);
 
-    @Query(value = "SELECT * FROM reparaciones WHERE utilizacion_horas = :utilizacionHoras", nativeQuery = true)
-    Optional<ReparacionEntity> findByUtilizacionHoras(@Param("utilizacionHoras") String utilizacionHoras);
+    @Query(value = "SELECT * FROM reparaciones WHERE tipoReparacion = :tipoReparacion", nativeQuery = true)
+    Optional<ReparacionEntity> findByTipoReparacion(@Param("tipoReparacion") String tipoReparacion);
 
-    @Query(value = "SELECT * FROM reparaciones WHERE fecha_devolucion = :fechaDevolucion", nativeQuery = true)
-    Optional<ReparacionEntity> findByFechaDevolucion(@Param("fechaDevolucion") String fechaDevolucion);
+    @Query(value = "SELECT * FROM reparaciones WHERE montoTotal = :montoTotal", nativeQuery = true)
+    Optional<ReparacionEntity> findByMontoTotal(@Param("montoTotal") Integer montoTotal);
 
-    @Query(value = "SELECT * FROM reparaciones WHERE hora_devolucion = :horaDevolucion", nativeQuery = true)
-    Optional<ReparacionEntity> findByHoraDevolucion(@Param("horaDevolucion") String horaDevolucion);
+    @Query(value = "SELECT * FROM reparaciones WHERE fechaSalida = :fechaSalida", nativeQuery = true)
+    Optional<ReparacionEntity> findByFechaSalida(@Param("fechaSalida") String fechaSalida);
 
-    @Query(value = "SELECT * FROM reparaciones WHERE estado_danado = :estadoDanado", nativeQuery = true)
-    Optional<ReparacionEntity> findByEstadoDanado(@Param("estadoDanado") String estadoDanado);
+    @Query(value = "SELECT * FROM reparaciones WHERE horaSalida = :horaSalida", nativeQuery = true)
+    Optional<ReparacionEntity> findByHoraSalida(@Param("horaSalida") String horaSalida);
 
-    @Query(value = "SELECT * FROM reparaciones WHERE uso = :uso", nativeQuery = true)
-    Optional<ReparacionEntity> findByUso(@Param("uso") String uso);
+    @Query(value = "SELECT * FROM reparaciones WHERE fechaRetiro = :fechaRetiro", nativeQuery = true)
+    Optional<ReparacionEntity> findByFechaRetiro(@Param("fechaRetiro") String fechaRetiro);
 
-    @Query(value = "SELECT * FROM reparaciones WHERE id_vehiculo = :idVehiculo AND id_profesor = :idProfesor", nativeQuery = true)
-    Optional<ReparacionEntity> findByIdVehiculoAndIdProfesor(@Param("idVehiculo") String idVehiculo, @Param("idProfesor") String idProfesor);
+    @Query(value = "SELECT * FROM reparaciones WHERE horaRetiro = :horaRetiro", nativeQuery = true)
+    Optional<ReparacionEntity> findByHoraRetiro(@Param("horaRetiro") String horaRetiro);
+
+    //find all reparaciones
+    @Query(value = "SELECT * FROM reparaciones", nativeQuery = true)
+    List<ReparacionEntity> findAllReparaciones();
+
+    @Query(value = "SELECT * FROM reparaciones WHERE idVehiculo = :idVehiculo", nativeQuery = true)
+    List<ReparacionEntity> findByVehiculoID(@Param("idVehiculo") String idVehiculo);
+
 
 
 }

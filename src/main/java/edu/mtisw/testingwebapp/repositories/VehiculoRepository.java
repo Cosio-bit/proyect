@@ -34,7 +34,7 @@ public interface VehiculoRepository extends JpaRepository<VehiculoEntity, Long> 
     Optional<VehiculoEntity> findByNroAsientos(@Param("nroAsientos") int nroAsientos);
 
     @Query(value = "SELECT * FROM vehiculos WHERE estado = :estado", nativeQuery = true)
-    Optional<VehiculoEntity> findByNroAsientos(@Param("estado") String estado);
+    Optional<VehiculoEntity> findByEstado(@Param("estado") String estado);
 
     //find all vehiculos
     @Query(value = "SELECT * FROM vehiculos", nativeQuery = true)

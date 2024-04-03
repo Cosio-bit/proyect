@@ -27,10 +27,10 @@ public class ReparacionService {
                                               LocalDate horaIngreso,
                                               String tipoReparacion,
                                               Integer montoTotal,
-                                              LocalDate fechaSalidaReparacion,
-                                              LocalDate horaSalidaReparacion,
-                                              LocalDate fechaSalidaCliente,
-                                              LocalDate horaSalidaCliente,
+                                              LocalDate fechaSalida,
+                                              LocalDate horaSalida,
+                                              LocalDate fechaRetiro,
+                                              LocalDate horaRetiro,
                                               String idVehiculo){
 
         ReparacionEntity reparacion = new ReparacionEntity();
@@ -39,10 +39,10 @@ public class ReparacionService {
         reparacion.setHoraIngeso(horaIngreso.toString());
         reparacion.setTipoReparacion(tipoReparacion);
         reparacion.setMontoTotal(montoTotal);
-        reparacion.setFechaSalidaReparacion(fechaSalidaReparacion.toString());
-        reparacion.setHoraSalidaReparacion(horaSalidaReparacion.toString());
-        reparacion.setFechaSalidaCliente(fechaSalidaCliente.toString());
-        reparacion.setHoraSalidaCliente(horaSalidaCliente.toString());
+        reparacion.setFechaSalida(fechaSalida.toString());
+        reparacion.setHoraSalida(horaSalida.toString());
+        reparacion.setFechaRetiro(fechaRetiro.toString());
+        reparacion.setHoraRetiro(horaRetiro.toString());
         reparacion.setIdVehiculo(idVehiculo);
 
 
@@ -104,8 +104,8 @@ public class ReparacionService {
 
 
 
-        public List<ReparacionEntity> obtenerReparacionesPorVehiculoID(String long1) {
-            return (List<ReparacionEntity>) reparacionRepository.findByIdVehiculo(long1);
+    public List<ReparacionEntity> obtenerReparacionesPorVehiculoID(String vehiculoId) {
+        return reparacionRepository.findByVehiculoID(vehiculoId);
         }
 
 
