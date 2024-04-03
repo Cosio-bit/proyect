@@ -43,14 +43,9 @@ public class VehiculoService {
     public ReparacionEntity nuevaReparacion(LocalDate fechaIngreso,
                                               LocalDate horaIngreso,
                                               String tipoReparacion,
-                                              Integer montoTotal,
-                                              LocalDate fechaSalida,
-                                              LocalDate horaSalida,
-                                              LocalDate fechaRetiro,
-                                              LocalDate horaRetiro,
                                               String idVehiculo){
 
-        return reparacionService.guardarReparacion(fechaIngreso,horaIngreso,tipoReparacion,montoTotal,fechaSalida,horaSalida,fechaRetiro,horaRetiro,idVehiculo);
+        return reparacionService.guardarReparacion(fechaIngreso,horaIngreso,tipoReparacion, idVehiculo);
     
     }
 

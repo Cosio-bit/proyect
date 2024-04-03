@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es-ES" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Visualizar Reparación</title>
+    <style>
+        body {
+            background-color: #BAF4FA;
+            color: #6889BC;
+            font-family: Calibri, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #7AF4FA;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .container {
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .content-table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .content-table th,
+        .content-table td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        .content-table th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+<header class="header">
+    <h1>Visualizar Reparación</h1>
+
+    <a class="cta-button" href="/vehiculos">Volver a la Lista de vehículos</a>
+    <a class="cta-button" href="/reparaciones">Volver a la Lista de Reparaciones</a>
+    <nav>
+        <!-- Puedes agregar enlaces de navegación si es necesario -->
+    </nav>
+</header>
+<div class="container">
+    <table class="content-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Fecha de Ingreso</th>
+            <th>Hora de Ingreso</th>
+            <th>Tipo de Reparacion</th>
+            <th>Monto Total</th>
+            <th>Fecha de Salida de Reparacion</th>
+            <th>Hora de Salida de Reparacion</th>
+            <th>Fecha de Salida de Cliente</th>
+            <th>Hora de Salida de Cliente</th>
+            <th>ID Vehiculo</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Display a single instance of Reparación -->
+        <tr>
+            <td th:text="${reparacion.id}"></td>
+            <td th:text="${reparacion.fechaIngreso}"></td>
+            <td th:text="${reparacion.horaIngreso}"></td>
+            <td th:text="${reparacion.tipoReparacion}"></td>
+            <td th:text="${reparacion.montoTotal}"></td>
+            <!-- Check if fechaSalida is not null -->
+            <td th:if="${reparacion.fechaSalida != null}" th:text="${reparacion.fechaSalida}"></td>
+            <!-- If fechaSalida is null, display nothing -->
+            <td th:unless="${reparacion.fechaSalida != null}"></td>
+            <!-- Similarly handle other nullable fields -->
+            <td th:if="${reparacion.horaSalida != null}" th:text="${reparacion.horaSalida}"></td>
+            <td th:unless="${reparacion.horaSalida != null}"></td>
+            <td th:if="${reparacion.fechaRetiro != null}" th:text="${reparacion.fechaRetiro}"></td>
+            <td th:unless="${reparacion.fechaRetiro != null}"></td>
+            <td th:if="${reparacion.horaRetiro != null}" th:text="${reparacion.horaRetiro}"></td>
+            <td th:unless="${reparacion.horaRetiro != null}"></td>
+            <!-- idVehiculo is non-nullable, no need for conditional check -->
+            <td th:text="${reparacion.idVehiculo}"></td>
+        </tr>
+
+
+        </tbody>
+    </table>
+</div>
+<br>
+<hr>
+</body>
+</html>

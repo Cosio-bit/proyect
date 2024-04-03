@@ -31,17 +31,12 @@ public ResponseEntity<?> agregarReparacion(
             @RequestParam("fechaIngreso") LocalDate fechaIngreso,
 			@RequestParam("horaIngreso") LocalDate horaIngreso,
 			@RequestParam("tipoReparacion") String tipoReparacion,
-			@RequestParam("montoTotal") Integer montoTotal,
-			@RequestParam("fechaSalida") LocalDate fechaSalida,
-			@RequestParam("horaSalida") LocalDate horaSalida,
-			@RequestParam("fechaRetiro") LocalDate fechaRetiro,
-			@RequestParam("horaRetiro") LocalDate horaRetiro,
 			@RequestParam("idVehiculo") String idVehiculo
     ){
     try {
 
         // Aquí asumo que tienes una lógica para manejar la creación del préstamo
-        ReparacionEntity nuevoReparacion = reparacionService.guardarReparacion(fechaIngreso, horaIngreso, tipoReparacion, montoTotal,fechaSalida, horaSalida, fechaRetiro, horaRetiro, idVehiculo );
+        ReparacionEntity nuevoReparacion = reparacionService.guardarReparacion(fechaIngreso, horaIngreso, tipoReparacion, idVehiculo );
 
         if (nuevoReparacion != null) {
             return ResponseEntity.ok(nuevoReparacion);
@@ -54,6 +49,34 @@ public ResponseEntity<?> agregarReparacion(
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al procesar la solicitud: " + e.getMessage());
     }
 }
+
+    // Update "salida" date and time
+    @PutMapping("/{reparacionId}/salida")
+    public ResponseEntity<?> updateSalidaDateAndTime(@PathVariable Long reparacionId, @RequestParam LocalDate salidaDate, @RequestParam LocalDate salidaTime) {
+        ReparacionEntity reparacion = reparacionService.findById(reparacionId);
+        if (reparacion == null) {
+            return ResponseEntity.notFound().build();
+        }
+        reparacion.setFechaSalida(salidaDate.
+        reparacion.setHoraSalida(salidaDate.toLocalTime());
+        reparacionService.save(reparacion);
+        return ResponseEntity.ok().build();
+    }
+
+    // Update "retiro" date and time
+    @PutMapping("/{reparacionId}/retiro")
+    public ResponseEntity<?> updateRetiroDateAndTime(@PathVariable Long reparacionId, @RequestBody LocalDate retiroDateTime) {
+        Reparacion reparacion = reparacionService.findById(reparacionId);
+        if (reparacion == null) {
+            return ResponseEntity.notFound().build();
+        }
+        reparacion.setFechaRetiro(retiroDateTime.toLocalDate());
+        reparacion.setHoraRetiro(retiroDateTime.toLocalTime());
+        reparacionService.save(reparacion);
+        return ResponseEntity.ok().build();
+    }
+}
+
 
     // 3. Obtener los reparaciones de un vehiculo en particular
     @GetMapping("/vehiculos/vehiculo/reparaciones/{id}")

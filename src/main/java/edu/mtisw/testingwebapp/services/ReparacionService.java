@@ -26,25 +26,14 @@ public class ReparacionService {
     public ReparacionEntity guardarReparacion(LocalDate fechaIngreso,
                                               LocalDate horaIngreso,
                                               String tipoReparacion,
-                                              Integer montoTotal,
-                                              LocalDate fechaSalida,
-                                              LocalDate horaSalida,
-                                              LocalDate fechaRetiro,
-                                              LocalDate horaRetiro,
                                               String idVehiculo){
 
         ReparacionEntity reparacion = new ReparacionEntity();
 
         reparacion.setFechaIngreso(fechaIngreso.toString());
-        reparacion.setHoraIngeso(horaIngreso.toString());
+        reparacion.setHoraIngreso(horaIngreso.toString());
         reparacion.setTipoReparacion(tipoReparacion);
-        reparacion.setMontoTotal(montoTotal);
-        reparacion.setFechaSalida(fechaSalida.toString());
-        reparacion.setHoraSalida(horaSalida.toString());
-        reparacion.setFechaRetiro(fechaRetiro.toString());
-        reparacion.setHoraRetiro(horaRetiro.toString());
         reparacion.setIdVehiculo(idVehiculo);
-
 
         return reparacionRepository.save(reparacion);
     }
@@ -67,6 +56,12 @@ public class ReparacionService {
         for(int i=0; i!=reparacionEntities.size();i++){
             updateReparacion(reparacionEntities.get(i), "Devuelto"); //actualiza el estado de los reparaciones a lo que realmente utilizaremos
         }
+    }
+
+
+    public ReparacionEntity findById(Long reparacionId) {
+        Optional<ReparacionEntity> optionalReparacion = reparacionRepository.findById(reparacionId);
+        return optionalReparacion.orElse(null);
     }
 
 

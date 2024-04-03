@@ -56,7 +56,7 @@
                 <td><a th:href="@{'/vehiculos/vehiculo/' + ${vehiculo.id}}">Ver Detalles del vehiculo</a></td>
             </tr>
 
-        <!-- Botones para reparar y marcar como reparado -->
+        <!--
         <tr th:each="vehiculo : ${vehiculos}">
             <td colspan="9">
                 <button id="ingresoButton" estado="no reparando">Ingresar</button>
@@ -64,8 +64,8 @@
                 <button id="retiroButton" disabled>Retiro</button>
                 <span id="timer">00:00:00</span>
                 <span id="resultado"></span>
-                <!-- Cambios realizados -->
-                <!-- Utilizando un multiselect para seleccionar múltiples tipos de daños -->
+                Cambios realizados
+                Utilizando un multiselect para seleccionar múltiples tipos de daños
                 <select id="estadoDanado" multiple>
                     <option value="0">Daño Mecánico</option>
                     <option value="1">Daño Eléctrico</option>
@@ -77,9 +77,7 @@
                     <option value="7">Daño de Accesorios</option>
                 </select>
             </td>
-        </tr>
-
-        
+        </tr>Botones para reparar y marcar como reparado -->
 
 
             </tbody>
@@ -96,6 +94,10 @@
 </html>
 
 <script>
+    //
+</script>
+
+<script>/*
     let interval;
     let vehiculoDisponible = true;
 
@@ -118,7 +120,7 @@
                 event.target.disabled = true;
                 document.getElementById('salidaButton' + idVehiculo).disabled = false;
                 iniciarContador(idVehiculo);
-                event.target.setAttribute('estado', 'reparando');
+                event.target.setAttribute('estado', 'ingreso');
                 horaIngreso = new Date().toLocaleTimeString();
                 fechaIngreso = new Date().toLocaleDateString();
             }
@@ -145,8 +147,8 @@
                 const utilizacionHoras = fila.querySelector('#timer' + idVehiculo).textContent;
 
                 //obtener la cantidad de tiempo de cuando se pidio el vehiculo sea fechaDevolución y fechaEntrega la cantidad de tiempo que ha pasado desde el pedido
-                const horaSalida = new Date().toLocaleTimeString();
-                const fechaSalida = new Date().toLocaleDateString();
+                horaSalida = new Date().toLocaleTimeString();
+                fechaSalida = new Date().toLocaleDateString();
 
                 // Restablecer el contador del vehiculo
                 vehiculosTimers[idVehiculo].tiempoTotalSegundos = tiempoInicial;
@@ -176,8 +178,8 @@
                 const utilizacionHoras = fila.querySelector('#timer' + idVehiculo).textContent;
 
                 //obtener la cantidad de tiempo de cuando se pidio el vehiculo sea fechaDevolución y fechaEntrega la cantidad de tiempo que ha pasado desde el pedido
-                const horaRetiro = new Date().toLocaleTimeString();
-                const fechaRetiro = new Date().toLocaleDateString();
+                horaRetiro = new Date().toLocaleTimeString();
+                fechaRetiro = new Date().toLocaleDateString();
 
                 // Restablecer el contador del vehiculo
                 vehiculosTimers[idVehiculo].tiempoTotalSegundos = tiempoInicial;
@@ -199,33 +201,6 @@
     });
 
 
-
-/*
-    // Evento para saltar el tiempo de un vehiculo
-    document.querySelectorAll("[id^='skipButton']").forEach(button => {
-        button.addEventListener("click", function() {
-            const idVehiculo = this.id.replace('skipButton', '');
-            const fila = this.closest('tr');
-            const skipTime = fila.querySelector('#skipTime' + idProjector).value;
-            const [horas, minutos, segundos] = skipTime.split(":").map(Number);
-
-            if (!isNaN(horas) && !isNaN(minutos) && !isNaN(segundos)) {
-                const skipTotalSegundos = horas * 3600 + minutos * 60 + segundos;
-                actualizarTiempo(idVehiculo, skipTotalSegundos);
-
-                // Usa vehiculosTimers[idProjector].tiempoTotalSegundos para acceder al tiempo
-                if (vehiculosTimers[idVehiculo].tiempoTotalSegundos < 0) {
-                    clearInterval(vehiculosTimers[idVehiculo].interval);
-                    fila.querySelector('#timer' + idVehiculo).innerText = "Atrasado";
-                    registrarTiempoUsado(fila, idVehiculo);
-                    fila.querySelector('#returnButton' + idVehiculo).disabled = true;
-                    fila.querySelector('#startButton' + idVehiculo).disabled = false;
-                }
-            }
-        });
-    });
-
-*/
 
     window.addEventListener('load', function() {
         // Recorre todos los vehiculos y verifica si hay tiempo guardado en el almacenamiento local
@@ -369,4 +344,31 @@ function registrarTiempoUsado(idVehiculo) {
 
 }
 
+
+    /*
+        // Evento para saltar el tiempo de un vehiculo
+        document.querySelectorAll("[id^='skipButton']").forEach(button => {
+            button.addEventListener("click", function() {
+                const idVehiculo = this.id.replace('skipButton', '');
+                const fila = this.closest('tr');
+                const skipTime = fila.querySelector('#skipTime' + idProjector).value;
+                const [horas, minutos, segundos] = skipTime.split(":").map(Number);
+
+                if (!isNaN(horas) && !isNaN(minutos) && !isNaN(segundos)) {
+                    const skipTotalSegundos = horas * 3600 + minutos * 60 + segundos;
+                    actualizarTiempo(idVehiculo, skipTotalSegundos);
+
+                    // Usa vehiculosTimers[idProjector].tiempoTotalSegundos para acceder al tiempo
+                    if (vehiculosTimers[idVehiculo].tiempoTotalSegundos < 0) {
+                        clearInterval(vehiculosTimers[idVehiculo].interval);
+                        fila.querySelector('#timer' + idVehiculo).innerText = "Atrasado";
+                        registrarTiempoUsado(fila, idVehiculo);
+                        fila.querySelector('#returnButton' + idVehiculo).disabled = true;
+                        fila.querySelector('#startButton' + idVehiculo).disabled = false;
+                    }
+                }
+            });
+        });
+
+    */
 </script>

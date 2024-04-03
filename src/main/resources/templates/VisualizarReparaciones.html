@@ -68,23 +68,33 @@
 			<th>Hora de Salida de Cliente</th>
 			<th>ID Vehículo</th>
 		</tr>
-		</thead>
-		<tbody>
-		<!-- Iterate over the list of Reparacion entities -->
-		<tr th:each="reparacion : ${reparaciones}">
-			<td th:text="${reparacion.id}"></td>
-			<td th:text="${reparacion.fechaIngreso}"></td>
-			<td th:text="${reparacion.horaIngeso}"></td>
-			<td th:text="${reparacion.tipoReparacion}"></td>
-			<td th:text="${reparacion.montoTotal}"></td>
-			<td th:text="${reparacion.fechaSalida}"></td>
-			<td th:text="${reparacion.horaSalida}"></td>
-			<td th:text="${reparacion.fechaRetiro}"></td>
-			<td th:text="${reparacion.horaRetiro}"></td>
-			<td th:text="${reparacion.idVehiculo}"></td>
+		</thead><tbody>
+	<!-- Iterate over the list of Reparacion entities -->
+	<tr th:each="reparacion : ${reparaciones}">
+		<td th:text="${reparacion.id}"></td>
+		<td th:text="${reparacion.fechaIngreso}"></td>
+		<td th:text="${reparacion.horaIngreso}"></td>
+		<td th:text="${reparacion.tipoReparacion}"></td>
+		<td th:text="${reparacion.montoTotal}"></td>
+		<!-- Check if fechaSalida is not null -->
+		<td th:if="${reparacion.fechaSalida != null}" th:text="${reparacion.fechaSalida}"></td>
+		<!-- If fechaSalida is null, display nothing -->
+		<td th:unless="${reparacion.fechaSalida != null}"></td>
+		<!-- Similarly handle other nullable fields -->
+		<td th:if="${reparacion.horaSalida != null}" th:text="${reparacion.horaSalida}"></td>
+		<td th:unless="${reparacion.horaSalida != null}"></td>
+		<td th:if="${reparacion.fechaRetiro != null}" th:text="${reparacion.fechaRetiro}"></td>
+		<td th:unless="${reparacion.fechaRetiro != null}"></td>
+		<td th:if="${reparacion.horaRetiro != null}" th:text="${reparacion.horaRetiro}"></td>
+		<td th:unless="${reparacion.horaRetiro != null}"></td>
+		<!-- idVehiculo is non-nullable, no need for conditional check -->
+		<td th:text="${reparacion.idVehiculo}"></td>
 
-		</tr>
-		</tbody>
+
+		<td><a th:href="@{/vehiculos/vehiculo/reparaciones/{id}(id=${reparacion.id})}">Ver detalles</a></td>
+	</tr>
+	</tbody>
+
 	</table>
 </div>
 <br>

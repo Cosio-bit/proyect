@@ -71,15 +71,10 @@ public class VehiculoController {
 			@RequestParam("fechaIngreso") LocalDate fechaIngreso,
 			@RequestParam("horaIngreso") LocalDate horaIngreso,
 			@RequestParam("tipoReparacion") String tipoReparacion,
-			@RequestParam("montoTotal") Integer montoTotal,
-			@RequestParam("fechaSalida") LocalDate fechaSalida,
-			@RequestParam("horaSalida") LocalDate horaSalida,
-			@RequestParam("fechaRetiro") LocalDate fechaRetiro,
-			@RequestParam("horaRetiro") LocalDate horaRetiro,
 			@RequestParam("idVehiculo") String idVehiculo
 	) {
 		// Guardar la información del profesor
-		ReparacionEntity reparacion = vehiculoService.nuevaReparacion(fechaIngreso, horaIngreso, tipoReparacion, montoTotal, fechaSalida, horaSalida, fechaRetiro, horaRetiro, idVehiculo);
+		ReparacionEntity reparacion = vehiculoService.nuevaReparacion(fechaIngreso, horaIngreso, tipoReparacion, idVehiculo);
 
 		// Create a ModelAndView object and add the data you want to pass to the view
 		ModelAndView modelAndView = new ModelAndView("IngresarReparacion");
@@ -89,6 +84,8 @@ public class VehiculoController {
 
 		return modelAndView;
 	}
+
+
 	
 }
 
