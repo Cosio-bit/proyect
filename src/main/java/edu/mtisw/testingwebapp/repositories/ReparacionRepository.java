@@ -15,8 +15,8 @@ public interface ReparacionRepository extends JpaRepository<ReparacionEntity, Lo
     @Query(value = "SELECT * FROM reparaciones WHERE id = :id", nativeQuery = true)
     Optional<ReparacionEntity> findById(@Param("id") Long id);
 
-    @Query(value = "SELECT * FROM reparaciones WHERE idVehiculo = :idVehiculo", nativeQuery = true)
-    Optional<ReparacionEntity> findByIdVehiculo(@Param("idVehiculo") String idVehiculo);
+    @Query(value = "SELECT * FROM reparaciones WHERE id_vehiculo = :id_vehiculo", nativeQuery = true)
+    Optional<ReparacionEntity> findByIdVehiculo(@Param("id_vehiculo") String id_vehiculo);
 
     @Query(value = "SELECT * FROM reparaciones WHERE fecha_hora_ingreso = :fechaHoraIngreso", nativeQuery = true)
     Optional<ReparacionEntity> findByFechaHoraIngreso(@Param("fechaHoraIngreso") String fechaHoraIngreso);
@@ -31,8 +31,8 @@ public interface ReparacionRepository extends JpaRepository<ReparacionEntity, Lo
     @Query(value = "SELECT * FROM reparaciones", nativeQuery = true)
     List<ReparacionEntity> findAllReparaciones();
 
-    @Query(value = "SELECT * FROM reparaciones WHERE idVehiculo = :idVehiculo", nativeQuery = true)
-    List<ReparacionEntity> findByVehiculoID(@Param("idVehiculo") String idVehiculo);
+    @Query(value = "SELECT * FROM reparaciones WHERE id_vehiculo = :id_vehiculo", nativeQuery = true)
+    List<ReparacionEntity> findByVehiculoID(@Param("id_vehiculo") String id_vehiculo);
 
 
 }

@@ -39,8 +39,6 @@ public class VehiculoService {
         return vehiculoRepository.save(vehiculo);
     }
 
-    
-
 
     public ReparacionEntity crearReparacion(LocalDateTime fechaHoraIngreso,
                                               String tipoReparacion,
@@ -66,12 +64,6 @@ public class VehiculoService {
     public Optional<VehiculoEntity> obtenerPorPatente(String patente){
         return vehiculoRepository.findByPatente(patente);
     }
-
-    public Object obtenerVehiculoPorID(String vehiculoID) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'obtenerVehiculoPorID'");
-    }
-
 
 
 }

@@ -10,7 +10,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,6 +22,11 @@ public class ReparacionService {
     public ArrayList<ReparacionEntity> obtenerReparaciones(){
         return (ArrayList<ReparacionEntity>) reparacionRepository.findAll();
     }
+
+    public ArrayList<ReparacionEntity> obtenerReparacionesPorIdVehiculo(String idVehiculo) {
+        return (ArrayList<ReparacionEntity>)  reparacionRepository.findByVehiculoID(idVehiculo);
+    }
+
 
     public ReparacionEntity guardarReparacion(LocalDateTime fechaHoraIngreso,
                                               String tipoReparacion,
@@ -101,10 +105,6 @@ public class ReparacionService {
     //        }
     //    }
     //}
-
-    public List<ReparacionEntity> obtenerReparacionesPorIdVehiculo(String idVehiculo) {
-        return reparacionRepository.findByVehiculoID(idVehiculo);
-        }
 
 
 

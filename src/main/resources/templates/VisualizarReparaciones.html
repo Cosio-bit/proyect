@@ -80,7 +80,7 @@
             <!-- idVehiculo is non-nullable, no need for conditional check -->
             <td th:text="${reparacion.idVehiculo}"></td>
 
-		<td><a th:href="@{'/vehiculo/reparaciones/' + ${reparacion.idVehiculo}}">Ver reparaciones del vehiculo</a></td>
+		<td><a th:href="@{'/reparaciones/' + ${reparacion.idVehiculo}}">Ver reparaciones del vehiculo</a></td>
 		<td><a th:href="@{'/reparacion/' + ${reparacion.id}}">Ver reparacion especifica</a></td>
 
 	</tr>

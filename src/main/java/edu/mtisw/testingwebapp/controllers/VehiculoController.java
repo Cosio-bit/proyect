@@ -8,8 +8,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+
 
 @Controller
 @RequestMapping
@@ -57,6 +60,11 @@ public class VehiculoController {
 		List<VehiculoEntity> vehiculos = vehiculoService.obtenerVehiculos();
 		model.addAttribute("vehiculos", vehiculos);
 		return "VisualizarVehiculos";
+	}
+
+	@GetMapping("/vehiculosjson")
+	public ArrayList<VehiculoEntity> listarjson(){
+		return vehiculoService.obtenerVehiculos();
 	}
 
 /*

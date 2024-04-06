@@ -29,6 +29,13 @@ public class ReparacionController {
         return "VisualizarReparaciones";
     }
 
+    @GetMapping("/reparaciones/{id}")
+    public String mostrarReparaciones(@PathVariable("id") String id, Model model) {
+        List<ReparacionEntity> reparaciones = reparacionService.obtenerReparacionesPorIdVehiculo(id);
+        model.addAttribute("reparaciones", reparaciones);
+        return "VisualizarReparaciones";
+    }
+
 
     @GetMapping("/reparacion/{id}")
     public String mostrarReparacion(@PathVariable Long id, Model model) {
@@ -39,14 +46,6 @@ public class ReparacionController {
         }
         return "VisualizarReparacion";
     }
-
-    @GetMapping("/vehiculo/reparaciones/{idVehiculo}")
-    public String mostrarReparaciones(@PathVariable("idVehiculo") String idVehiculo, Model model) {
-        List<ReparacionEntity> reparaciones = reparacionService.obtenerReparacionesPorIdVehiculo(idVehiculo);
-        model.addAttribute("reparaciones", reparaciones);
-        return "VisualizarReparaciones";
-    }
-
 
 
     @PostMapping("/crearReparacion/{idVehiculo}")

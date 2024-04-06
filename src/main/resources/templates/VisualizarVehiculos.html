@@ -1,97 +1,116 @@
 <!DOCTYPE html>
-<html lang="es-ES"
-      xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="es-ES" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visualizar vehiculo</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #BAF4FA;
+            color: #6889BC;
+            font-family: Calibri, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
 
+        .header {
+            background-color: #7AF4FA;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .cta-button:hover {
+            background-color: #0056b3;
+        }
+
+        .content-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .content-table th,
+        .content-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .content-table th {
+            background-color: #f2f2f2;
+        }
+
+        .content-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
-<style>
-    body {
-        background-color: #BAF4FA;
-        color: #6889BC;
-        font-family: Calibri, sans-serif;
-        margin: 0;
-        padding: 0;
-    }
 
-    .header {
-        background-color: #7AF4FA;
-        padding: 10px;
-        text-align: center;
-    }
-</style>
-
-<a class="cta-button" href="/vehiculos/vehiculo">Agregar Nuevo Vehiculos</a>
-
-<div class="f">
-    <div class="container my-2">
-        <table border="1" class="content-table">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Patente</th>
-                <th>Marca</th>
-                <th>Modelo</th>
-                <th>Año de Fabricacion</th>
-                <th>Tipo de Motor</th>
-                <th>Nro de Asientos</th>
-                <th>Estado</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="vehiculo : ${vehiculos}">
-
-                <td th:text="${vehiculo.id}"></td>
-                <td th:text="${vehiculo.patente}"></td>
-                <td th:text="${vehiculo.marca}"></td>
-                <td th:text="${vehiculo.modelo}"></td>
-                <td th:text="${vehiculo.tipoMotor}"></td>
-                <td th:text="${vehiculo.annoFabricacion}"></td>
-                <td th:text="${vehiculo.tipoMotor}"></td>
-                <td th:text="${vehiculo.nroAsientos}"></td>
-                <td><a th:href="@{'/vehiculos/vehiculo/' + ${vehiculo.id}}">Ver Detalles del vehiculo</a></td>
-                <!--nueva reparacion-->
-                <td><a th:href="@{'/crearReparacion/' + ${vehiculo.id}}">Nueva Reparacion</a></td>
-            </tr>
-
-        <!--
-        <tr th:each="vehiculo : ${vehiculos}">
-            <td colspan="9">
-                <button id="ingresoButton" estado="no reparando">Ingresar</button>
-                <button id="salidaButton" disabled>Reparado</button>
-                <button id="retiroButton" disabled>Retiro</button>
-                <span id="timer">00:00:00</span>
-                <span id="resultado"></span>
-                Cambios realizados
-                Utilizando un multiselect para seleccionar múltiples tipos de daños
-                <select id="estadoDanado" multiple>
-                    <option value="0">Daño Mecánico</option>
-                    <option value="1">Daño Eléctrico</option>
-                    <option value="2">Daño de Carrocería</option>
-                    <option value="3">Daño de Pintura</option>
-                    <option value="4">Daño de Neumáticos</option>
-                    <option value="5">Daño de Cristales</option>
-                    <option value="6">Daño de Interiores</option>
-                    <option value="7">Daño de Accesorios</option>
-                </select>
-            </td>
-        </tr>Botones para reparar y marcar como reparado -->
-
-
-            </tbody>
-            <tfoot>
-            <!-- Contenido del tfoot si lo hay -->
-            </tfoot>
-        </table>
-        <a class="cta-button" href="/reparaciones"><button>Ver reparaciones</button></a>
-    </div>
+<body>
+<div class="header">
+    <h1>Visualizar vehiculo</h1>
 </div>
-<br>
-<hr>
+
+<div class="container mt-3">
+    <a class="cta-button mb-3" href="/vehiculos/vehiculo">Agregar Nuevo Vehiculo</a>
+
+    <table class="table content-table">
+        <thead class="thead-light">
+        <tr>
+            <th>ID</th>
+            <th>Patente</th>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Año de Fabricacion</th>
+            <th>Tipo de Motor</th>
+            <th>Nro de Asientos</th>
+            <th>Estado</th>
+            <th colspan="3">Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="vehiculo : ${vehiculos}">
+            <td th:text="${vehiculo.id}"></td>
+            <td th:text="${vehiculo.patente}"></td>
+            <td th:text="${vehiculo.marca}"></td>
+            <td th:text="${vehiculo.modelo}"></td>
+            <td th:text="${vehiculo.annoFabricacion}"></td>
+            <td th:text="${vehiculo.tipoMotor}"></td>
+            <td th:text="${vehiculo.nroAsientos}"></td>
+            <td>
+                <a class="btn btn-info btn-sm" th:href="@{'/vehiculos/vehiculo/' + ${vehiculo.id}}">Ver Detalles</a>
+            </td>
+            <td>
+                <a class="btn btn-secondary btn-sm" th:href="@{'/reparaciones/' + ${vehiculo.id}}">Ver Reparaciones</a>
+            </td>
+            <td>
+                <a class="btn btn-primary btn-sm" th:href="@{'/crearReparacion/' + ${vehiculo.id}}">Nueva Reparacion</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a class="cta-button" href="/reparaciones"><button class="btn btn-primary">Ver todas las reparaciones</button></a>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
 
 </html>
+
 
 <script>
     //
