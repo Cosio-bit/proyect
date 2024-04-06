@@ -36,7 +36,7 @@
     <a class="cta-button" href="/vehiculos"><button>Volver al menú principal</button></a>
 </header>
 <div class="mainclass">
-    <form th:action="@{/nuevoVehiculo}" method="POST">
+    <form th:action="@{/vehiculos/vehiculo}" method="POST">
         <div class="logo">
             <h1><b>Registrar nuevo Vehiculos</b></h1>
         </div>
@@ -67,9 +67,15 @@
                     <label for="modelo"></label><input type="text" id="modelo" placeholder="Ingrese el modelo del vehiculo" name="modelo">
                 </li>
 
+
+                <li>
+                    <label><strong>año de fabricación</strong></label>
+                    <label for="annoFabricacion"></label><input type="date" id="annoFabricacion" placeholder="Ingrese el año del vehiculo" name="annoFabricacion">
+                </li>
+
                 <li>
                     <label><strong>tipo de auto</strong></label>
-                    <label for="tipo"></label><select id="tipo" name="tipo" required>
+                    <label for="tipoVehiculo"></label><select id="tipoVehiculo" name="tipoVehiculo" required>
                         <option value="">Seleccione el tipo de vehiculo</option>
                         <option value="Sedan">Sedan</option>
                         <option value="Hatchback">Hatchback</option>
@@ -83,13 +89,8 @@
                 </li>
 
                 <li>
-                    <label><strong>año de fabricación</strong></label>
-                    <label for="annoFabricacion"></label><input type="text" id="annoFabricacion" placeholder="Ingrese el año del vehiculo" name="annoFabricacion">
-                </li>
-
-                <li>
                     <label><strong>tipo de motor</strong></label>
-                    <label for="motor"></label><select id="motor" name="motor" required>
+                    <label for="tipoMotor"></label><select id="tipoMotor" name="tipoMotor" required>
                         <option value="">Seleccione el tipo de motor</option>
                         <option value="Bencina">Bencina</option>
                         <option value="Diesel">Diesel</option>
@@ -120,15 +121,7 @@
                     <label for="kilometraje"></label><input type="number" id="kilometraje" name="kilometraje">
                 </li>
 
-                <li>
-                    <label><strong>estado</strong></label>
-                    <label for="estado"></label><select id="estado" name="estado" required>
-                        <option value="">Seleccione el estado del vehiculo</option>
-                        <option value="Ingreso">No reparando</option>
-                        <option value="Salida">En mantenimiento</option>
-                        <option value="Retiro">Despachado</option>
-                    </select>
-                </li>
+
                 <!-- Add more fields as needed -->
             </ul>
         </ul>

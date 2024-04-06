@@ -1,8 +1,12 @@
 package edu.mtisw.testingwebapp.entities;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "reparaciones")
 @Data
@@ -15,14 +19,10 @@ public class ReparacionEntity {
     @Column(unique = true, nullable = false)
     private Long id;
 
-    @Column(nullable = false)
     private String idVehiculo;
 
     @Column(nullable = false)
-    private String fechaIngreso;
-
-    @Column(nullable = false)
-    private String horaIngreso;
+    private LocalDateTime fechaHoraIngreso;
 
     @Column(nullable = false)
     private String tipoReparacion;
@@ -31,14 +31,10 @@ public class ReparacionEntity {
     private Integer montoTotal;
 
     @Column(nullable = true) // Assuming this field can be null
-    private String fechaSalida;
+    private LocalDateTime fechaHoraSalida;
 
     @Column(nullable = true) // Assuming this field can be null
-    private String horaSalida;
+    private LocalDateTime fechaHoraRetiro;
 
-    @Column(nullable = true) // Assuming this field can be null
-    private String fechaRetiro;
 
-    @Column(nullable = true) // Assuming this field can be null
-    private String horaRetiro;
 }

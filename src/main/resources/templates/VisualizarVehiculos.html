@@ -23,7 +23,7 @@
     }
 </style>
 
-<a class="cta-button" href="/nuevoVehiculo">Agregar Nuevo Vehiculos</a>
+<a class="cta-button" href="/vehiculos/vehiculo">Agregar Nuevo Vehiculos</a>
 
 <div class="f">
     <div class="container my-2">
@@ -34,7 +34,6 @@
                 <th>Patente</th>
                 <th>Marca</th>
                 <th>Modelo</th>
-                <th>Tipo</th>
                 <th>Año de Fabricacion</th>
                 <th>Tipo de Motor</th>
                 <th>Nro de Asientos</th>
@@ -52,8 +51,9 @@
                 <td th:text="${vehiculo.annoFabricacion}"></td>
                 <td th:text="${vehiculo.tipoMotor}"></td>
                 <td th:text="${vehiculo.nroAsientos}"></td>
-                <td th:text="${vehiculo.estado}"></td>
                 <td><a th:href="@{'/vehiculos/vehiculo/' + ${vehiculo.id}}">Ver Detalles del vehiculo</a></td>
+                <!--nueva reparacion-->
+                <td><a th:href="@{'/crearReparacion/' + ${vehiculo.id}}">Nueva Reparacion</a></td>
             </tr>
 
         <!--

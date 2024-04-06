@@ -74,16 +74,15 @@
 	<p>Patente: <span th:text="${vehiculo.patente}"></span></p>
 	<p>Marca: <span th:text="${vehiculo.marca}"></span></p>
 	<p>Modelo: <span th:text="${vehiculo.modelo}"></span></p>
-	<p>Tipo: <span th:text="${vehiculo.tipo}"></span></p>
 	<p>Año de fabricación: <span th:text="${vehiculo.annoFabricacion}"></span></p>
+	<p>Tipo Vehicle: <span th:text="${vehiculo.tipoVehiculo}"></span></p>
 	<p>Tipo de Motor: <span th:text="${vehiculo.tipoMotor}"></span></p>
 	<p>Número de asientos: <span th:text="${vehiculo.nroAsientos}"></span></p>
-	<p>Estado: <span th:text="${vehiculo.estado}"></span></p>
 
 
-	<td>
-		<a th:href="@{'/vehiculos/vehiculo/reparaciones/' + ${vehiculo.id}}">Ver reparaciones</a>
-	</td>
+	<a th:href="@{'/reparaciones/' + ${vehiculo.id}}">Ver reparaciones</a>
+	<a th:href="@{'/crearReparacion/' + ${vehiculo.id}}">Nueva reparación</a>
+	
 
 	<!-- Add more details about the vehículo as needed -->
 

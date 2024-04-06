@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es">
 
 <head>
-
     <title>Ingresar Detalle de Pago</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
@@ -11,22 +10,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 </head>
-
-<style>
-    body {
-        background-color: #BAF4FA;
-        color: #6889BC;
-        font-family: Calibri, sans-serif;
-        margin: 0;
-        padding: 0;
-    }
-
-    .header {
-        background-color: #BAF4FA;
-        padding: 10px;
-        text-align: center;
-    }
-</style>
 
 <body>
 <header class="header">
@@ -37,7 +20,8 @@
     <a class="cta-button" href="/vehiculos"><button>Volver al menú principal</button></a>
 </header>
 <div class="mainclass">
-    <form th:action="@{/nuevaReparacion}" method="POST">
+    <!-- Use Thymeleaf to set the form action URL -->
+    <form th:action="@{'/crearReparacion/' + ${idVehiculo}}" method="POST">
         <div class="logo">
             <h1><b>Registrar nueva Reparacion</b></h1>
         </div>
@@ -47,10 +31,7 @@
             <ul class="container">
                 <li>
                     <label><strong>Fecha de Ingreso</strong></label>
-                    <input type="date" id="fechaIngreso" name="fechaIngreso" required>
-                <li>
-                    <label><strong>Hora de Ingreso</strong></label>
-                    <input type="time" id="horaIngreso" name="horaIngreso" required>
+                    <p id="fechaHoraIngreso"></p>
                 </li>
                 <li>
                     <label><strong>Tipo de Reparacion</strong></label>
@@ -65,11 +46,20 @@
 
             </ul>
             <div class="cta-button">
-                <button type="submit">Registrar Reparacion</button>
+                <button type="submit" onclick="registerCurrentDateTime()">Registrar Reparacion con la hora actual</button>
             </div>
         </ul>
     </form>
 </div>
+
+<script>
+    function registerCurrentDateTime() {
+        // Get the current datetime in UTC
+        // Set the current datetime to the paragraph element
+        document.getElementById("fechaHoraIngreso").innerText = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    }
+</script>
+
 </body>
 
 </html>
