@@ -36,7 +36,6 @@ public class ReparacionController {
         return "VisualizarReparaciones";
     }
 
-
     @GetMapping("/reparacion/{id}")
     public String mostrarReparacion(@PathVariable Long id, Model model) {
         Optional<ReparacionEntity> reparacion = Optional.fromNullable((reparacionService.findById(id)));
@@ -46,7 +45,6 @@ public class ReparacionController {
         }
         return "VisualizarReparacion";
     }
-
 
     @PostMapping("/crearReparacion/{idVehiculo}")
     public ModelAndView guardarReparacion(
@@ -60,16 +58,12 @@ public class ReparacionController {
         return modelAndView;
     }
 
-
     @GetMapping("/crearReparacion/{idVehiculo}")
     public String VehiculoForm(Model model, @PathVariable String idVehiculo) {
         model.addAttribute("reparacion", new ReparacionEntity());
         model.addAttribute("idVehiculo", idVehiculo);
         return "IngresarReparacion";
     }
-
-
-
 
 // Update "salida" date and time
         //@PutMapping("/reparaciones/reparacion/{reparacionId}/salida")

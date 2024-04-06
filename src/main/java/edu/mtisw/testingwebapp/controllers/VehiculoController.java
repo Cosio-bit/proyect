@@ -13,13 +13,11 @@ import java.util.List;
 import java.util.Optional;
 
 
-
 @Controller
 @RequestMapping
 public class VehiculoController {
     @Autowired
     private VehiculoService vehiculoService;
-
 
     @GetMapping("/vehiculos/vehiculo/{id}")
     public String mostrarVehiculo(@PathVariable Long id, Model model) {
@@ -54,7 +52,6 @@ public class VehiculoController {
 		return modelAndView;
 	}
 
-    
 	@GetMapping("/vehiculos")
 	public String listar(Model model) {
 		List<VehiculoEntity> vehiculos = vehiculoService.obtenerVehiculos();
@@ -66,7 +63,6 @@ public class VehiculoController {
 	public ArrayList<VehiculoEntity> listarjson(){
 		return vehiculoService.obtenerVehiculos();
 	}
-
 /*
 	@PostMapping("/reparaciones/reparacion/{idVehiculo}")
 	public ModelAndView nuevaReparacion(
@@ -87,7 +83,6 @@ public class VehiculoController {
 	}
 
 */
-	
 }
 
 

@@ -27,7 +27,6 @@ public class ReparacionService {
         return (ArrayList<ReparacionEntity>)  reparacionRepository.findByVehiculoID(idVehiculo);
     }
 
-
     public ReparacionEntity guardarReparacion(LocalDateTime fechaHoraIngreso,
                                               String tipoReparacion,
                                               String idVehiculo){
@@ -52,7 +51,7 @@ public class ReparacionService {
         if (reparacion.getIdVehiculo() != null) {
             if (reparacion.getFechaHoraSalida() == null) {
                 reparacion.setFechaHoraSalida(LocalDateTime.now());
-                
+
             }
             else if (reparacion.getFechaHoraRetiro()==null){
                 reparacion.setFechaHoraRetiro(LocalDateTime.now());
@@ -90,9 +89,9 @@ public class ReparacionService {
     //    Optional<ReparacionEntity> optionalReparacion = reparacionRepository.findById(reparacionID);
 
     //    if (optionalReparacion.isPresent()){ //&& optionalReparacion.get().getEstado().equals("No Devuelto")) {
-      //      ReparacionEntity reparacion = optionalReparacion.get();
+    //      ReparacionEntity reparacion = optionalReparacion.get();
             //reparacion.setEstadoDanado("Devuelto");// Establece el estado pagado en true
-        //    reparacionRepository.save(reparacion); // Guarda la entidad actualizada
+    //    reparacionRepository.save(reparacion); // Guarda la entidad actualizada
 
             // Calcula el nuevo monto total para el historial de arancel
     //        Long vehiculoId = Long.parseLong(reparacion.getIdVehiculo());
@@ -105,7 +104,4 @@ public class ReparacionService {
     //        }
     //    }
     //}
-
-
-
 }

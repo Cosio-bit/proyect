@@ -36,7 +36,6 @@ public interface ProfesorRepository extends JpaRepository<ProfesorEntity, Long> 
     @Query(value = "UPDATE profesores SET infracciones = :infracciones WHERE id = :id", nativeQuery = true)
     void updateInfracciones(@Param("infracciones") int infracciones, @Param("id") Long id);
 
-
     //find all profesores
     @Query(value = "SELECT * FROM profesores", nativeQuery = true)
     List<ProfesorEntity> findAllProfesores();
