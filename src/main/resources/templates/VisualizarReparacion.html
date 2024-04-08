@@ -70,17 +70,21 @@
         <!-- Display a single instance of Reparación -->
         <tr>
             <td th:text="${reparacion.id}"></td>
-            <td th:dateTime="${reparacion.fechaHoraIngreso}"></td>
+            <!-- Formatear la fecha de ingreso -->
+            <td th:text="${reparacion.fechaHoraIngreso}"></td>
             <td th:text="${reparacion.montoTotal}"></td>
             <!-- Check if fechaSalida is not null -->
-            <td th:if="${reparacion.fechaHoraSalida != null}" th:dateTime="${reparacion.fechaHoraSalida}"></td>
+            <td th:if="${reparacion.fechaHoraSalida != null}" th:text="${reparacion.fechaHoraSalida}"></td>
             <!-- If fechaSalida is null, display nothing -->
             <td th:unless="${reparacion.fechaHoraSalida != null}"></td>
             <!-- Similarly handle other nullable fields -->
-            <td th:if="${reparacion.fechaHoraRetiro != null}" th:dateTime="${reparacion.fechaHoraRetiro}"></td>
+            <td th:if="${reparacion.fechaHoraRetiro != null}" th:text="${reparacion.fechaHoraRetiro}"></td>
             <td th:unless="${reparacion.fechaHoraRetiro != null}"></td>
             <!-- idVehiculo is non-nullable, no need for conditional check -->
             <td th:text="${reparacion.idVehiculo}"></td>
+
+            <td><a th:href="@{'/reparacion/' + ${reparacion.id} + '/retiro'}" th:method="put">Retirar vehiculo</a></td>
+            <td><a th:href="@{'/reparacion/' + ${reparacion.id} + '/salida'}" th:method="put">Salida reparacion</a></td>
         </tr>
 
 

@@ -43,20 +43,18 @@ public class ReparacionService {
         return reparacionRepository.save(reparacion);
     }
 
-    public void updateReparacion(ReparacionEntity reparacion){
+    //Long vehiculoId = Long.parseLong(reparacion.getVehiculo());
+    //VehiculoEntity vehiculo = vehiculoRepository.findById(vehiculoId).orElse(null);
 
-        //Long vehiculoId = Long.parseLong(reparacion.getVehiculo());
-        //VehiculoEntity vehiculo = vehiculoRepository.findById(vehiculoId).orElse(null);
+    public void updateReparacion(ReparacionEntity reparacion){
 
         if (reparacion.getIdVehiculo() != null) {
             if (reparacion.getFechaHoraSalida() == null) {
                 reparacion.setFechaHoraSalida(LocalDateTime.now());
-
             }
             else if (reparacion.getFechaHoraRetiro()==null){
                 reparacion.setFechaHoraRetiro(LocalDateTime.now());
-
-        } //arreglar para que se actualice el estado del reparacion
+        }
         reparacionRepository.save(reparacion);
         }
     }

@@ -68,20 +68,35 @@
 	<!-- Iterate over the list of Reparacion entities -->
 	<tr th:each="reparacion : ${reparaciones}">
 			<td th:text="${reparacion.id}"></td>
-            <td th:dateTime="${reparacion.fechaHoraIngreso}"></td>
+            <td th:text="${reparacion.fechaHoraIngreso}"></td>
             <td th:int="${reparacion.montoTotal}"></td>
             <!-- Check if fechaSalida is not null -->
-            <td th:if="${reparacion.fechaHoraSalida != null}" th:dateTime="${reparacion.fechaHoraSalida}"></td>
+            <td th:if="${reparacion.fechaHoraSalida != null}" th:text="${reparacion.fechaHoraSalida}"></td>
             <!-- If fechaSalida is null, display nothing -->
             <td th:unless="${reparacion.fechaHoraSalida != null}"></td>
             <!-- Similarly handle other nullable fields -->
-            <td th:if="${reparacion.fechaHoraRetiro != null}" th:dateTime="${reparacion.fechaHoraRetiro}"></td>
+            <td th:if="${reparacion.fechaHoraRetiro != null}" th:text="${reparacion.fechaHoraRetiro}"></td>
             <td th:unless="${reparacion.fechaHoraRetiro != null}"></td>
             <!-- idVehiculo is non-nullable, no need for conditional check -->
             <td th:text="${reparacion.idVehiculo}"></td>
 
 		<td><a th:href="@{'/reparaciones/' + ${reparacion.idVehiculo}}">Ver reparaciones del vehiculo</a></td>
 		<td><a th:href="@{'/reparacion/' + ${reparacion.id}}">Ver reparacion especifica</a></td>
+		<td>
+			<form action="/reparacion/{id}/salida" method="post" id="salidaForm">
+				<input type="hidden" name="id" th:value="${reparacion.id}">
+				<button type="submit">Update Salida Date and Time</button>
+			</form>
+		</td>
+
+		<td>
+			<form action="/reparacion/{id}/retiro" method="post" id="retiroForm">
+				<input type="hidden" name="id" th:value="${reparacion.id}">
+				<button type="submit">Update Retiro Date and Time</button>
+			</form>
+		</td>
+
+
 
 	</tr>
 	</tbody>
@@ -92,3 +107,25 @@
 <hr>
 </body>
 </html>
+<script>
+
+	function submitForm(formId) {
+		document.getElementById(formId).submit();
+	}
+
+	function updateReparacion(url) {
+		fetch(url, {
+			method: 'PUT'
+		}).then(response => {
+			if (response.ok) {
+				// Refresh the page or handle success accordingly
+				window.location.reload();
+			} else {
+				// Handle error response
+				console.error('Failed to update reparacion');
+			}
+		}).catch(error => {
+			console.error('Error:', error);
+		});
+	}
+</script>

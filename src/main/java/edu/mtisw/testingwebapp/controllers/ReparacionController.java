@@ -65,23 +65,22 @@ public class ReparacionController {
         return "IngresarReparacion";
     }
 
-// Update "salida" date and time
-        //@PutMapping("/reparaciones/reparacion/{reparacionId}/salida")
-        //public ResponseEntity<?> updateSalidaDateAndTime(@PathVariable Long reparacionId, @RequestParam LocalDate salidaDate, @RequestParam LocalDate salidaTime) {
-          //  ReparacionEntity reparacion = reparacionService.findById(reparacionId);
-            //reparacionService.updateReparacion(reparacion);
-            //return ResponseEntity.ok().build();
-        //}
 
-        // Update "retiro" date and time
-        //@PutMapping("/reparaciones/reparacion/{reparacionId}/retiro")
-        //public ResponseEntity<?> updateRetiroDateAndTime(@PathVariable Long reparacionId, @RequestBody LocalDateTime retiroDateTime) {
-         //   ReparacionEntity reparacion = reparacionService.findById(reparacionId);
-           // reparacionService.updateReparacion(reparacion);
-            //return ResponseEntity.ok().build();
-        //}
+    @PostMapping("/reparacion/{reparacionId}/salida")
+    public String updateSalidaDateAndTime(@PathVariable Long reparacionId) {
+        ReparacionEntity reparacion = reparacionService.findById(reparacionId);
+        reparacionService.updateReparacion(reparacion);
+        return "redirect:/reparaciones";
+    }
 
-    
+    @PostMapping("/reparacion/{reparacionId}/retiro")
+    public String updateRetiroDateAndTime(@PathVariable Long reparacionId) {
+        ReparacionEntity reparacion = reparacionService.findById(reparacionId);
+        reparacionService.updateReparacion(reparacion);
+        return "redirect:/reparaciones";
+    }
+
+
 }
 
 
