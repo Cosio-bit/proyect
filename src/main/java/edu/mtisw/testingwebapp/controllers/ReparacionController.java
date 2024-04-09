@@ -66,18 +66,22 @@ public class ReparacionController {
     }
 
 
-    @PostMapping("/reparacion/{reparacionId}/salida")
-    public String updateSalidaDateAndTime(@PathVariable Long reparacionId) {
+    @GetMapping("/reparacion/{reparacionId}/salida")
+    public String updateSalidaDateAndTime(@PathVariable Long reparacionId, Model model) {
         ReparacionEntity reparacion = reparacionService.findById(reparacionId);
         reparacionService.updateReparacion(reparacion);
-        return "redirect:/reparaciones";
+        List<ReparacionEntity> reparaciones = reparacionService.obtenerReparaciones();
+        model.addAttribute("reparaciones", reparaciones);
+        return "VisualizarReparaciones";
     }
 
-    @PostMapping("/reparacion/{reparacionId}/retiro")
-    public String updateRetiroDateAndTime(@PathVariable Long reparacionId) {
+    @GetMapping("/reparacion/{reparacionId}/retiro")
+    public String updateRetiroDateAndTime(@PathVariable Long reparacionId, Model model) {
         ReparacionEntity reparacion = reparacionService.findById(reparacionId);
         reparacionService.updateReparacion(reparacion);
-        return "redirect:/reparaciones";
+        List<ReparacionEntity> reparaciones = reparacionService.obtenerReparaciones();
+        model.addAttribute("reparaciones", reparaciones);
+        return "VisualizarReparaciones";
     }
 
 
